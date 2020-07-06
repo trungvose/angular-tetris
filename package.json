@@ -1,10 +1,16 @@
 {
   "name": "angular-tetris",
   "version": "0.0.1",
+  "author": {
+    "name": "Trung Vo",
+    "email": "trungk18@gmail.com",
+    "url": "https://github.com/trungk18/jira-clone-angular"
+  },
+  "description": "Tetris game built with Angular and Akita 🎮",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
-    "build": "ng build",
+    "build": "ng build --prod=true --sourceMap=true",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e"
