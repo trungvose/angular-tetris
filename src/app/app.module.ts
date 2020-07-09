@@ -5,6 +5,7 @@ import { AppComponent } from './app.component';
 import { AngularTetrisComponent } from './containers/angular-tetris/angular-tetris.component';
 import { KeyboardComponent } from './components/keyboard/keyboard.component';
 import { ButtonComponent } from './components/button/button.component';
+import { ScreenDecorationComponent } from './components/screen-decoration/screen-decoration.component';
 
 @NgModule({
   declarations: [
@@ -12,6 +13,7 @@ import { ButtonComponent } from './components/button/button.component';
     AngularTetrisComponent,
     KeyboardComponent,
     ButtonComponent,
+    ScreenDecorationComponent,
   ],
   imports: [BrowserModule],
   providers: [],

@@ -11,49 +11,12 @@ $black: #000;
   left: 50%;
   margin: -450px 0 0 -320px;
   background: $yellow;
-
-  &:ng-deep {
-    //block
-    b {
-      display: block;
-      width: 20px;
-      height: 20px;
-      padding: 2px;
-      border: 2px solid #879372;
-      margin: 0 2px 2px 0;
-      float: left;
-
-      &:after {
-        content: "";
-        display: block;
-        width: 12px;
-        height: 12px;
-        background: #879372;
-        overflow: hidden;
-      }
-
-      //fill block
-      &.c {
-        border-color: $black;
-        &:after {
-          background: $black;
-        }
-      }
-
-      &.d {
-        border-color: #560000;
-        &:after {
-          background: #560000;
-        }
-      }
-    }
-  }
 }
 
-.rect {
+.react {
   width: 480px;
   padding: 45px 0 35px;
-  border: $black solid;
+  border: #000 solid;
   border-width: 0 10px 10px;
   margin: 0 auto;
   position: relative;
@@ -70,7 +33,6 @@ $black: #000;
   border-color: #987f0f #fae36c #fae36c #987f0f;
   margin: 0 auto;
   position: relative;
-
   .panel {
     width: 380px;
     height: 468px;
@@ -78,5 +40,25 @@ $black: #000;
     background: #9ead86;
     padding: 8px;
     border: 2px solid #494536;
+  }
+}
+
+.state {
+  width: 108px;
+  position: absolute;
+  top: 0;
+  right: 15px;
+  p {
+    line-height: 47px;
+    height: 57px;
+    padding: 10px 0 0;
+    white-space: nowrap;
+    clear: both;
+  }
+  .bottom {
+    position: absolute;
+    width: 114px;
+    top: 426px;
+    left: 0;
   }
 }
