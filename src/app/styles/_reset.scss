@@ -1,5 +1,23 @@
+$light-teal: #009688;
+
 * {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
+}
+
+body {
+  background: $light-teal;
+
+  padding: 0;
+  margin: 0;
+  font: 20px/1 "Helvetica Neue", "Helvetica", "Arial", sans-serif;
+
+  overflow: hidden;
+  cursor: default;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  direction: ltr;
+  text-align: left;
 }

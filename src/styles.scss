@@ -1,15 +1,1 @@
 @import "../src/app/styles/tetris.scss";
-$light-teal: #009688;
-
-body {
-  background: $light-teal;
-  padding: 0;
-  margin: 0;
-  overflow: hidden;
-  cursor: default;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  direction: ltr;
-  text-align: left;
-}
