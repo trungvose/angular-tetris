@@ -1,0 +1,51 @@
+.number {
+  height: 24px;
+  font-size: 14px;
+  float: right;
+
+  span.num {
+    float: left;
+    width: 14px;
+    height: 24px;
+  }
+
+  .num-0 {
+    background-position: -75px -25px;
+  }
+  .num-1 {
+    background-position: -89px -25px;
+  }
+  .num-2 {
+    background-position: -103px -25px;
+  }
+  .num-3 {
+    background-position: -117px -25px;
+  }
+  .num-4 {
+    background-position: -131px -25px;
+  }
+  .num-5 {
+    background-position: -145px -25px;
+  }
+  .num-6 {
+    background-position: -159px -25px;
+  }
+  .num-7 {
+    background-position: -173px -25px;
+  }
+  .num-8 {
+    background-position: -187px -25px;
+  }
+  .num-9 {
+    background-position: -201px -25px;
+  }
+  .num-n {
+    background-position: -215px -25px;
+  }
+  .num-colon-faded {
+    background-position: -243px -25px;
+  }
+  .num-colon-solid {
+    background-position: -229px -25px;
+  }
+}

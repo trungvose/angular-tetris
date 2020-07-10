@@ -7,6 +7,8 @@ import { KeyboardComponent } from './components/keyboard/keyboard.component';
 import { ButtonComponent } from './components/button/button.component';
 import { ScreenDecorationComponent } from './components/screen-decoration/screen-decoration.component';
 import { MatrixComponent } from './components/matrix/matrix.component';
+import { NumberComponent } from './components/number/number.component';
+import { ClockComponent } from './components/clock/clock.component';
 
 @NgModule({
   declarations: [
@@ -16,6 +18,8 @@ import { MatrixComponent } from './components/matrix/matrix.component';
     ButtonComponent,
     ScreenDecorationComponent,
     MatrixComponent,
+    NumberComponent,
+    ClockComponent,
   ],
   imports: [BrowserModule],
   providers: [],

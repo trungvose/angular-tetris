@@ -33,6 +33,7 @@ $black: #000;
   border-color: #987f0f #fae36c #fae36c #987f0f;
   margin: 0 auto;
   position: relative;
+
   .panel {
     width: 380px;
     height: 468px;
@@ -48,6 +49,7 @@ $black: #000;
   position: absolute;
   top: 0;
   right: 15px;
+
   p {
     line-height: 47px;
     height: 57px;
@@ -55,7 +57,8 @@ $black: #000;
     white-space: nowrap;
     clear: both;
   }
-  .bottom {
+
+  .last-row {
     position: absolute;
     width: 114px;
     top: 426px;
