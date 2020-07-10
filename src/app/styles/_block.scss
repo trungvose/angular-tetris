@@ -1,3 +1,7 @@
+$black: #000;
+$brown: #560000;
+
+//block
 b {
   display: block;
   width: 20px;
@@ -6,6 +10,7 @@ b {
   border: 2px solid #879372;
   margin: 0 2px 2px 0;
   float: left;
+
   &:after {
     content: "";
     display: block;
@@ -14,18 +19,18 @@ b {
     background: #879372;
     overflow: hidden;
   }
-  
-  &.c {
-    border-color: #000;
+
+  &.filled {
+    border-color: $black;
     &:after {
-      background: #000;
+      background: $black;
     }
   }
 
-  &.d {
-    border-color: #560000;
+  &.full {
+    border-color: $brown;
     &:after {
-      background: #560000;
+      background: $brown;
     }
   }
 }

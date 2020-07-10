@@ -9,6 +9,8 @@ import { ScreenDecorationComponent } from './components/screen-decoration/screen
 import { MatrixComponent } from './components/matrix/matrix.component';
 import { NumberComponent } from './components/number/number.component';
 import { ClockComponent } from './components/clock/clock.component';
+import { SoundComponent } from './components/sound/sound.component';
+import { PauseComponent } from './components/pause/pause.component';
 
 @NgModule({
   declarations: [
@@ -20,6 +22,8 @@ import { ClockComponent } from './components/clock/clock.component';
     MatrixComponent,
     NumberComponent,
     ClockComponent,
+    SoundComponent,
+    PauseComponent,
   ],
   imports: [BrowserModule],
   providers: [],

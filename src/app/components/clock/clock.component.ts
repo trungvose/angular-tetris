@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { interval, Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
+import { Observable, timer } from 'rxjs';
+import { map } from 'rxjs/operators';
 
 const REFRESH_CLOCK_INTERVAL = 1000;
 @UntilDestroy()
@@ -16,7 +16,7 @@ export class ClockComponent implements OnInit {
   constructor() {}
 
   ngOnInit(): void {
-    this.clock$ = interval(REFRESH_CLOCK_INTERVAL).pipe(
+    this.clock$ = timer(0, REFRESH_CLOCK_INTERVAL).pipe(
       untilDestroyed(this),
       map(() => this.renderClock())
     );
