@@ -43,25 +43,3 @@ $black: #000;
     border: 2px solid #494536;
   }
 }
-
-.state {
-  width: 108px;
-  position: absolute;
-  top: 0;
-  right: 15px;
-
-  p {
-    line-height: 47px;
-    height: 57px;
-    padding: 10px 0 0;
-    white-space: nowrap;
-    clear: both;
-  }
-
-  .last-row {
-    position: absolute;
-    width: 114px;
-    top: 426px;
-    left: 0;
-  }
-}

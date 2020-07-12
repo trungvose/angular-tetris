@@ -11,6 +11,10 @@ import { NumberComponent } from './components/number/number.component';
 import { ClockComponent } from './components/clock/clock.component';
 import { SoundComponent } from './components/sound/sound.component';
 import { PauseComponent } from './components/pause/pause.component';
+import { PointComponent } from './components/point/point.component';
+import { NextComponent } from './components/next/next.component';
+import { LevelComponent } from './components/level/level.component';
+import { StartLineComponent } from './components/start-line/start-line.component';
 
 @NgModule({
   declarations: [
@@ -24,6 +28,10 @@ import { PauseComponent } from './components/pause/pause.component';
     ClockComponent,
     SoundComponent,
     PauseComponent,
+    PointComponent,
+    NextComponent,
+    LevelComponent,
+    StartLineComponent,
   ],
   imports: [BrowserModule],
   providers: [],
