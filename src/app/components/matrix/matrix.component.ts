@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { MatrixUtil } from '../../utils/matrix';
+import { MatrixUtil } from '@trungk18/interface/utils/matrix';
 @Component({
   selector: 't-matrix',
   templateUrl: './matrix.component.html',
