@@ -1,6 +1,6 @@
 <div class="matrix">
     <div class="matrix-row"
-         *ngFor="let row of matrix">
+         *ngFor="let row of matrix$ | async">
         <b *ngFor="let dot of row"
            [class.filled]="isFilled(dot)">
         </b>

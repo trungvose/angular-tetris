@@ -1,7 +1,8 @@
-import { BlockType, Block } from '../block';
-import { KeyboardState } from './keyboard';
-import { MatrixUtil } from '../utils/matrix';
 import { LocalStorageUtil } from '../utils/local-storage';
+import { KeyboardState } from './keyboard';
+import { initialTetrisState } from './tetris-initial-state';
+import { BlockType } from '../block/block-type';
+import { Block } from '../block/block';
 export interface TetrisState {
   matrix: number[][];
   next: BlockType;
@@ -16,30 +17,6 @@ export interface TetrisState {
   isDropping: boolean;
   keyboard: KeyboardState;
 }
-
-export const initialTetrisState: TetrisState = {
-  matrix: MatrixUtil.BlankMatrix,
-  next: null,
-  current: null,
-  initialSpeed: 1,
-  currentSpeed: 1,
-  initialLine: 0,
-  clearedLines: 0,
-  isDropping: false,
-  pause: false,
-  sound: false,
-  points: 0,
-  keyboard: {
-    down: false,
-    drop: false,
-    left: false,
-    music: false,
-    pause: false,
-    reset: false,
-    right: false,
-    rotate: false,
-  },
-};
 
 export function createInitialState() {
   return {

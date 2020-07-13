@@ -1,8 +1,10 @@
-import { Component, OnInit, Input } from '@angular/core';
-import { MatrixUtil } from '@trungk18/interface/utils/matrix';
-import { DotColor, Dot } from '@trungk18/interface/dot';
-import { Block } from '@trungk18/interface/block';
-
+import { Component, OnInit } from '@angular/core';
+import { Dot, DotColor } from '@trungk18/interface/dot';
+import { Observable, combineLatest } from 'rxjs';
+import { TetrisQuery } from '../../state/tetris.query';
+import { untilDestroyed, UntilDestroy } from '@ngneat/until-destroy';
+import { map } from 'rxjs/operators';
+@UntilDestroy()
 @Component({
   selector: 't-matrix',
   templateUrl: './matrix.component.html',
@@ -10,12 +12,25 @@ import { Block } from '@trungk18/interface/block';
 })
 export class MatrixComponent implements OnInit {
   isOver = false;
-  @Input() matrix: number[][] = MatrixUtil.BlankMatrix;
-  @Input() current: Block;
+  matrix$: Observable<number[][]>;
 
-  constructor() {}
+  constructor(private _query: TetrisQuery) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.render();
+  }
+
+  render() {
+    this.matrix$ = combineLatest([
+      this._query.matrix$,
+      this._query.current$,
+    ]).pipe(
+      untilDestroyed(this),
+      map(([matrix, current]) => {
+        return matrix;
+      })
+    );
+  }
 
   isFilled(block: DotColor) {
     return Dot.isFilled(block);

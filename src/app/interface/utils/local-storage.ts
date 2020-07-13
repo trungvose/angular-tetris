@@ -1,4 +1,5 @@
-import { TetrisState, initialTetrisState } from '../state/tetris';
+import { TetrisState } from '../state/tetris';
+import { initialTetrisState } from '../state/tetris-initial-state';
 
 const StorageKey = 'ANGULAR_TETRIS_TRUNG_VO';
 

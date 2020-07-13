@@ -10,6 +10,7 @@ export class TetrisQuery extends Query<TetrisState> {
   }
 
   matrix$ = this.select('matrix');
+  current$ = this.select('current');
   sound$ = this.select('sound');
   pause$ = this.select('pause');
   points = this.select('points');
