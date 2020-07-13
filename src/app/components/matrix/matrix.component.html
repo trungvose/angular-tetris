@@ -1,8 +1,8 @@
 <div class="matrix">
     <div class="matrix-row"
          *ngFor="let row of matrix">
-        <b *ngFor="let block of row"
-           [class.filled]="isFilled(block)">
+        <b *ngFor="let dot of row"
+           [class.filled]="isFilled(dot)">
         </b>
     </div>
 </div>
