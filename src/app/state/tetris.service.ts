@@ -6,6 +6,7 @@ import { BlockUtil } from '@trungk18/interface/utils/block';
 import { TetrisState } from '@trungk18/interface/state/tetris';
 import { CallBack } from '@trungk18/interface/callback';
 import { DotColor } from '@trungk18/interface/dot';
+import { SoundManagerService } from '@trungk18/services/sound-manager.service';
 
 @Injectable({ providedIn: 'root' })
 export class TetrisService {
@@ -15,12 +16,13 @@ export class TetrisService {
     return this._store.getValue();
   }
 
-  constructor(private _store: TetrisStore) {}
+  constructor(private _store: TetrisStore, private _sound: SoundManagerService) {}
 
   start() {
-    //TODO music
-    let { initialLine, next } = this.raw;
+    this._sound.start();
+    let { initialLine, next, initialSpeed } = this.raw;
     this.setPoints(0, true);
+    this.setCurrentSpeed(initialSpeed);
     this._setMatrix(MatrixUtil.getStartMatrix(initialLine));
     this._moveBlock({
       type: next
@@ -31,14 +33,15 @@ export class TetrisService {
 
   auto(timeout?: number) {
     timeout = timeout < 0 ? 0 : timeout;
-    clearTimeout(this.fallInterval);
+    this._clearTimeout();
     let fallSpeed = timeout || MatrixUtil.getCurrentSpeedTime(this.raw.currentSpeed);
     this.fallInterval = setTimeout(this._fall.bind(this), fallSpeed);
   }
 
   startOver() {
-    clearTimeout(this.fallInterval);
+    this._clearTimeout();
     this._store.update({
+      lock: true,
       reset: true,
       pause: false
     });
@@ -49,6 +52,7 @@ export class TetrisService {
       matrix: MatrixUtil.BlankMatrix,
       current: null,
       reset: false,
+      lock: false,
       clearedLines: 0
     });
   }
@@ -65,25 +69,31 @@ export class TetrisService {
     });
     this._nextBlock();
     this.auto();
+    this._setLock(false);
     this.setClearedLines(linesToClear);
     this.setPoints(MatrixUtil.getPointForCurrentSpeed(this.raw.currentSpeed));
     this.setCurrentSpeed(MatrixUtil.increaseSpeed(this.raw.clearedLines, this.raw.initialSpeed));
   }
 
   nextRound(matrix: MatrixArray, stopDownTrigger?: CallBack) {
-    clearTimeout(this.fallInterval);
+    this._clearTimeout();
+    this._setLock(true);
     this._setMatrix(matrix);
     stopDownTrigger && stopDownTrigger();
     this.setPoints(MatrixUtil.getPointForCurrentSpeed(this.raw.currentSpeed));
-    
+
     if (MatrixUtil.linesToClear(matrix)) {
-      //TODO clear
+      this._sound.clear();
+      return;
     }
     if (MatrixUtil.isOver(matrix)) {
-      //TODO Gameover
+      this._sound.gameover();
+      this.startOver();
+      return;
     }
 
     setTimeout(() => {
+      this._setLock(false);
       this._moveBlock({
         type: this.raw.next
       });
@@ -109,6 +119,21 @@ export class TetrisService {
     this._store.update({
       clearedLines: this.raw.clearedLines + lines.length
     });
+  }
+
+  pause(isPause: boolean) {
+    this._store.update({
+      pause: isPause
+    });
+    if (isPause) {
+      this._clearTimeout();
+      return;
+    }
+    this.auto();
+  }
+
+  private _clearTimeout() {
+    clearTimeout(this.fallInterval);
   }
 
   private _fall() {
@@ -139,6 +164,12 @@ export class TetrisService {
   private _setMatrix(matrix: MatrixArray) {
     this._store.update({
       matrix
+    });
+  }
+
+  private _setLock(lock: boolean) {
+    this._store.update({
+      lock
     });
   }
 

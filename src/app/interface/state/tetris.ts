@@ -9,6 +9,7 @@ export interface TetrisState {
   next: BlockType;
   current: Block;
   reset: boolean;
+  lock: boolean;
   initialSpeed: number;
   currentSpeed: number;
   initialLine: number;
@@ -23,6 +24,6 @@ export interface TetrisState {
 export function createInitialState() {
   return {
     ...initialTetrisState,
-    ...LocalStorageUtil.lastRecord,
+    ...LocalStorageUtil.lastRecord
   };
 }

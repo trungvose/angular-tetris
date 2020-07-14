@@ -14,6 +14,7 @@ export const initialTetrisState: TetrisState = {
   pause: false,
   sound: false,
   reset: false,
+  lock: false,
   points: 0,
   keyboard: {
     down: false,

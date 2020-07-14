@@ -15,7 +15,7 @@ export class MatrixUtil {
   static get BlankNext(): MatrixArray {
     return [new Array(4).fill(DotColor.EMPTY), new Array(4).fill(DotColor.EMPTY)];
   }
-  
+
   static getCurrentSpeedTime(currentSpeed: number): number {
     return this.Speeds[currentSpeed - 1];
   }
@@ -89,8 +89,8 @@ export class MatrixUtil {
     let xy = next.xy;
     let shape = next.shape;
     let horizontal = shape[0].length;
-    return shape.every((m, k1) =>
-      m.every((n, k2) => {
+    return shape.every((row, k1) =>
+      row.every((dot, k2) => {
         if (xy[1] < 0) {
           // left
           return false;
@@ -107,7 +107,7 @@ export class MatrixUtil {
           // bottom
           return false;
         }
-        if (n) {
+        if (dot) {
           if (matrix[xy[0] + k1][xy[1] + k2]) {
             return false;
           }
