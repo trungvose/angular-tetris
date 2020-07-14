@@ -1,4 +1,4 @@
-import { BlockType, BlockShape } from './block-type';
+import { BlockType, BlockShape, BlockOrigin } from './block-type';
 import { MatrixArray } from '../utils/matrix';
 
 export class Block {
@@ -66,11 +66,11 @@ export class Block {
       })
     );
     let nextXy = [
-      this.xy[0] + origin[this.type][this.rotateIndex][0],
-      this.xy[1] + origin[this.type][this.rotateIndex][1]
+      this.xy[0] + BlockOrigin[this.type][this.rotateIndex][0],
+      this.xy[1] + BlockOrigin[this.type][this.rotateIndex][1]
     ];
     let nextRotateIndex =
-      this.rotateIndex + 1 >= origin[this.type].length ? 0 : this.rotateIndex + 1;
+      this.rotateIndex + 1 >= BlockOrigin[this.type].length ? 0 : this.rotateIndex + 1;
 
     return {
       shape: result,

@@ -8,6 +8,7 @@ import * as _ from 'lodash';
 import { Block } from '@trungk18/interface/block/block';
 import { MatrixUtil, MatrixArray } from '@trungk18/interface/utils/matrix';
 import { TetrisService } from '@trungk18/state/tetris.service';
+import { CallBack } from '@trungk18/interface/callback';
 @UntilDestroy()
 @Component({
   selector: 't-matrix',
@@ -35,15 +36,15 @@ export class MatrixComponent implements OnInit {
       untilDestroyed(this),
       map(([matrix, current, reset]) => {
         let clearLines = MatrixUtil.linesToClear(matrix);
-        if (clearLines && !this.linesToClear) {
-          this.clearAnimate();
-          this.updateClearLineAndReset(reset, clearLines);
-        }
+        // if (clearLines && !this.linesToClear) {
+        //   this.clearAnimate();
+        //   this.updateClearLineAndReset(reset, clearLines);
+        // }
 
-        if (!clearLines && !this.isOver && reset) {
-          this.updateClearLineAndReset(reset, clearLines);
-          return this.generateOverMatrix(matrix, current);
-        }
+        // if (!clearLines && !this.isOver && reset) {
+        //   this.updateClearLineAndReset(reset, clearLines);
+        //   return this.generateOverMatrix(matrix, current);
+        // }
         this.updateClearLineAndReset(reset, clearLines);
         return this.generateMatrix(matrix, current);
       })
@@ -51,7 +52,7 @@ export class MatrixComponent implements OnInit {
   }
 
   clearAnimate() {
-    let anima = (callback) => {
+    let anima = (callback: CallBack) => {
       setTimeout(() => {
         this.animatedColor = DotColor.EMPTY;
         setTimeout(() => {
@@ -100,12 +101,12 @@ export class MatrixComponent implements OnInit {
         ];
       });
     } else if (shape) {
-      shape.forEach((m, k1) =>
-        m.forEach((n, k2) => {
-          let isYAxisPositive = n && xy[0] + k1 >= 0;
+      shape.forEach((row, k1) =>
+        row.forEach((dot, k2) => {
+          let isYAxisPositive = dot && xy[0] + k1 >= 0;
           if (isYAxisPositive) {
             let line = newMatrix[xy[0] + k1];
-            let isMatrixAndDotCrossing = line[xy[1] + k2] === 1 && !this.linesToClear;
+            let isMatrixAndDotCrossing = line[xy[1] + k2] === DotColor.FILLED && !this.linesToClear;
             let color = isMatrixAndDotCrossing ? DotColor.ANIMATED : DotColor.FILLED;
             line[xy[1] + k2] = color;
             newMatrix[xy[0] + k1] = line;

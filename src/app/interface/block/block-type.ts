@@ -5,33 +5,51 @@ export enum BlockType {
   Z = 'Z',
   S = 'S',
   O = 'O',
-  T = 'T',
+  T = 'T'
 }
 
 export const BlockShape = {
   [BlockType.I]: [[1, 1, 1, 1]],
   [BlockType.L]: [
     [0, 0, 1],
-    [1, 1, 1],
+    [1, 1, 1]
   ],
   [BlockType.J]: [
     [1, 0, 0],
-    [1, 1, 1],
+    [1, 1, 1]
   ],
   [BlockType.Z]: [
     [1, 1, 0],
-    [0, 1, 1],
+    [0, 1, 1]
   ],
   [BlockType.S]: [
     [0, 1, 1],
-    [1, 1, 0],
+    [1, 1, 0]
   ],
   [BlockType.O]: [
     [1, 1],
-    [1, 1],
+    [1, 1]
   ],
   [BlockType.T]: [
     [0, 1, 0],
-    [1, 1, 1],
+    [1, 1, 1]
+  ]
+};
+
+export const BlockOrigin = {
+  [BlockType.I]: [
+    [-1, 1],
+    [1, -1]
   ],
+  [BlockType.L]: [[0, 0]],
+  [BlockType.J]: [[0, 0]],
+  [BlockType.Z]: [[0, 0]],
+  [BlockType.S]: [[0, 0]],
+  [BlockType.O]: [[0, 0]],
+  [BlockType.T]: [
+    [0, 0],
+    [1, 0],
+    [-1, 1],
+    [0, -1]
+  ]
 };
