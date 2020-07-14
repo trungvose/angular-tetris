@@ -17,7 +17,7 @@ import { CallBack } from '@trungk18/interface/callback';
 export class MatrixComponent implements OnInit {
   isOver = false;
   animatedColor: DotColor;
-  linesToClear: number[] = [];
+  linesToClear: number[];
   matrix$: Observable<MatrixArray>;
 
   constructor(private _query: TetrisQuery, private _service: TetrisService) {}
@@ -33,17 +33,17 @@ export class MatrixComponent implements OnInit {
       this._query.reset$
     ]).pipe(
       untilDestroyed(this),
-      map(([matrix, current, reset]) => {
+      map(([matrix, current, isOver]) => {
         let clearLines = MatrixUtil.linesToClear(matrix);
         setTimeout(() => {
           this.linesToClear = clearLines;
-          this.isOver = reset;
+          this.isOver = isOver;
         });
         if (clearLines && !this.linesToClear) {
           this.clearAnimate();
         }
 
-        if (!clearLines && !this.isOver && reset) {
+        if (!clearLines && !this.isOver && isOver) {
           return this.generateOverMatrix(matrix, current);
         }
         return this.generateMatrix(matrix, current);
@@ -74,13 +74,8 @@ export class MatrixComponent implements OnInit {
     });
   }
 
-  updateClearLineAndReset(over: boolean, clearLines: number[]) {
-    this.isOver = over;
-    this.linesToClear = clearLines;
-  }
-
   private generateMatrix(matrix: MatrixArray, current: Block): MatrixArray {
-    let newMatrix = MatrixUtil.deepCopy(matrix)
+    let newMatrix = MatrixUtil.deepCopy(matrix);
     if (!current) {
       return newMatrix;
     }

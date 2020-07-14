@@ -6,9 +6,7 @@ import { TetrisQuery } from '@trungk18/state/tetris.query';
 })
 export class SoundManagerService {
   private _source: AudioBufferSourceNode;
-  constructor(private _query: TetrisQuery) {
-    this._loadSound();
-  }
+  constructor(private _query: TetrisQuery) {}
 
   private get _hasWebAudioAPI(): boolean {
     return !!AudioContext && location.protocol.indexOf('http') !== -1;
@@ -39,35 +37,47 @@ export class SoundManagerService {
   }
 
   private _playMusic(when: number, offset: number, duration: number) {
-    if (!this._source || !this._query.isEnableSound) {
+    if (!this._query.isEnableSound) {
       return;
     }
-    this._source.start(when, offset, duration);
+    this._loadSound().then((source) => {
+      source && this._source.start(when, offset, duration);
+    });
   }
 
-  private _loadSound() {
-    if (!this._hasWebAudioAPI || !this._source) {
-      return;
-    }
-    const url = '/assets/music.mp3';
-    const context = new AudioContext();
-    const req = new XMLHttpRequest();
-    req.open('GET', url, true);
-    req.responseType = 'arraybuffer';
+  private _loadSound(): Promise<AudioBufferSourceNode> {
+    return new Promise((resolve, reject) => {
+      if (!this._hasWebAudioAPI) {
+        resolve(null);
+        return;
+      }
+      if (this._source) {
+        resolve(this._source);
+        return;
+      }
+      const url = '/assets/music.mp3';
+      const context = new AudioContext();
+      const req = new XMLHttpRequest();
+      req.open('GET', url, true);
+      req.responseType = 'arraybuffer';
 
-    req.onload = () => {
-      context.decodeAudioData(
-        req.response,
-        (buffer) => {
-          this._source = context.createBufferSource();
-          this._source.buffer = buffer;
-          this._source.connect(context.destination);
-        },
-        () => {
-          alert('Cannot play sound, but I hope you still enjoy Angular Tetris. Sorry lah!');
-        }
-      );
-    };
-    req.send();
+      req.onload = () => {
+        context.decodeAudioData(
+          req.response,
+          (buffer) => {
+            this._source = context.createBufferSource();
+            this._source.buffer = buffer;
+            this._source.connect(context.destination);
+            resolve(this._source);
+          },
+          () => {
+            let msg = 'Cannot play sound, but I hope you still enjoy Angular Tetris. Sorry lah!';
+            alert(msg);
+            reject(msg);
+          }
+        );
+      };
+      req.send();
+    });
   }
 }
