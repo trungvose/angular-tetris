@@ -5,6 +5,7 @@ import { Block } from '@trungk18/interface/block/block';
 import { BlockUtil } from '@trungk18/interface/utils/block';
 import { TetrisState } from '@trungk18/interface/state/tetris';
 import { CallBack } from '@trungk18/interface/callback';
+import { DotColor } from '@trungk18/interface/dot';
 
 @Injectable({ providedIn: 'root' })
 export class TetrisService {
@@ -18,9 +19,9 @@ export class TetrisService {
 
   start() {
     //TODO music
-    let { clearedLines, next } = this.raw;
-    let startMatrix = MatrixUtil.getStartMatrix(clearedLines);
-    this._setMatrix(startMatrix);
+    let { initialLine, next } = this.raw;
+    this.setPoints(0, true);
+    this._setMatrix(MatrixUtil.getStartMatrix(initialLine));
     this._moveBlock({
       type: next
     });
@@ -30,9 +31,9 @@ export class TetrisService {
 
   auto(timeout?: number) {
     timeout = timeout < 0 ? 0 : timeout;
-    let fallSpeed = timeout || MatrixUtil.getCurrentSpeedTime(this.raw.currentSpeed);
     clearTimeout(this.fallInterval);
-    this.fallInterval = setTimeout(this.fall.bind(this), fallSpeed);
+    let fallSpeed = timeout || MatrixUtil.getCurrentSpeedTime(this.raw.currentSpeed);
+    this.fallInterval = setTimeout(this._fall.bind(this), fallSpeed);
   }
 
   startOver() {
@@ -74,49 +75,7 @@ export class TetrisService {
     this._setMatrix(matrix);
     stopDownTrigger && stopDownTrigger();
     this.setPoints(MatrixUtil.getPointForCurrentSpeed(this.raw.currentSpeed));
-  }
-
-  setCurrentSpeed(speed: number) {
-    speed = speed > 6 ? 6 : speed;
-    this._store.update({
-      currentSpeed: speed
-    });
-  }
-
-  setPoints(addedPoints: number) {
-    this._store.update({
-      points: this.raw.points + addedPoints
-    });
-  }
-
-  setClearedLines(lines: number[]) {
-    this._store.update({
-      clearedLines: this.raw.clearedLines + lines.length
-    });
-  }
-
-  private fall() {
-    let { current, matrix, currentSpeed } = this.raw;
-    let next = current.fall();
-    if (MatrixUtil.want(next, matrix)) {
-      this._moveBlock(next);
-      this.fallInterval = setTimeout(this.fall.bind(this), MatrixUtil.Speeds[currentSpeed - 1]);
-    } else {
-      let newMatrix = MatrixUtil.deepCopy(matrix);
-      let shape = current && current.shape;
-      let xy = current && current.xy;
-      shape.forEach((m, k1) =>
-        m.forEach((n, k2) => {
-          if (n && xy[0] + k1 >= 0) {
-            let line = newMatrix[xy[0] + k1];
-            line[xy[1] + k2] = 1;
-            newMatrix[xy[0] + k1] = line;
-          }
-        })
-      );
-      this.nextRound(newMatrix);
-    }
-
+    
     if (MatrixUtil.linesToClear(matrix)) {
       //TODO clear
     }
@@ -131,6 +90,50 @@ export class TetrisService {
       this._nextBlock();
       this.auto();
     }, 100);
+  }
+
+  setCurrentSpeed(speed: number) {
+    speed = speed > 6 ? 6 : speed;
+    this._store.update({
+      currentSpeed: speed
+    });
+  }
+
+  setPoints(addedPoints: number, reset = false) {
+    this._store.update({
+      points: reset ? addedPoints : this.raw.points + addedPoints
+    });
+  }
+
+  setClearedLines(lines: number[]) {
+    this._store.update({
+      clearedLines: this.raw.clearedLines + lines.length
+    });
+  }
+
+  private _fall() {
+    let { current, matrix, currentSpeed } = this.raw;
+    let next = current.fall();
+    if (MatrixUtil.want(next, matrix)) {
+      this._moveBlock(next);
+      this.fallInterval = setTimeout(
+        this._fall.bind(this),
+        MatrixUtil.getCurrentSpeedTime(currentSpeed)
+      );
+    } else {
+      let newMatrix = MatrixUtil.deepCopy(matrix);
+      let { shape, xy } = current;
+      shape.forEach((row, k1) =>
+        row.forEach((dot, k2) => {
+          if (dot && xy[0] + k1 >= 0) {
+            let line = newMatrix[xy[0] + k1];
+            line[xy[1] + k2] = DotColor.FILLED;
+            newMatrix[xy[0] + k1] = line;
+          }
+        })
+      );
+      this.nextRound(newMatrix);
+    }
   }
 
   private _setMatrix(matrix: MatrixArray) {

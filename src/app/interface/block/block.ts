@@ -43,8 +43,6 @@ export class Block {
         case 'T':
           this.xy = [-1, 4];
           break;
-        default:
-          break;
       }
     } else {
       this.xy = xy;
@@ -81,11 +79,11 @@ export class Block {
     };
   }
 
-  fall(n = 1): Partial<Block> {
+  fall(step = 1): Partial<Block> {
     return {
       shape: this.shape,
       type: this.type,
-      xy: [this.xy[0] + n, this.xy[1]],
+      xy: [this.xy[0] + step, this.xy[1]],
       rotateIndex: this.rotateIndex,
       timeStamp: Date.now()
     };

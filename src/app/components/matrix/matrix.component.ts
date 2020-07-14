@@ -4,7 +4,6 @@ import { Observable, combineLatest } from 'rxjs';
 import { TetrisQuery } from '../../state/tetris.query';
 import { untilDestroyed, UntilDestroy } from '@ngneat/until-destroy';
 import { map } from 'rxjs/operators';
-import * as _ from 'lodash';
 import { Block } from '@trungk18/interface/block/block';
 import { MatrixUtil, MatrixArray } from '@trungk18/interface/utils/matrix';
 import { TetrisService } from '@trungk18/state/tetris.service';
@@ -36,16 +35,17 @@ export class MatrixComponent implements OnInit {
       untilDestroyed(this),
       map(([matrix, current, reset]) => {
         let clearLines = MatrixUtil.linesToClear(matrix);
-        // if (clearLines && !this.linesToClear) {
-        //   this.clearAnimate();
-        //   this.updateClearLineAndReset(reset, clearLines);
-        // }
+        setTimeout(() => {
+          this.linesToClear = clearLines;
+          this.isOver = reset;
+        });
+        if (clearLines && !this.linesToClear) {
+          this.clearAnimate();
+        }
 
-        // if (!clearLines && !this.isOver && reset) {
-        //   this.updateClearLineAndReset(reset, clearLines);
-        //   return this.generateOverMatrix(matrix, current);
-        // }
-        this.updateClearLineAndReset(reset, clearLines);
+        if (!clearLines && !this.isOver && reset) {
+          return this.generateOverMatrix(matrix, current);
+        }
         return this.generateMatrix(matrix, current);
       })
     );
@@ -80,7 +80,7 @@ export class MatrixComponent implements OnInit {
   }
 
   private generateMatrix(matrix: MatrixArray, current: Block): MatrixArray {
-    let newMatrix = _.cloneDeep(matrix);
+    let newMatrix = MatrixUtil.deepCopy(matrix)
     if (!current) {
       return newMatrix;
     }
