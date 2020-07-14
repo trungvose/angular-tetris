@@ -12,7 +12,7 @@ export const initialTetrisState: TetrisState = {
   clearedLines: 0,
   isDropping: false,
   pause: false,
-  sound: false,
+  sound: true,
   reset: false,
   lock: false,
   points: 0,
