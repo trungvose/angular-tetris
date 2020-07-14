@@ -7,7 +7,7 @@ import { Observable } from 'rxjs';
 import { MatrixArray, MatrixUtil } from '@trungk18/interface/utils/matrix';
 import { map } from 'rxjs/operators';
 
-const xy = {
+const anchor = {
   [BlockType.I]: [1, 0],
   [BlockType.L]: [0, 0],
   [BlockType.J]: [0, 0],
@@ -36,10 +36,10 @@ export class NextComponent implements OnInit {
   render(type: BlockType): MatrixArray {
     const shape = BlockShape[type];
     const block = MatrixUtil.BlankNext;
-    shape.forEach((m, k1) => {
-      m.forEach((n, k2) => {
-        if (n) {
-          block[k1 + xy[type][0]][k2 + xy[type][1]] = 1;
+    shape.forEach((row, k1) => {
+      row.forEach((dot, k2) => {
+        if (this.isFilled(dot)) {
+          block[k1 + anchor[type][0]][k2 + anchor[type][1]] = DotColor.FILLED;
         }
       });
     });
