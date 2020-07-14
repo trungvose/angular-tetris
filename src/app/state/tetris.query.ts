@@ -16,4 +16,8 @@ export class TetrisQuery extends Query<TetrisState> {
   pause$ = this.select('pause');
   points = this.select('points');
   reset$ = this.select('reset');
+
+  get isEnableSound(): boolean {
+    return this.store.getValue().sound;
+  }
 }
