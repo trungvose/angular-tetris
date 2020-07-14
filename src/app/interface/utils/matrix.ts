@@ -12,7 +12,10 @@ export class MatrixUtil {
   static BlankLine: number[] = new Array(MatrixUtil.NumberOfColumns).fill(DotColor.EMPTY);
   static FillLine: number[] = new Array(MatrixUtil.NumberOfColumns).fill(DotColor.FILLED);
   static BlankMatrix: MatrixArray = new Array(MatrixUtil.NumberOfRows).fill(MatrixUtil.BlankLine);
-
+  static BlankNext: MatrixArray = [
+    new Array(4).fill(DotColor.EMPTY),
+    new Array(4).fill(DotColor.EMPTY)
+  ];
   static getCurrentSpeedTime(currentSpeed: number): number {
     return this.Speeds[currentSpeed - 1];
   }

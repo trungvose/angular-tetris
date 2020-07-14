@@ -11,6 +11,7 @@ export class TetrisQuery extends Query<TetrisState> {
 
   matrix$ = this.select('matrix');
   current$ = this.select('current');
+  next$ = this.select('next');
   sound$ = this.select('sound');
   pause$ = this.select('pause');
   points = this.select('points');

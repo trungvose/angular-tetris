@@ -1,7 +1,8 @@
 <p>Next</p>
 <div class="next">
     <div class="row"
-         *ngFor="let row of BLANK_NEXT">
-        <b *ngFor="let block of row"></b>
+         *ngFor="let row of block$ | async">
+        <b *ngFor="let dot of row"
+           [class.filled]="isFilled(dot)"></b>
     </div>
 </div>
