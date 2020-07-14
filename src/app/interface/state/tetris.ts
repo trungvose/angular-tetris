@@ -3,10 +3,12 @@ import { KeyboardState } from './keyboard';
 import { initialTetrisState } from './tetris-initial-state';
 import { BlockType } from '../block/block-type';
 import { Block } from '../block/block';
+import { MatrixArray } from '../utils/matrix';
 export interface TetrisState {
-  matrix: number[][];
+  matrix: MatrixArray;
   next: BlockType;
   current: Block;
+  reset: boolean;
   initialSpeed: number;
   currentSpeed: number;
   initialLine: number;

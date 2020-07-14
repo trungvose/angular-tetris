@@ -1,9 +1,10 @@
 import { TetrisState } from './tetris';
 import { MatrixUtil } from '../utils/matrix';
+import { BlockUtil } from '../utils/block';
 
 export const initialTetrisState: TetrisState = {
   matrix: MatrixUtil.BlankMatrix,
-  next: null,
+  next: BlockUtil.nextBlock,
   current: null,
   initialSpeed: 1,
   currentSpeed: 1,
@@ -12,6 +13,7 @@ export const initialTetrisState: TetrisState = {
   isDropping: false,
   pause: false,
   sound: false,
+  reset: false,
   points: 0,
   keyboard: {
     down: false,
@@ -21,6 +23,6 @@ export const initialTetrisState: TetrisState = {
     pause: false,
     reset: false,
     right: false,
-    rotate: false,
-  },
+    rotate: false
+  }
 };
