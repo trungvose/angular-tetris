@@ -15,6 +15,8 @@ import { PointComponent } from './components/point/point.component';
 import { NextComponent } from './components/next/next.component';
 import { LevelComponent } from './components/level/level.component';
 import { StartLineComponent } from './components/start-line/start-line.component';
+import { AkitaNgDevtools } from '@datorama/akita-ngdevtools';
+import { environment } from '../environments/environment';
 
 @NgModule({
   declarations: [
@@ -33,7 +35,7 @@ import { StartLineComponent } from './components/start-line/start-line.component
     LevelComponent,
     StartLineComponent,
   ],
-  imports: [BrowserModule],
+  imports: [BrowserModule, environment.production ? [] : AkitaNgDevtools.forRoot()],
   providers: [],
   bootstrap: [AppComponent],
 })
