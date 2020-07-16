@@ -4,11 +4,13 @@ import { PieceFactory } from '@trungk18/factory/piece-factory';
 import { GameState } from '@trungk18/interface/game-state';
 import { Piece } from '@trungk18/interface/piece/piece';
 import { Tile } from '@trungk18/interface/tile/tile';
+import { MatrixUtil } from '@trungk18/interface/utils/matrix';
 
 export interface TetrisState {
   matrix: Tile[];
   current: Piece;
   next: Piece;
+  points: number;
   locked: boolean;
   sound: boolean;
   initSpeed: number;
@@ -21,22 +23,23 @@ export interface TetrisState {
 
 export function createInitialState(pieceFactory: PieceFactory): TetrisState {
   return {
-    matrix: null,
+    matrix: MatrixUtil.EmptyBoard,
     current: null,
     next: pieceFactory.getRandomPiece(),
+    points: 0,
     locked: true,
     sound: true,
     initLine: 0,
     clearedLines: 0,
     initSpeed: 1,
     currentSpeed: 1,
-    gameState: GameState.Paused,
+    gameState: GameState.Loading,
     saved: null,
   };
 }
 
 @Injectable({ providedIn: 'root' })
-@StoreConfig({ name: 'tetris' })
+@StoreConfig({ name: 'AngularTetris' })
 export class TetrisStore extends Store<TetrisState> {
   constructor(_pieceFactory: PieceFactory) {
     super(createInitialState(_pieceFactory));

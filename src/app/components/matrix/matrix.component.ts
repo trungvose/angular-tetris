@@ -1,14 +1,17 @@
 import { Component, OnInit } from '@angular/core';
-import { MatrixUtil } from '@trungk18/interface/utils/matrix';
 import { Tile } from '@trungk18/interface/tile/tile';
+import { TetrisQuery } from '@trungk18/state/tetris.query';
+import { Observable } from 'rxjs';
 @Component({
   selector: 't-matrix',
   templateUrl: './matrix.component.html',
-  styleUrls: ['./matrix.component.scss'],
+  styleUrls: ['./matrix.component.scss']
 })
 export class MatrixComponent implements OnInit {
-  matrix: Tile[] = MatrixUtil.EmptyBoard;
-  constructor() {}
+  matrix$: Observable<Tile[]>;
+  constructor(private _query: TetrisQuery) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.matrix$ = this._query.matrix$;
+  }
 }
