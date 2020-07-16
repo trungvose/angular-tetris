@@ -1,8 +1,6 @@
 <div class="matrix">
     <div class="matrix-row"
          *ngFor="let row of matrix">
-        <b *ngFor="let block of row"
-           [class.filled]="isFilled(block)">
-        </b>
+        <t-tile *ngFor="let block of row"></t-tile>
     </div>
 </div>

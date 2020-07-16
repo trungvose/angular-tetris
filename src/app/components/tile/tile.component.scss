@@ -2,7 +2,7 @@ $black: #000;
 $brown: #560000;
 
 //block
-b {
+:host {
   display: block;
   width: 20px;
   height: 20px;
@@ -27,7 +27,7 @@ b {
     }
   }
 
-  &.full {
+  &.animated {
     border-color: $brown;
     &:after {
       background: $brown;

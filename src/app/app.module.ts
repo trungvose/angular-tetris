@@ -17,6 +17,7 @@ import { LevelComponent } from './components/level/level.component';
 import { StartLineComponent } from './components/start-line/start-line.component';
 import { AkitaNgDevtools } from '@datorama/akita-ngdevtools';
 import { environment } from '../environments/environment';
+import { TileComponent } from './components/tile/tile.component';
 
 @NgModule({
   declarations: [
@@ -34,6 +35,7 @@ import { environment } from '../environments/environment';
     NextComponent,
     LevelComponent,
     StartLineComponent,
+    TileComponent,
   ],
   imports: [BrowserModule, environment.production ? [] : AkitaNgDevtools.forRoot()],
   providers: [],

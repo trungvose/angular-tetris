@@ -6,8 +6,4 @@ export class MatrixUtil {
   static BlankMatrix: number[][] = new Array(MatrixUtil.NUMBER_OF_ROWS).fill(
     MatrixUtil.BlankLine
   );
-
-  static isBlockFilled(num: number) {
-    return num === 1;
-  }
 }
