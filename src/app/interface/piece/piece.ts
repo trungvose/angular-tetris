@@ -109,9 +109,9 @@ export class Piece {
 
   private _newPiece(): Piece {
     let piece = new Piece(this.x, this.y);
-    piece.setShapes(this._shapes);
-    piece.type = this.type;
     piece.rotation = this.rotation;
+    piece.type = this.type;
+    piece.setShapes(this._shapes);
     piece._lastConfig = this._lastConfig;
     return piece;
   }
