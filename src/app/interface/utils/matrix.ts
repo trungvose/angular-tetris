@@ -7,4 +7,8 @@ export class MatrixUtil {
   static get EmptyBoard(): Tile[] {
     return new Array(this.Width * this.Height).fill(new EmptyTile());
   }
+
+  static get EmptyRow(): Tile[] {
+    return new Array(this.Width).fill(new EmptyTile());
+  }
 }

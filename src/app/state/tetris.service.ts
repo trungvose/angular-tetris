@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { TetrisState, TetrisStore } from './tetris.store';
+import { TetrisState, TetrisStore, createInitialState } from './tetris.store';
 import { Piece } from '@trungk18/interface/piece/piece';
 import { PieceFactory } from '@trungk18/factory/piece-factory';
 import { Tile } from '@trungk18/interface/tile/tile';
@@ -55,8 +55,56 @@ export class TetrisService {
     this._unsubscribe();
   }
 
-  private _unsubscribe() {
-    this._gameInterval && this._gameInterval.unsubscribe();
+  reset() {
+    this._store.update(createInitialState(this._pieceFactory));
+  }
+
+  moveLeft() {
+    if (this._locked) {
+      return;
+    }
+    this._clearPiece();
+    this._setCurrentPiece(this._current.store());
+    this._setCurrentPiece(this._current.moveLeft());
+    if (this._isCollidesLeft) {
+      this._setCurrentPiece(this._current.revert());
+    }
+    this._drawPiece();
+  }
+
+  moveRight() {
+    if (this._locked) {
+      return;
+    }
+    this._clearPiece();
+    this._setCurrentPiece(this._current.store());
+    this._setCurrentPiece(this._current.moveRight());
+    if (this._isCollidesRight) {
+      this._setCurrentPiece(this._current.revert());
+    }
+    this._drawPiece();
+  }
+
+  rotate() {
+    if (this._locked) {
+      return;
+    }
+
+    this._clearPiece();
+    this._setCurrentPiece(this._current.store());
+    this._setCurrentPiece(this._current.rotate());
+    while (this._isCollidesRight) {
+      this._setCurrentPiece(this._current.moveLeft());
+      if (this._isCollidesLeft) {
+        this._setCurrentPiece(this._current.revert());
+        break;
+      }
+    }
+    this._drawPiece();
+  }
+
+  moveDown() {
+    this._update();
   }
 
   private _update() {
@@ -84,7 +132,23 @@ export class TetrisService {
     this._setLocked(false);
   }
 
-  private _clearFullLines() {}
+  private _clearFullLines() {
+    for (let row = MatrixUtil.Height - 1; row >= 0; row--) {
+      let isFull = true;
+      for (let col = 0; col < MatrixUtil.Width; col++) {
+        let pos = row * MatrixUtil.Width + col;
+        if (!this._matrix[pos].isFilled) {
+          isFull = false;
+          break;
+        }
+      }
+
+      if (isFull) {
+        let leftOverMatrix = this._matrix.slice(0, row * MatrixUtil.Width);
+        this._setMatrix([...MatrixUtil.EmptyRow, ...leftOverMatrix]);
+      }
+    }
+  }
 
   private get _isGameOver() {
     this._setCurrentPiece(this._current.store());
@@ -104,6 +168,20 @@ export class TetrisService {
 
   private get _isCollidesBottom(): boolean {
     if (this._current.bottomRow >= MatrixUtil.Height) {
+      return true;
+    }
+    return this._collides();
+  }
+
+  private get _isCollidesLeft(): boolean {
+    if (this._current.leftCol < 0) {
+      return true;
+    }
+    return this._collides();
+  }
+
+  private get _isCollidesRight(): boolean {
+    if (this._current.rightCol >= MatrixUtil.Width) {
       return true;
     }
     return this._collides();
@@ -165,5 +243,9 @@ export class TetrisService {
     this._store.update({
       locked
     });
+  }
+
+  private _unsubscribe() {
+    this._gameInterval && this._gameInterval.unsubscribe();
   }
 }
