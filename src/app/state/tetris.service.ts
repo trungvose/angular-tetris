@@ -7,6 +7,8 @@ import { EmptyTile } from '@trungk18/interface/tile/empty-tile';
 import { CallBack } from '@trungk18/interface/callback';
 import { FilledTile } from '@trungk18/interface/tile/filled-tile';
 import { timer, Subscription } from 'rxjs';
+import { MatrixUtil } from '@trungk18/interface/utils/matrix';
+import { GameState } from '@trungk18/interface/game-state';
 
 @Injectable({ providedIn: 'root' })
 export class TetrisService {
@@ -36,15 +38,24 @@ export class TetrisService {
   start() {
     if (!this._current) {
       this._setCurrentPiece(this._next);
+      this._setNext();
     }
-    this.clearInterval();
+    this._unsubscribe();
     this._gameInterval = timer(0, 500).subscribe(() => {
       this._update();
     });
     this._setLocked(false);
   }
 
-  clearInterval() {
+  pause() {
+    this._store.update({
+      locked: true,
+      gameState: GameState.Paused
+    });
+    this._unsubscribe();
+  }
+
+  private _unsubscribe() {
     this._gameInterval && this._gameInterval.unsubscribe();
   }
 
@@ -57,15 +68,54 @@ export class TetrisService {
     this._clearPiece();
     this._setCurrentPiece(this._current.store());
     this._setCurrentPiece(this._current.moveDown());
+
     if (this._isCollidesBottom) {
+      this._setCurrentPiece(this._current.revert());
+      this._drawPiece();
+      this._clearFullLines();
+      this._setCurrentPiece(this._next);
+      this._setNext();
+      if (this._isGameOver) {
+        this._onGameOver();
+      }
     }
 
     this._drawPiece();
     this._setLocked(false);
   }
 
-  private get _isCollidesBottom(): boolean {
+  private _clearFullLines() {}
+
+  private get _isGameOver() {
+    this._setCurrentPiece(this._current.store());
+    this._setCurrentPiece(this._current.moveDown());
+    if (this._isCollidesBottom) {
+      return true;
+    }
+    this._setCurrentPiece(this._current.revert());
     return false;
+  }
+
+  private _onGameOver() {
+    this._store.update({
+      gameState: GameState.Over
+    });
+  }
+
+  private get _isCollidesBottom(): boolean {
+    if (this._current.bottomRow >= MatrixUtil.Height) {
+      return true;
+    }
+    return this._collides();
+  }
+
+  private _collides(): boolean {
+    return this._current.positionOnGrid.some((pos) => {
+      if (pos && this._matrix[pos].isFilled) {
+        return true;
+      }
+      return false;
+    });
   }
 
   private _drawPiece() {
