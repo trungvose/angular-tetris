@@ -15,9 +15,3 @@ export enum PieceTypes {
   Z = 7,
   S = 8,
 }
-
-export enum DotColor {
-  Empty,
-  Filled,
-  Animated,
-}

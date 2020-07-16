@@ -1,20 +1,23 @@
-import { PieceRotation } from './piece-enum';
+import { PieceRotation, PieceTypes } from './piece-enum';
 import { Shape, Shapes } from './shape';
-import { GridUtil } from '../../utils/grid';
-import { threadId } from 'worker_threads';
+import { GridUtil } from '../utils/grid';
 
 export class Piece {
   x: number;
   y: number;
   rotation = PieceRotation.Deg0;
+  type: PieceTypes;
   shape: Shape;
-  private _shapes: Shapes;
+  private protected: Shapes;
   private _lastConfig: Partial<Piece>;
 
-  constructor(x: number, y: number, shapes: Shapes) {
+  constructor(x: number, y: number) {
     this.x = x;
     this.y = y;
-    this._shapes = shapes;
+  }
+
+  protected setShapes(shapes: Shapes) {
+    this.protected = shapes;
     this.shape = shapes[this.rotation];
   }
 
@@ -58,11 +61,11 @@ export class Piece {
   }
 
   rotate() {
-    const keys = Object.keys(this._shapes);
+    const keys = Object.keys(this.protected);
     let idx = keys.indexOf(this.rotation.toString());
     let isTurnOver = idx >= keys.length - 1;
     this.rotation = Number(isTurnOver ? keys[0] : keys[idx + 1]);
-    this.shape = this._shapes[this.rotation];
+    this.shape = this.protected[this.rotation];
   }
 
   moveDown() {
