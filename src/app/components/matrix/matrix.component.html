@@ -1,6 +1,5 @@
 <div class="matrix">
-    <div class="matrix-row"
-         *ngFor="let row of matrix">
-        <t-tile *ngFor="let block of row"></t-tile>
-    </div>
+    <t-tile [tile]="tile"
+            *ngFor="let tile of matrix">
+    </t-tile>
 </div>

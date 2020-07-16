@@ -1,6 +1,6 @@
 import { PieceRotation, PieceTypes } from './piece-enum';
 import { Shape, Shapes } from './shape';
-import { GridUtil } from '../utils/grid';
+import { MatrixUtil } from '../utils/matrix';
 
 export class Piece {
   x: number;
@@ -26,7 +26,7 @@ export class Piece {
     for (let row = 0; row < 4; row++) {
       for (let col = 0; col < 4; col++) {
         if (this.shape[row][col]) {
-          const position = (this.y + row) * GridUtil.Width + this.x + col;
+          const position = (this.y + row) * MatrixUtil.Width + this.x + col;
           if (position > 0) {
             positions.push(position);
           }
