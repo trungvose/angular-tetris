@@ -7,26 +7,26 @@ ShapesL[PieceRotation.Deg0] = [
   [0, 0, 0, 0],
   [1, 0, 0, 0],
   [1, 0, 0, 0],
-  [1, 1, 0, 0],
+  [1, 1, 0, 0]
 ];
 
 ShapesL[PieceRotation.Deg90] = [
   [0, 0, 0, 0],
   [0, 0, 0, 0],
   [1, 1, 1, 0],
-  [1, 0, 0, 0],
+  [1, 0, 0, 0]
 ];
-ShapesL[PieceRotation.Deg0] = [
+ShapesL[PieceRotation.Deg180] = [
   [0, 0, 0, 0],
   [1, 1, 0, 0],
   [0, 1, 0, 0],
-  [0, 1, 0, 0],
+  [0, 1, 0, 0]
 ];
-ShapesL[PieceRotation.Deg0] = [
+ShapesL[PieceRotation.Deg270] = [
   [0, 0, 0, 0],
   [0, 0, 0, 0],
   [0, 0, 1, 0],
-  [1, 1, 1, 0],
+  [1, 1, 1, 0]
 ];
 
 export class PieceL extends Piece {

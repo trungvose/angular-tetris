@@ -16,13 +16,13 @@ ShapesJ[PieceRotation.Deg90] = [
   [1, 1, 1, 0],
   [0, 0, 1, 0],
 ];
-ShapesJ[PieceRotation.Deg0] = [
+ShapesJ[PieceRotation.Deg180] = [
   [0, 0, 0, 0],
   [1, 1, 0, 0],
   [1, 0, 0, 0],
   [1, 0, 0, 0],
 ];
-ShapesJ[PieceRotation.Deg0] = [
+ShapesJ[PieceRotation.Deg270] = [
   [0, 0, 0, 0],
   [0, 0, 0, 0],
   [1, 0, 0, 0],

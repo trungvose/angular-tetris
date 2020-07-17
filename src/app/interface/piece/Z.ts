@@ -7,14 +7,14 @@ ShapesZ[PieceRotation.Deg0] = [
   [0, 0, 0, 0],
   [0, 1, 0, 0],
   [1, 1, 0, 0],
-  [1, 0, 0, 0],
+  [1, 0, 0, 0]
 ];
 
-ShapesZ[PieceRotation.Deg0] = [
+ShapesZ[PieceRotation.Deg90] = [
   [0, 0, 0, 0],
   [0, 0, 0, 0],
   [1, 1, 0, 0],
-  [0, 1, 1, 0],
+  [0, 1, 1, 0]
 ];
 
 export class PieceZ extends Piece {

@@ -7,28 +7,28 @@ ShapesT[PieceRotation.Deg0] = [
   [0, 0, 0, 0],
   [0, 0, 0, 0],
   [0, 1, 0, 0],
-  [1, 1, 1, 0],
+  [1, 1, 1, 0]
 ];
 
 ShapesT[PieceRotation.Deg90] = [
   [0, 0, 0, 0],
   [1, 0, 0, 0],
   [1, 1, 0, 0],
-  [1, 0, 0, 0],
+  [1, 0, 0, 0]
 ];
 
 ShapesT[PieceRotation.Deg180] = [
   [0, 0, 0, 0],
   [0, 0, 0, 0],
   [1, 1, 1, 0],
-  [0, 1, 0, 0],
+  [0, 1, 0, 0]
 ];
 
-ShapesT[PieceRotation.Deg0] = [
+ShapesT[PieceRotation.Deg270] = [
   [0, 0, 0, 0],
   [0, 1, 0, 0],
   [1, 1, 0, 0],
-  [0, 1, 0, 0],
+  [0, 1, 0, 0]
 ];
 
 export class PieceT extends Piece {
