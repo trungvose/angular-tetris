@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ArrowButton } from '@trungk18/interface/ui-model/arrow-button';
-import { TetrisService } from '@trungk18/state/tetris.service';
+import { TetrisService } from '@trungk18/state/tetris/tetris.service';
 
 @Component({
   selector: 't-keyboard',
@@ -12,8 +12,4 @@ export class KeyboardComponent implements OnInit {
   constructor(private _service: TetrisService) {}
 
   ngOnInit(): void {}
-
-  onDrop() {
-    this._service.start();
-  }
 }

@@ -13,7 +13,7 @@ $red: #dd1a1a;
   position: absolute;
   white-space: nowrap;
   line-height: 1.6;
-
+  cursor: pointer;
   span {
     &.absolute {
       position: absolute;
@@ -29,7 +29,7 @@ $red: #dd1a1a;
     border-radius: 50%;
     &:before,
     &:after {
-      content: "";
+      content: '';
       display: block;
       width: 100%;
       height: 100%;

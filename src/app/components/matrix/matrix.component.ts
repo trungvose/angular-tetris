@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Tile } from '@trungk18/interface/tile/tile';
-import { TetrisQuery } from '@trungk18/state/tetris.query';
+import { TetrisQuery } from '@trungk18/state/tetris/tetris.query';
 import { Observable } from 'rxjs';
 @Component({
   selector: 't-matrix',

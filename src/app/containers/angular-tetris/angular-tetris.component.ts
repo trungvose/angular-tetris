@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, HostListener } from '@angular/core';
-import { TetrisService } from '@trungk18/state/tetris.service';
+import { TetrisService } from '@trungk18/state/tetris/tetris.service';
 
 @Component({
   selector: 'angular-tetris',

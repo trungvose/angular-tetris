@@ -167,6 +167,7 @@ export class TetrisService {
   }
 
   private _onGameOver() {
+    this.pause();
     this._store.update({
       gameState: GameState.Over
     });

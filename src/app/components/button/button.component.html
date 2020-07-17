@@ -2,7 +2,7 @@
      [style.top.px]="top"
      [style.left.px]="left">
 
-    <i [class.active]="active"></i>
+    <i [class.active]="active$ | async"></i>
     <em *ngIf="arrowButton"
         [ngStyle]="{'transform': arrowTransforms}"></em>
 
