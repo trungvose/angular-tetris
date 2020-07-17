@@ -144,8 +144,14 @@ export class TetrisService {
       }
 
       if (isFull) {
-        let leftOverMatrix = this._matrix.slice(0, row * MatrixUtil.Width);
-        this._setMatrix([...MatrixUtil.EmptyRow, ...leftOverMatrix]);
+        let topPortion = this._matrix.slice(0, row * MatrixUtil.Width);
+        let newMatrix = [...this._matrix];
+        newMatrix.splice(
+          0,
+          (row + 1) * MatrixUtil.Width,
+          ...[...MatrixUtil.EmptyRow, ...topPortion]
+        );
+        this._setMatrix(newMatrix);
       }
     }
   }
