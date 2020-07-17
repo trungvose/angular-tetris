@@ -101,10 +101,12 @@ export class AngularTetrisComponent implements OnInit {
     this._keyboardService.setKeỵ({
       drop: true
     });
-    if (this._tetrisQuery.canStartGame) {
-      this._soundManager.start();
-      this._tetrisService.start();
+    if (this._tetrisQuery.isPlaying) {
+      this._soundManager.fall();
+      return;
     }
+    this._soundManager.start();
+    this._tetrisService.start();
   }
 
   @HostListener(`${KeyUp}.${TetrisKeyboard.Space}`)

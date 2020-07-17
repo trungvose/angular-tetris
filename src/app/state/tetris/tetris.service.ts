@@ -137,6 +137,7 @@ export class TetrisService {
       this._setNext();
       if (this._isGameOver) {
         this._onGameOver();
+        return;
       }
     }
 

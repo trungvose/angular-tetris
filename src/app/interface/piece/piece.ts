@@ -59,8 +59,8 @@ export class Piece {
     return this._newPiece();
   }
 
-  moveDown(): Piece {
-    this.y++;
+  moveDown(step = 1): Piece {
+    this.y = this.y + step;
     return this._newPiece();
   }
 
