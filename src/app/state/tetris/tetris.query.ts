@@ -33,6 +33,10 @@ export class TetrisQuery extends Query<TetrisState> {
     return this.raw.gameState !== GameState.Started;
   }
 
+  get isEnableSound(): boolean {
+    return !!this.raw.sound;
+  }
+
   next$ = this.select('next');
   matrix$ = this.select('matrix');
   sound$ = this.select('sound');
