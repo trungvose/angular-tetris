@@ -153,29 +153,23 @@ export class TetrisService {
 
   private _clearFullLines() {
     let numberOfClearedLines = 0;
+    let newMatrix = [...this._matrix];
     for (let row = MatrixUtil.Height - 1; row >= 0; row--) {
-      let isFull = true;
-      for (let col = 0; col < MatrixUtil.Width; col++) {
-        let pos = row * MatrixUtil.Width + col;
-        if (!this._matrix[pos].isFilled) {
-          isFull = false;
-          break;
-        }
-      }
-
-      if (isFull) {
+      let pos = row * MatrixUtil.Width;
+      let fullRowTiles = newMatrix.slice(pos, pos + MatrixUtil.Width);
+      let isFullRow = fullRowTiles.every((x) => x.isFilled);
+      if (isFullRow) {
         numberOfClearedLines++;
+        let topPortion = this._matrix.slice(0, row * MatrixUtil.Width);
+        newMatrix.splice(
+          0,
+          ++row * MatrixUtil.Width,
+          ...MatrixUtil.getEmptyRow().concat(topPortion)
+        );
+        this._setMatrix(newMatrix);
       }
     }
-    if (numberOfClearedLines) {
-      let topPortion = this._matrix.slice(
-        0,
-        MatrixUtil.Width * (MatrixUtil.Height - numberOfClearedLines)
-      );
-      let newMatrix = [...MatrixUtil.getEmptyRow(numberOfClearedLines), ...topPortion];
-      this._setMatrix(newMatrix);
-      this._setPointsAndSpeed(numberOfClearedLines);
-    }
+    this._setPointsAndSpeed(numberOfClearedLines);
   }
 
   private get _isGameOver() {

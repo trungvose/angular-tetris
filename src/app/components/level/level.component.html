@@ -1,2 +1,4 @@
 <p>Level</p>
-<t-number [length]="1"></t-number>
+<t-number [num]="currentSpeed$ | async"
+          [length]="1">
+</t-number>
