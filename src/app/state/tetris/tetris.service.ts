@@ -42,6 +42,9 @@ export class TetrisService {
       this._setCurrentPiece(this._next);
       this._setNext();
     }
+    this._store.update({
+      gameState: GameState.Started
+    });
     this._unsubscribe();
     this._gameInterval = timer(0, 500).subscribe(() => {
       this._update();

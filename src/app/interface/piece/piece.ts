@@ -8,6 +8,8 @@ export class Piece {
   rotation = PieceRotation.Deg0;
   type: PieceTypes;
   shape: Shape;
+  next: Shape;
+
   private _shapes: Shapes;
   private _lastConfig: Partial<Piece>;
 
@@ -111,6 +113,7 @@ export class Piece {
     let piece = new Piece(this.x, this.y);
     piece.rotation = this.rotation;
     piece.type = this.type;
+    piece.next = this.next;
     piece.setShapes(this._shapes);
     piece._lastConfig = this._lastConfig;
     return piece;

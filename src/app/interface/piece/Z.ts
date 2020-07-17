@@ -21,6 +21,10 @@ export class PieceZ extends Piece {
   constructor(x: number, y: number) {
     super(x, y);
     this.type = PieceTypes.Z;
+    this.next = [
+      [1, 1, 0, 0],
+      [0, 1, 1, 0]
+    ];
     this.setShapes(ShapesZ);
   }
 }

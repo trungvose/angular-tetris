@@ -35,6 +35,10 @@ export class PieceT extends Piece {
   constructor(x: number, y: number) {
     super(x, y);
     this.type = PieceTypes.T;
+    this.next = [
+      [0, 1, 0, 0],
+      [1, 1, 1, 0]
+    ];
     this.setShapes(ShapesT);
   }
 }
