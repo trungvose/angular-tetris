@@ -9,9 +9,9 @@ import { Observable } from 'rxjs';
 })
 export class MatrixComponent implements OnInit {
   matrix$: Observable<Tile[]>;
-  constructor(private _query: TetrisQuery) {}
+  constructor(private _tetrisQuery: TetrisQuery) {}
 
   ngOnInit(): void {
-    this.matrix$ = this._query.matrix$;
+    this.matrix$ = this._tetrisQuery.matrix$;
   }
 }

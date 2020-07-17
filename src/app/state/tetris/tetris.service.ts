@@ -1,38 +1,40 @@
 import { Injectable } from '@angular/core';
-import { TetrisState, TetrisStore, createInitialState } from './tetris.store';
-import { Piece } from '@trungk18/interface/piece/piece';
 import { PieceFactory } from '@trungk18/factory/piece-factory';
-import { Tile } from '@trungk18/interface/tile/tile';
-import { EmptyTile } from '@trungk18/interface/tile/empty-tile';
 import { CallBack } from '@trungk18/interface/callback';
-import { FilledTile } from '@trungk18/interface/tile/filled-tile';
-import { timer, Subscription } from 'rxjs';
-import { MatrixUtil } from '@trungk18/interface/utils/matrix';
 import { GameState } from '@trungk18/interface/game-state';
+import { Piece } from '@trungk18/interface/piece/piece';
+import { EmptyTile } from '@trungk18/interface/tile/empty-tile';
+import { FilledTile } from '@trungk18/interface/tile/filled-tile';
+import { Tile } from '@trungk18/interface/tile/tile';
+import { MatrixUtil } from '@trungk18/interface/utils/matrix';
+import { Subscription, timer } from 'rxjs';
+import { TetrisQuery } from './tetris.query';
+import { createInitialState, TetrisStore } from './tetris.store';
 
 @Injectable({ providedIn: 'root' })
 export class TetrisService {
   _gameInterval: Subscription;
 
-  constructor(private _store: TetrisStore, private _pieceFactory: PieceFactory) {}
-  private get _raw(): TetrisState {
-    return this._store.getValue();
-  }
+  constructor(
+    private _store: TetrisStore,
+    private _query: TetrisQuery,
+    private _pieceFactory: PieceFactory
+  ) {}
 
   private get _locked(): boolean {
-    return this._raw.locked;
+    return this._query.locked;
   }
 
   private get _current() {
-    return this._raw.current;
+    return this._query.current;
   }
 
   private get _next() {
-    return this._raw.next;
+    return this._query.next;
   }
 
   private get _matrix() {
-    return this._raw.matrix;
+    return this._query.matrix;
   }
 
   start() {

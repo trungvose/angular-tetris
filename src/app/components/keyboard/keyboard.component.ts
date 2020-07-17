@@ -9,7 +9,7 @@ import { TetrisService } from '@trungk18/state/tetris/tetris.service';
 })
 export class KeyboardComponent implements OnInit {
   ArrowButton = ArrowButton;
-  constructor(private _service: TetrisService) {}
+  constructor(private _tetrisService: TetrisService) {}
 
   ngOnInit(): void {}
 }
