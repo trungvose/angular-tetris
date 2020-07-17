@@ -1,4 +1,4 @@
-export enum TetrisKeyBoard {
+export enum TetrisKeyboard {
   Up = 'arrowup',
   Down = 'arrowdown',
   Left = 'arrowleft',
@@ -6,5 +6,5 @@ export enum TetrisKeyBoard {
   Space = 'space',
   P = 'p',
   R = 'r',
-  s = 's'
+  S = 's'
 }

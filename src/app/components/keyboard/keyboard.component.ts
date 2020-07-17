@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Output } from '@angular/core';
 import { ArrowButton } from '@trungk18/interface/ui-model/arrow-button';
-import { TetrisService } from '@trungk18/state/tetris/tetris.service';
+import { KeyboardQuery } from '@trungk18/state/keyboard/keyboard.query';
+import { EventEmitter } from 'events';
 
 @Component({
   selector: 't-keyboard',
@@ -9,7 +10,10 @@ import { TetrisService } from '@trungk18/state/tetris/tetris.service';
 })
 export class KeyboardComponent implements OnInit {
   ArrowButton = ArrowButton;
-  constructor(private _tetrisService: TetrisService) {}
+  @Output() onMouseDown = new EventEmitter();
+  @Output() onMouseUp = new EventEmitter();
+
+  constructor(public keyboardQuery: KeyboardQuery) {}
 
   ngOnInit(): void {}
 }

@@ -1,23 +1,35 @@
 import { Injectable } from '@angular/core';
 import { Store, StoreConfig } from '@datorama/akita';
+import { TetrisKeyboard } from '@trungk18/interface/keyboard';
 
 export interface KeyboardState {
-   key: string;
+  up: boolean;
+  down: boolean;
+  left: boolean;
+  right: boolean;
+  pause: boolean;
+  sound: boolean;
+  reset: boolean;
+  drop: boolean;
 }
 
 export function createInitialState(): KeyboardState {
   return {
-    key: ''
+    up: false,
+    down: false,
+    left: false,
+    right: false,
+    pause: false,
+    sound: false,
+    reset: false,
+    drop: false
   };
 }
 
 @Injectable({ providedIn: 'root' })
-@StoreConfig({ name: 'keyboard' })
+@StoreConfig({ name: 'AngularTetrisKeyboard' })
 export class KeyboardStore extends Store<KeyboardState> {
-
   constructor() {
     super(createInitialState());
   }
-
 }
-

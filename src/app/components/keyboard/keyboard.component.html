@@ -1,5 +1,6 @@
 <div class="keyboard">
     <t-button className="blue btn-md"
+              [active$]="keyboardQuery.up$"
               [arrowButton]="ArrowButton.UP"
               [top]="0"
               [left]="374"
@@ -7,39 +8,46 @@
         Rotation
     </t-button>
     <t-button className="blue btn-md"
+              [active$]="keyboardQuery.down$"
               [arrowButton]="ArrowButton.DOWN"
               [top]="180"
               [left]="374">
         Down
     </t-button>
     <t-button className="blue btn-md"
+              [active$]="keyboardQuery.left$"
               [arrowButton]="ArrowButton.LEFT"
               [top]="90"
               [left]="284">
         Left
     </t-button>
     <t-button className="blue btn-md"
+              [active$]="keyboardQuery.right$"
               [arrowButton]="ArrowButton.RIGHT"
               [top]="90"
               [left]="464">
         Right
     </t-button>
     <t-button className="blue btn-lg"
+              [active$]="keyboardQuery.drop$"
               [top]="100"
               [left]="52">
         Drop (SPACE)
     </t-button>
     <t-button className="red btn-sm"
+              [active$]="keyboardQuery.reset$"
               [top]="0"
               [left]="196">
         Reset (R)
     </t-button>
     <t-button className="green btn-sm"
+              [active$]="keyboardQuery.sound$"
               [top]="0"
               [left]="106">
         Sound (S)
     </t-button>
     <t-button className="green btn-sm"
+              [active$]="keyboardQuery.pause$"
               [top]="0"
               [left]="16">
         Pause (P)

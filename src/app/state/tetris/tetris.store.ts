@@ -34,7 +34,7 @@ export function createInitialState(pieceFactory: PieceFactory): TetrisState {
     initSpeed: 1,
     currentSpeed: 1,
     gameState: GameState.Loading,
-    saved: null,
+    saved: null
   };
 }
 
