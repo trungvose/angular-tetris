@@ -112,6 +112,13 @@ export class TetrisService {
     this._update();
   }
 
+  setSound() {
+    let sound = this._query.raw.sound;
+    this._store.update({
+      sound: !sound
+    });
+  }
+
   private _update() {
     if (this._locked) {
       return;

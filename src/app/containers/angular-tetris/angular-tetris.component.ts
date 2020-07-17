@@ -117,6 +117,7 @@ export class AngularTetrisComponent implements OnInit {
   @HostListener(`${KeyDown}.${TetrisKeyboard.S}`)
   keyDownSound() {
     this._soundManager.move();
+    this._tetrisService.setSound();
     this._keyboardService.setKeỵ({
       sound: true
     });
