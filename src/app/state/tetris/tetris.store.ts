@@ -5,6 +5,7 @@ import { GameState } from '@trungk18/interface/game-state';
 import { Piece } from '@trungk18/interface/piece/piece';
 import { Tile } from '@trungk18/interface/tile/tile';
 import { MatrixUtil } from '@trungk18/interface/utils/matrix';
+import { Speed } from '@trungk18/interface/speed';
 
 export interface TetrisState {
   matrix: Tile[];
@@ -13,8 +14,8 @@ export interface TetrisState {
   points: number;
   locked: boolean;
   sound: boolean;
-  initSpeed: number;
-  currentSpeed: number;
+  initSpeed: Speed;
+  currentSpeed: Speed;
   initLine: number;
   clearedLines: number;
   gameState: GameState;
@@ -31,7 +32,7 @@ export function createInitialState(pieceFactory: PieceFactory): TetrisState {
     sound: true,
     initLine: 0,
     clearedLines: 0,
-    initSpeed: 1,
+    initSpeed: 5,
     currentSpeed: 1,
     gameState: GameState.Loading,
     saved: null

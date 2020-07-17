@@ -8,7 +8,14 @@ export class MatrixUtil {
     return new Array(this.Width * this.Height).fill(new EmptyTile());
   }
 
-  static get EmptyRow(): Tile[] {
-    return new Array(this.Width).fill(new EmptyTile());
+  static getEmptyRow(numberOfLines: number = 1): Tile[] {
+    return new Array(this.Width * numberOfLines).fill(new EmptyTile());
+  }
+
+  static Points = [100, 300, 700, 1500];
+  static SpeedDelay = [800, 650, 500, 370, 250, 160];
+
+  static getSpeedDelay(speed: number) {
+    return this.SpeedDelay[speed - 1];
   }
 }

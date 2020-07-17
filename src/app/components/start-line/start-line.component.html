@@ -1,2 +1,9 @@
-<p>Start Line</p>
-<t-number></t-number>
+<p>
+    <span *ngIf="isPlaying$ | async else startingTmpl">
+        Lines
+    </span>
+</p>
+<t-number [num]="clearedLines$ | async"></t-number>
+<ng-template #startingTmpl>
+    Start Line
+</ng-template>

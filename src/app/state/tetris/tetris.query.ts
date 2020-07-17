@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Query } from '@datorama/akita';
 import { TetrisStore, TetrisState } from './tetris.store';
 import { GameState } from '@trungk18/interface/game-state';
+import { map } from 'rxjs/operators';
 
 @Injectable({ providedIn: 'root' })
 export class TetrisQuery extends Query<TetrisState> {
@@ -45,4 +46,8 @@ export class TetrisQuery extends Query<TetrisState> {
   matrix$ = this.select('matrix');
   sound$ = this.select('sound');
   gameState$ = this.select('gameState');
+  isPlaying$ = this.gameState$.pipe(map((gameState) => gameState === GameState.Started));
+  points$ = this.select('points');
+  clearedLines$ = this.select('clearedLines');
+  currentSpeed$ = this.select('currentSpeed');
 }

@@ -10,6 +10,7 @@ import { MatrixUtil } from '@trungk18/interface/utils/matrix';
 import { Subscription, timer } from 'rxjs';
 import { TetrisQuery } from './tetris.query';
 import { createInitialState, TetrisStore } from './tetris.store';
+import { Speed } from '@trungk18/interface/speed';
 
 @Injectable({ providedIn: 'root' })
 export class TetrisService {
@@ -43,13 +44,18 @@ export class TetrisService {
       this._setNext();
     }
     this._store.update({
+      currentSpeed: this._query.raw.initSpeed,
       gameState: GameState.Started
     });
     this._unsubscribe();
-    this._gameInterval = timer(0, 500).subscribe(() => {
+    this.auto(MatrixUtil.getSpeedDelay(this._query.raw.currentSpeed));
+    this._setLocked(false);
+  }
+
+  auto(delay: number) {
+    this._gameInterval = timer(0, delay).subscribe(() => {
       this._update();
     });
-    this._setLocked(false);
   }
 
   pause() {
@@ -146,6 +152,7 @@ export class TetrisService {
   }
 
   private _clearFullLines() {
+    let numberOfClearedLines = 0;
     for (let row = MatrixUtil.Height - 1; row >= 0; row--) {
       let isFull = true;
       for (let col = 0; col < MatrixUtil.Width; col++) {
@@ -157,15 +164,17 @@ export class TetrisService {
       }
 
       if (isFull) {
-        let topPortion = this._matrix.slice(0, row * MatrixUtil.Width);
-        let newMatrix = [...this._matrix];
-        newMatrix.splice(
-          0,
-          (row + 1) * MatrixUtil.Width,
-          ...[...MatrixUtil.EmptyRow, ...topPortion]
-        );
-        this._setMatrix(newMatrix);
+        numberOfClearedLines++;
       }
+    }
+    if (numberOfClearedLines) {
+      let topPortion = this._matrix.slice(
+        0,
+        MatrixUtil.Width * (MatrixUtil.Height - numberOfClearedLines)
+      );
+      let newMatrix = [...MatrixUtil.getEmptyRow(numberOfClearedLines), ...topPortion];
+      this._setMatrix(newMatrix);
+      this._setPointsAndSpeed(numberOfClearedLines);
     }
   }
 
@@ -209,7 +218,7 @@ export class TetrisService {
 
   private _collides(): boolean {
     return this._current.positionOnGrid.some((pos) => {
-      if (pos && this._matrix[pos].isFilled) {
+      if (this._matrix[pos].isFilled) {
         return true;
       }
       return false;
@@ -233,6 +242,29 @@ export class TetrisService {
     this._current.positionOnGrid.forEach((position) => {
       callback(position);
     });
+  }
+
+  private _setPointsAndSpeed(numberOfClearedLines: number) {
+    if (!numberOfClearedLines) {
+      return;
+    }
+    let { points, clearedLines, initSpeed, currentSpeed } = this._query.raw;
+    let addedPoints = MatrixUtil.Points[numberOfClearedLines - 1];
+    let totalLines = clearedLines + numberOfClearedLines;
+    let addedSpeed = Math.floor(totalLines / MatrixUtil.Height);
+    let newSpeed = <Speed>(initSpeed + addedSpeed);
+    newSpeed = newSpeed > 6 ? 6 : newSpeed;
+
+    this._store.update({
+      points: points + addedPoints,
+      clearedLines: totalLines,
+      currentSpeed: newSpeed
+    });
+
+    if (newSpeed !== currentSpeed) {
+      this._unsubscribe();
+      this.auto(MatrixUtil.getSpeedDelay(newSpeed));
+    }
   }
 
   private _updateMatrix(pos: number, tile: Tile) {
