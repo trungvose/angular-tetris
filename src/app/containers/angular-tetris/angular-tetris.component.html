@@ -17,4 +17,6 @@
         </div>
     </div>
 </div>
-<t-keyboard></t-keyboard>
+<t-keyboard (onMouseDown)="keyboardMouseDown($event)"
+            (onMouseUp)="keyboardMouseUp($event)">
+</t-keyboard>

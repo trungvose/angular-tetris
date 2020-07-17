@@ -2,6 +2,8 @@
     <t-button className="blue btn-md"
               [active$]="keyboardQuery.up$"
               [arrowButton]="ArrowButton.UP"
+              (mousedown)="mouseDown('Up')"
+              (mouseup)="mouseUp('Up')"
               [top]="0"
               [left]="374"
               [isAbsolute]="true">
@@ -10,6 +12,8 @@
     <t-button className="blue btn-md"
               [active$]="keyboardQuery.down$"
               [arrowButton]="ArrowButton.DOWN"
+              (mousedown)="mouseDown('Down')"
+              (mouseup)="mouseUp('Down')"
               [top]="180"
               [left]="374">
         Down
@@ -17,6 +21,8 @@
     <t-button className="blue btn-md"
               [active$]="keyboardQuery.left$"
               [arrowButton]="ArrowButton.LEFT"
+              (mousedown)="mouseDown('Left')"
+              (mouseup)="mouseUp('Left')"
               [top]="90"
               [left]="284">
         Left
@@ -24,30 +30,40 @@
     <t-button className="blue btn-md"
               [active$]="keyboardQuery.right$"
               [arrowButton]="ArrowButton.RIGHT"
+              (mousedown)="mouseDown('Right')"
+              (mouseup)="mouseUp('Right')"
               [top]="90"
               [left]="464">
         Right
     </t-button>
     <t-button className="blue btn-lg"
               [active$]="keyboardQuery.drop$"
+              (mousedown)="mouseDown('Space')"
+              (mouseup)="mouseUp('Space')"
               [top]="100"
               [left]="52">
         Drop (SPACE)
     </t-button>
     <t-button className="red btn-sm"
               [active$]="keyboardQuery.reset$"
+              (mousedown)="mouseDown('Reset')"
+              (mouseup)="mouseUp('Reset')"
               [top]="0"
               [left]="196">
         Reset (R)
     </t-button>
     <t-button className="green btn-sm"
               [active$]="keyboardQuery.sound$"
+              (mousedown)="mouseDown('Sound')"
+              (mouseup)="mouseUp('Sound')"
               [top]="0"
               [left]="106">
         Sound (S)
     </t-button>
     <t-button className="green btn-sm"
               [active$]="keyboardQuery.pause$"
+              (mousedown)="mouseDown('Pause')"
+              (mouseup)="mouseUp('Pause')"
               [top]="0"
               [left]="16">
         Pause (P)

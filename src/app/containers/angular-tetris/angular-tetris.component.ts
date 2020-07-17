@@ -20,6 +20,14 @@ export class AngularTetrisComponent implements OnInit {
 
   ngOnInit(): void {}
 
+  keyboardMouseDown(key: string) {
+    this[`keyDown${key}`]();
+  }
+
+  keyboardMouseUp(key: string) {
+    this[`keyUp${key}`]();
+  }
+
   @HostListener(`${KeyDown}.${TetrisKeyboard.Left}`)
   keyDownLeft() {
     this._keyboardService.setKeỵ({
@@ -51,7 +59,7 @@ export class AngularTetrisComponent implements OnInit {
   }
 
   @HostListener(`${KeyDown}.${TetrisKeyboard.Up}`)
-  keyDownRotate() {
+  keyDownUp() {
     this._keyboardService.setKeỵ({
       up: true
     });
@@ -59,7 +67,7 @@ export class AngularTetrisComponent implements OnInit {
   }
 
   @HostListener(`${KeyUp}.${TetrisKeyboard.Up}`)
-  keyUpRotate() {
+  keyUpUp() {
     this._keyboardService.setKeỵ({
       up: false
     });
