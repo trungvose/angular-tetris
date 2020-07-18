@@ -4,8 +4,9 @@ import { KeyboardService } from '@trungk18/state/keyboard/keyboard.service';
 import { TetrisQuery } from '@trungk18/state/tetris/tetris.query';
 import { TetrisService } from '@trungk18/state/tetris/tetris.service';
 import { SoundManagerService } from '@trungk18/services/sound-manager.service';
-import { timer, of } from 'rxjs';
+import { timer, of, Observable } from 'rxjs';
 import { delay } from 'rxjs/operators';
+import { KeyboardQuery } from '@trungk18/state/keyboard/keyboard.query';
 const KeyUp = 'document:keyup';
 const KeyDown = 'document:keydown';
 @Component({
@@ -14,15 +15,18 @@ const KeyDown = 'document:keydown';
   styleUrls: ['./angular-tetris.component.scss']
 })
 export class AngularTetrisComponent implements OnInit {
-  @Input() paused: boolean;
+  drop$: Observable<boolean>;
   constructor(
     private _tetrisService: TetrisService,
     private _tetrisQuery: TetrisQuery,
     private _keyboardService: KeyboardService,
+    private _keyboardQuery: KeyboardQuery,
     private _soundManager: SoundManagerService
   ) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.drop$ = this._keyboardQuery.drop$;
+  }
 
   keyboardMouseDown(key: string) {
     this[`keyDown${key}`]();
