@@ -80,7 +80,7 @@ export class Piece {
       for (let col = 0; col < 4; col++) {
         if (this.shape[row][col]) {
           const position = (this.y + row) * MatrixUtil.Width + this.x + col;
-          if (position > 0) {
+          if (position >= 0) {
             positions.push(position);
           }
         }

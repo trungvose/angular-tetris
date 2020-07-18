@@ -16,8 +16,8 @@ const KeyDown = 'document:keydown';
 export class AngularTetrisComponent implements OnInit {
   drop$: Observable<boolean>;
 
-  get isPlaying() {
-    return this._tetrisQuery.isPlaying;
+  get hasCurrent() {
+    return !!this._tetrisQuery.current;
   }
 
   constructor(
@@ -46,7 +46,7 @@ export class AngularTetrisComponent implements OnInit {
     this._keyboardService.setKeỵ({
       left: true
     });
-    if (this.isPlaying) {
+    if (this.hasCurrent) {
       this._tetrisService.moveLeft();
     } else {
       this._tetrisService.decreaseLevel();
@@ -66,7 +66,7 @@ export class AngularTetrisComponent implements OnInit {
     this._keyboardService.setKeỵ({
       right: true
     });
-    if (this.isPlaying) {
+    if (this.hasCurrent) {
       this._tetrisService.moveRight();
     } else {
       this._tetrisService.increaseLevel();
@@ -86,7 +86,7 @@ export class AngularTetrisComponent implements OnInit {
     this._keyboardService.setKeỵ({
       up: true
     });
-    if (this.isPlaying) {
+    if (this.hasCurrent) {
       this._tetrisService.rotate();
     } else {
       this._tetrisService.increaseStartLine();
@@ -106,7 +106,7 @@ export class AngularTetrisComponent implements OnInit {
     this._keyboardService.setKeỵ({
       down: true
     });
-    if (this.isPlaying) {
+    if (this.hasCurrent) {
       this._tetrisService.moveDown();
     } else {
       this._tetrisService.decreaseStartLine();
@@ -125,7 +125,7 @@ export class AngularTetrisComponent implements OnInit {
     this._keyboardService.setKeỵ({
       drop: true
     });
-    if (this.isPlaying) {
+    if (this.hasCurrent) {
       this._soundManager.fall();
       return;
     }
