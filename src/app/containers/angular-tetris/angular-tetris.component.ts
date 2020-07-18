@@ -163,9 +163,9 @@ export class AngularTetrisComponent implements OnInit {
       if (confirm('You are having a good game. Are you sure you want to reset?')) {
         this._tetrisService.reset();
       } else {
-        this.keyUpReset();
         this._tetrisService.start();
       }
+      this.keyUpReset();
     });
   }
 

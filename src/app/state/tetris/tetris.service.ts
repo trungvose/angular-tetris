@@ -243,15 +243,13 @@ export class TetrisService {
       return;
     }
     let { points, clearedLines, initSpeed, currentSpeed } = this._query.raw;
-    let addedPoints = MatrixUtil.Points[numberOfClearedLines - 1];
-    let totalLines = clearedLines + numberOfClearedLines;
-    let addedSpeed = Math.floor(totalLines / MatrixUtil.Height);
-    let newSpeed = <Speed>(initSpeed + addedSpeed);
-    newSpeed = newSpeed > 6 ? 6 : newSpeed;
+    let newLines = clearedLines + numberOfClearedLines;
+    let newPoints = this._getPoints(numberOfClearedLines, points);
+    let newSpeed = this._getSpeed(newLines, initSpeed);
 
     this._store.update({
-      points: points + addedPoints,
-      clearedLines: totalLines,
+      points: newPoints,
+      clearedLines: newLines,
       currentSpeed: newSpeed
     });
 
@@ -259,6 +257,19 @@ export class TetrisService {
       this._unsubscribe();
       this.auto(MatrixUtil.getSpeedDelay(newSpeed));
     }
+  }
+
+  private _getSpeed(totalLines: number, initSpeed: number): Speed {
+    let addedSpeed = Math.floor(totalLines / MatrixUtil.Height);
+    let newSpeed = <Speed>(initSpeed + addedSpeed);
+    newSpeed = newSpeed > 6 ? 6 : newSpeed;
+    return newSpeed;
+  }
+
+  private _getPoints(numberOfClearedLines: number, points: number): number {
+    let addedPoints = MatrixUtil.Points[numberOfClearedLines - 1];
+    let newPoints = points + addedPoints;
+    return newPoints > MatrixUtil.MaxPoint ? MatrixUtil.MaxPoint : newPoints;
   }
 
   private _updateMatrix(pos: number, tile: Tile) {

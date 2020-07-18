@@ -13,6 +13,7 @@ export class MatrixUtil {
   }
 
   static Points = [100, 300, 700, 1500];
+  static MaxPoint = 999999;
   static SpeedDelay = [800, 650, 500, 370, 250, 160];
 
   static getSpeedDelay(speed: number) {
