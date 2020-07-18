@@ -3,7 +3,7 @@ import { Component, OnInit, Input } from '@angular/core';
 @Component({
   selector: 't-number',
   templateUrl: './number.component.html',
-  styleUrls: ['./number.component.scss'],
+  styleUrls: ['./number.component.scss']
 })
 export class NumberComponent implements OnInit {
   @Input() num: number = 0;
@@ -11,8 +11,7 @@ export class NumberComponent implements OnInit {
 
   get nums(): string[] {
     let str = `${this.num}`;
-    let emptyCount = this.length - str.length;
-    return str.padStart(emptyCount, 'n').split('');
+    return str.padStart(this.length, 'n').split('');
   }
 
   constructor() {}

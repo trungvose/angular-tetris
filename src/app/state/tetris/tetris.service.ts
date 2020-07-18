@@ -43,12 +43,13 @@ export class TetrisService {
       this._setCurrentPiece(this._next);
       this._setNext();
     }
+    let { initLine, speed } = this._query.raw;
     this._store.update({
-      currentSpeed: this._query.raw.initSpeed,
-      gameState: GameState.Started
+      gameState: GameState.Started,
+      matrix: MatrixUtil.getStartBoard(initLine)
     });
     this._unsubscribe();
-    this.auto(MatrixUtil.getSpeedDelay(this._query.raw.currentSpeed));
+    this.auto(MatrixUtil.getSpeedDelay(speed));
     this._setLocked(false);
   }
 
@@ -56,6 +57,15 @@ export class TetrisService {
     this._gameInterval = timer(0, delay).subscribe(() => {
       this._update();
     });
+  }
+
+  resume() {
+    let { speed } = this._query.raw;
+    this._store.update({
+      locked: false,
+      gameState: GameState.Started
+    });
+    this.auto(MatrixUtil.getSpeedDelay(speed));
   }
 
   pause() {
@@ -125,6 +135,38 @@ export class TetrisService {
     });
   }
 
+  decreaseLevel() {
+    let { speed } = this._query.raw;
+    let newSpeed = (speed - 1 < 1 ? 6 : speed - 1) as Speed;
+    this._store.update({
+      speed: newSpeed
+    });
+  }
+
+  increaseLevel() {
+    let { speed } = this._query.raw;
+    let newSpeed = (speed + 1 > 6 ? 1 : speed + 1) as Speed;
+    this._store.update({
+      speed: newSpeed
+    });
+  }
+
+  increaseStartLine() {
+    let { initLine } = this._query.raw;
+    let startLine = initLine + 1 > 10 ? 1 : initLine + 1;
+    this._store.update({
+      initLine: startLine
+    });
+  }
+
+  decreaseStartLine() {
+    let { initLine } = this._query.raw;
+    let startLine = initLine - 1 < 1 ? 10 : initLine - 1;
+    this._store.update({
+      initLine: startLine
+    });
+  }
+
   private _update() {
     if (this._locked) {
       return;
@@ -161,11 +203,7 @@ export class TetrisService {
       if (isFullRow) {
         numberOfClearedLines++;
         let topPortion = this._matrix.slice(0, row * MatrixUtil.Width);
-        newMatrix.splice(
-          0,
-          ++row * MatrixUtil.Width,
-          ...MatrixUtil.getEmptyRow().concat(topPortion)
-        );
+        newMatrix.splice(0, ++row * MatrixUtil.Width, ...MatrixUtil.EmptyRow.concat(topPortion));
         this._setMatrix(newMatrix);
       }
     }
@@ -242,18 +280,18 @@ export class TetrisService {
     if (!numberOfClearedLines) {
       return;
     }
-    let { points, clearedLines, initSpeed, currentSpeed } = this._query.raw;
+    let { points, clearedLines, speed } = this._query.raw;
     let newLines = clearedLines + numberOfClearedLines;
     let newPoints = this._getPoints(numberOfClearedLines, points);
-    let newSpeed = this._getSpeed(newLines, initSpeed);
+    let newSpeed = this._getSpeed(newLines, speed);
 
     this._store.update({
       points: newPoints,
       clearedLines: newLines,
-      currentSpeed: newSpeed
+      speed: newSpeed
     });
 
-    if (newSpeed !== currentSpeed) {
+    if (newSpeed !== speed) {
       this._unsubscribe();
       this.auto(MatrixUtil.getSpeedDelay(newSpeed));
     }

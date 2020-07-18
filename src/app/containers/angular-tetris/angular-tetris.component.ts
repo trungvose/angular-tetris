@@ -1,12 +1,11 @@
-import { Component, HostListener, Input, OnInit } from '@angular/core';
+import { Component, HostListener, OnInit } from '@angular/core';
 import { TetrisKeyboard } from '@trungk18/interface/keyboard';
+import { SoundManagerService } from '@trungk18/services/sound-manager.service';
+import { KeyboardQuery } from '@trungk18/state/keyboard/keyboard.query';
 import { KeyboardService } from '@trungk18/state/keyboard/keyboard.service';
 import { TetrisQuery } from '@trungk18/state/tetris/tetris.query';
 import { TetrisService } from '@trungk18/state/tetris/tetris.service';
-import { SoundManagerService } from '@trungk18/services/sound-manager.service';
-import { timer, of, Observable } from 'rxjs';
-import { delay } from 'rxjs/operators';
-import { KeyboardQuery } from '@trungk18/state/keyboard/keyboard.query';
+import { Observable } from 'rxjs';
 const KeyUp = 'document:keyup';
 const KeyDown = 'document:keydown';
 @Component({
@@ -16,6 +15,11 @@ const KeyDown = 'document:keydown';
 })
 export class AngularTetrisComponent implements OnInit {
   drop$: Observable<boolean>;
+
+  get isPlaying() {
+    return this._tetrisQuery.isPlaying;
+  }
+
   constructor(
     private _tetrisService: TetrisService,
     private _tetrisQuery: TetrisQuery,
@@ -42,7 +46,11 @@ export class AngularTetrisComponent implements OnInit {
     this._keyboardService.setKeỵ({
       left: true
     });
-    this._tetrisService.moveLeft();
+    if (this.isPlaying) {
+      this._tetrisService.moveLeft();
+    } else {
+      this._tetrisService.decreaseLevel();
+    }
   }
 
   @HostListener(`${KeyUp}.${TetrisKeyboard.Left}`)
@@ -58,7 +66,11 @@ export class AngularTetrisComponent implements OnInit {
     this._keyboardService.setKeỵ({
       right: true
     });
-    this._tetrisService.moveRight();
+    if (this.isPlaying) {
+      this._tetrisService.moveRight();
+    } else {
+      this._tetrisService.increaseLevel();
+    }
   }
 
   @HostListener(`${KeyUp}.${TetrisKeyboard.Right}`)
@@ -74,7 +86,11 @@ export class AngularTetrisComponent implements OnInit {
     this._keyboardService.setKeỵ({
       up: true
     });
-    this._tetrisService.rotate();
+    if (this.isPlaying) {
+      this._tetrisService.rotate();
+    } else {
+      this._tetrisService.increaseStartLine();
+    }
   }
 
   @HostListener(`${KeyUp}.${TetrisKeyboard.Up}`)
@@ -90,7 +106,11 @@ export class AngularTetrisComponent implements OnInit {
     this._keyboardService.setKeỵ({
       down: true
     });
-    this._tetrisService.moveDown();
+    if (this.isPlaying) {
+      this._tetrisService.moveDown();
+    } else {
+      this._tetrisService.decreaseStartLine();
+    }
   }
 
   @HostListener(`${KeyUp}.${TetrisKeyboard.Down}`)
@@ -105,7 +125,7 @@ export class AngularTetrisComponent implements OnInit {
     this._keyboardService.setKeỵ({
       drop: true
     });
-    if (this._tetrisQuery.isPlaying) {
+    if (this.isPlaying) {
       this._soundManager.fall();
       return;
     }
@@ -143,7 +163,7 @@ export class AngularTetrisComponent implements OnInit {
       pause: true
     });
     if (this._tetrisQuery.canStartGame) {
-      this._tetrisService.start();
+      this._tetrisService.resume();
     } else {
       this._tetrisService.pause();
     }

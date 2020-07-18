@@ -8,12 +8,14 @@ import { Observable } from 'rxjs';
   styleUrls: ['./start-line.component.scss']
 })
 export class StartLineComponent implements OnInit {
-  isPlaying$: Observable<boolean>;
+  hasCurrent$: Observable<boolean>;
   clearedLines$: Observable<number>;
+  initLine$: Observable<number>;
   constructor(public _query: TetrisQuery) {}
 
   ngOnInit(): void {
-    this.isPlaying$ = this._query.isPlaying$;
+    this.hasCurrent$ = this._query.hasCurrent$;
     this.clearedLines$ = this._query.clearedLines$;
+    this.initLine$ = this._query.initLine$;
   }
 }

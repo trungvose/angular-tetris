@@ -46,8 +46,9 @@ export class TetrisQuery extends Query<TetrisState> {
   matrix$ = this.select('matrix');
   sound$ = this.select('sound');
   gameState$ = this.select('gameState');
-  isPlaying$ = this.gameState$.pipe(map((gameState) => gameState === GameState.Started));
+  hasCurrent$ = this.select('current').pipe(map((x) => !!x));
   points$ = this.select('points');
   clearedLines$ = this.select('clearedLines');
-  currentSpeed$ = this.select('currentSpeed');
+  initLine$ = this.select('initLine');
+  speed$ = this.select('speed');
 }

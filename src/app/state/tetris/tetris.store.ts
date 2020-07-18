@@ -14,8 +14,7 @@ export interface TetrisState {
   points: number;
   locked: boolean;
   sound: boolean;
-  initSpeed: Speed;
-  currentSpeed: Speed;
+  speed: Speed;
   initLine: number;
   clearedLines: number;
   gameState: GameState;
@@ -24,7 +23,7 @@ export interface TetrisState {
 
 export function createInitialState(pieceFactory: PieceFactory): TetrisState {
   return {
-    matrix: MatrixUtil.EmptyBoard,
+    matrix: MatrixUtil.getStartBoard(),
     current: null,
     next: pieceFactory.getRandomPiece(),
     points: 0,
@@ -32,8 +31,7 @@ export function createInitialState(pieceFactory: PieceFactory): TetrisState {
     sound: true,
     initLine: 0,
     clearedLines: 0,
-    initSpeed: 5,
-    currentSpeed: 1,
+    speed: 1,
     gameState: GameState.Loading,
     saved: null
   };
