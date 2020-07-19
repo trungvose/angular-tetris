@@ -15,6 +15,7 @@ const KeyDown = 'document:keydown';
 })
 export class AngularTetrisComponent implements OnInit {
   drop$: Observable<boolean>;
+  isShowLogo$: Observable<boolean>;
 
   get hasCurrent() {
     return !!this._tetrisQuery.current;
@@ -30,6 +31,7 @@ export class AngularTetrisComponent implements OnInit {
 
   ngOnInit(): void {
     this.drop$ = this._keyboardQuery.drop$;
+    this.isShowLogo$ = this._tetrisQuery.isShowLogo$;
   }
 
   keyboardMouseDown(key: string) {

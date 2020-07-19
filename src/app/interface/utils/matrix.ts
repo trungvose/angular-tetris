@@ -47,6 +47,10 @@ export class MatrixUtil {
     return new Array(this.Width).fill(new EmptyTile());
   }
 
+  static get FullRow(): Tile[] {
+    return new Array(this.Width).fill(new FilledTile());
+  }
+
   static Points = [100, 300, 700, 1500];
   static MaxPoint = 999999;
   static SpeedDelay = [800, 650, 500, 370, 250, 160];

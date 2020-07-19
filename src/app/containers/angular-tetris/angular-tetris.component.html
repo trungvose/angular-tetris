@@ -4,7 +4,7 @@
     <div class="screen">
         <div class="panel">
             <t-matrix></t-matrix>
-            <t-logo></t-logo>
+            <t-logo *ngIf="isShowLogo$ | async"></t-logo>
             <div class="state">
                 <t-point></t-point>
                 <t-start-line></t-start-line>
