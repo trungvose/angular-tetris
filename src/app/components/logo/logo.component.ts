@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { Observable, timer } from 'rxjs';
-import { finalize, map, startWith, takeWhile, tap } from 'rxjs/operators';
+import { concat, Observable, timer } from 'rxjs';
+import { delay, finalize, map, repeat, startWith, takeWhile, tap } from 'rxjs/operators';
 
 @Component({
   selector: 't-logo',
@@ -12,11 +12,16 @@ export class LogoComponent implements OnInit {
   constructor() {}
 
   ngOnInit(): void {
-    this.run().subscribe();
+    concat(this.run(), this.eyes())
+      .pipe(
+        delay(5000),
+        repeat(10)
+      )
+      .subscribe();
   }
 
   eyes() {
-    return timer(0, 150).pipe(
+    return timer(0, 300).pipe(
       startWith(0),
       map((x) => x + 1),
       takeWhile((x) => x < 6),
