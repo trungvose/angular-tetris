@@ -30,9 +30,8 @@ export class MatrixComponent implements OnInit {
         let newMatrix = [...matrix];
         let rowsLength = MatrixUtil.Height * 2;
         let animatedMatrix$: Observable<Tile[]> = timer(0, rowsLength).pipe(
-          startWith(0),
           map((x) => x + 1),
-          takeWhile((x) => x <= rowsLength+1),
+          takeWhile((x) => x <= rowsLength + 1),
           switchMap((idx) => {
             let gridIndex = idx - 1;
             if (gridIndex < MatrixUtil.Height) {
@@ -42,12 +41,13 @@ export class MatrixComponent implements OnInit {
                 ...MatrixUtil.FullRow
               );
             }
-            if (gridIndex > MatrixUtil.Height&& gridIndex <= rowsLength) {
-              let startIdx = (MatrixUtil.Height - (gridIndex - MatrixUtil.Height)) * MatrixUtil.Width;
+            if (gridIndex > MatrixUtil.Height && gridIndex <= rowsLength) {
+              let startIdx =
+                (MatrixUtil.Height - (gridIndex - MatrixUtil.Height)) * MatrixUtil.Width;
               newMatrix.splice(startIdx, MatrixUtil.Width, ...MatrixUtil.EmptyRow);
             }
 
-            return of(newMatrix)
+            return of(newMatrix);
           })
         );
         return animatedMatrix$;
