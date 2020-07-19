@@ -21,7 +21,7 @@ export class LogoComponent implements OnInit {
   }
 
   eyes() {
-    return timer(0, 300).pipe(
+    return timer(0, 500).pipe(
       startWith(0),
       map((x) => x + 1),
       takeWhile((x) => x < 6),
