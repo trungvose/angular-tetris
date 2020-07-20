@@ -11,6 +11,7 @@ import { Subscription, timer } from 'rxjs';
 import { TetrisQuery } from './tetris.query';
 import { createInitialState, TetrisStore } from './tetris.store';
 import { Speed } from '@trungk18/interface/speed';
+import { SoundManagerService } from '@trungk18/services/sound-manager.service';
 
 @Injectable({ providedIn: 'root' })
 export class TetrisService {
@@ -19,6 +20,7 @@ export class TetrisService {
   constructor(
     private _store: TetrisStore,
     private _query: TetrisQuery,
+    private _soundManager: SoundManagerService,
     private _pieceFactory: PieceFactory
   ) {}
 
@@ -222,6 +224,7 @@ export class TetrisService {
 
   private _onGameOver() {
     this.pause();
+    this._soundManager.gameOver();
     this._store.update({
       gameState: GameState.Over,
       current: null

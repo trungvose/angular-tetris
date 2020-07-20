@@ -2,8 +2,8 @@ import { Injectable } from '@angular/core';
 import { Query } from '@datorama/akita';
 import { TetrisStore, TetrisState } from './tetris.store';
 import { GameState } from '@trungk18/interface/game-state';
-import { map, delay } from 'rxjs/operators';
-import { combineLatest } from 'rxjs';
+import { map, delay, switchMap } from 'rxjs/operators';
+import { combineLatest, of } from 'rxjs';
 
 @Injectable({ providedIn: 'root' })
 export class TetrisQuery extends Query<TetrisState> {
@@ -53,10 +53,10 @@ export class TetrisQuery extends Query<TetrisState> {
   initLine$ = this.select('initLine');
   speed$ = this.select('speed');
   isShowLogo$ = combineLatest(this.gameState$, this.select('current')).pipe(
-    map(([state, current]) => {
+    switchMap(([state, current]) => {
       let isLoadingOrOver = state === GameState.Loading || state === GameState.Over;
-      return isLoadingOrOver && !current;
-    }),
-    delay(1700)
+      let isRenderingLogo$ = of(isLoadingOrOver && !current);
+      return isLoadingOrOver ? isRenderingLogo$.pipe(delay(1800)) : isRenderingLogo$;
+    })
   );
 }
