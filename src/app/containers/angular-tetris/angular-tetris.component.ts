@@ -1,4 +1,4 @@
-import { Component, HostListener, OnInit } from '@angular/core';
+import { Component, HostListener, OnInit, ElementRef, Renderer2 } from '@angular/core';
 import { TetrisKeyboard } from '@trungk18/interface/keyboard';
 import { SoundManagerService } from '@trungk18/services/sound-manager.service';
 import { KeyboardQuery } from '@trungk18/state/keyboard/keyboard.query';
@@ -16,7 +16,6 @@ const KeyDown = 'document:keydown';
 export class AngularTetrisComponent implements OnInit {
   drop$: Observable<boolean>;
   isShowLogo$: Observable<boolean>;
-
   get hasCurrent() {
     return !!this._tetrisQuery.current;
   }
@@ -26,12 +25,42 @@ export class AngularTetrisComponent implements OnInit {
     private _tetrisQuery: TetrisQuery,
     private _keyboardService: KeyboardService,
     private _keyboardQuery: KeyboardQuery,
-    private _soundManager: SoundManagerService
+    private _soundManager: SoundManagerService,
+    private _el: ElementRef,
+    private _render: Renderer2
   ) {}
 
   ngOnInit(): void {
     this.drop$ = this._keyboardQuery.drop$;
     this.isShowLogo$ = this._tetrisQuery.isShowLogo$;
+    setTimeout(() => {
+      this.resize();
+    });
+  }
+
+  @HostListener('window:resize', ['$event'])
+  resize() {
+    let width = document.documentElement.clientWidth;
+    let height = document.documentElement.clientHeight;
+    let ratio = height / width;
+    let scale = 1;
+    if (ratio < 1.5) {
+      scale = height / 960;
+    } else {
+      scale = width / 640;
+      let filling = (height - 960 * scale) / scale / 3;
+      let paddingTop = Math.floor(filling) + 42;
+      let paddingBottom = Math.floor(filling);
+      let marginTop = Math.floor(-480 - filling * 1.5);
+      this.setPaddingMargin(paddingTop, paddingBottom, marginTop);
+    }
+    this._render.setStyle(this._el.nativeElement, 'transform', `scale(${scale})`);
+  }
+
+  private setPaddingMargin(paddingTop: number, paddingBottom: number, marginTop: number) {
+    this._render.setStyle(this._el.nativeElement, 'padding-top', `${paddingTop}px`);
+    this._render.setStyle(this._el.nativeElement, 'padding-bottom', `${paddingBottom}px`);
+    this._render.setStyle(this._el.nativeElement, 'margin-top', `${marginTop}px`);
   }
 
   keyboardMouseDown(key: string) {
