@@ -1,0 +1,9 @@
+<p>Next</p>
+<div class="next">
+    <div class="row"
+         *ngFor="let row of next$ | async">
+        <t-tile [tile]='tile'
+                *ngFor="let tile of row">
+        </t-tile>
+    </div>
+</div>

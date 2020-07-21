@@ -1,0 +1,88 @@
+.d-flex {
+  position: fixed;
+  top: 50%;
+  transform: translateY(-50%);
+  left: -300px;
+
+  iframe {
+    margin-top: 5px;
+    margin-bottom: 5px;
+  }
+
+  .qr {
+    left: auto;
+    top: 5%;
+    text-align: left;
+    cursor: pointer;
+    .hint {
+      margin-bottom: 10px;
+      font-size: 14px;
+      max-width: 300px;
+      color: #cfd2d6;
+      opacity: 0;
+    }
+    &:hover {
+      img {
+        transform: scale(4);
+      }
+      .hint {
+        opacity: 1;
+      }
+    }
+    img {
+      width: 60px;
+      height: 60px;
+      transition: transform 0.2s;
+      transform-origin: 0 0;
+    }
+  }
+
+  display: flex;
+  flex-direction: column;
+}
+.twitter {
+  cursor: pointer;
+  margin-top: 15px;
+  margin-bottom: 5px;
+
+  .twitter-button {
+    background-color: #eee;
+    background-image: -webkit-gradient(
+      linear,
+      left top,
+      left bottom,
+      color-stop(0, #fcfcfc),
+      to(#eee)
+    );
+    background-image: linear-gradient(to bottom, #fcfcfc 0, #eee 100%);
+    background-repeat: no-repeat;
+    border: 1px solid #d5d5d5;
+    padding: 3px 10px 3px 8px;
+    font-size: 16px;
+    line-height: 22px;
+    border-radius: 4px;
+    font-weight: 700;
+    color: #333;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial,
+      'Noto Sans', sans-serif;
+    text-decoration: none;
+
+    &:hover {
+      text-decoration: none;
+      background-color: #ddd;
+      background-image: -webkit-gradient(
+        linear,
+        left top,
+        left bottom,
+        color-stop(0, #eee),
+        to(#ddd)
+      );
+      background-image: linear-gradient(to bottom, #eee 0, #ddd 100%);
+      border-color: #ccc;
+    }
+    .icon {
+      width: 20px;
+      height: 20px;
+    }
+  }
+}

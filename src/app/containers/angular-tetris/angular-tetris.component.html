@@ -1,8 +1,25 @@
-<div class="react">
+<div class="react"
+     [class.drop]='drop$ | async'>
+    <t-screen-decoration></t-screen-decoration>
     <div class="screen">
         <div class="panel">
-
+            <t-matrix></t-matrix>
+            <t-logo *ngIf="isShowLogo$ | async"></t-logo>
+            <div class="state">
+                <t-point></t-point>
+                <t-start-line></t-start-line>
+                <t-level></t-level>
+                <t-next></t-next>
+                <div class="last-row">
+                    <t-sound></t-sound>
+                    <t-pause></t-pause>
+                    <t-clock></t-clock>
+                </div>
+            </div>
         </div>
     </div>
 </div>
-<t-keyboard></t-keyboard>
+<t-keyboard (onMouseDown)="keyboardMouseDown($event)"
+            (onMouseUp)="keyboardMouseUp($event)">
+</t-keyboard>
+<t-github></t-github>

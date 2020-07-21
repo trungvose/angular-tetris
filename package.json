@@ -25,6 +25,8 @@
     "@angular/platform-browser": "~10.0.2",
     "@angular/platform-browser-dynamic": "~10.0.2",
     "@angular/router": "~10.0.2",
+    "@datorama/akita": "^4.22.0",
+    "@ngneat/until-destroy": "^7.3.2",
     "rxjs": "~6.5.4",
     "tslib": "^2.0.0",
     "zone.js": "~0.10.2"
@@ -33,6 +35,7 @@
     "@angular-devkit/build-angular": "~0.1000.1",
     "@angular/cli": "~10.0.1",
     "@angular/compiler-cli": "~10.0.2",
+    "@datorama/akita-ngdevtools": "^3.0.2",
     "@types/node": "^12.11.1",
     "@types/jasmine": "~3.5.0",
     "@types/jasminewd2": "~2.0.3",
