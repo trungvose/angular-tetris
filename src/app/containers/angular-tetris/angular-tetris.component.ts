@@ -158,6 +158,7 @@ export class AngularTetrisComponent implements OnInit {
     });
     if (this.hasCurrent) {
       this._soundManager.fall();
+      this._tetrisService.drop();
       return;
     }
     this._soundManager.start();

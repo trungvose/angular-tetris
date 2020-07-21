@@ -1,7 +1,8 @@
 import { Tile } from './tile';
 
 export class AnimatedTile extends Tile {
-  constructor() {
+  constructor(isSolid = false) {
     super(2);
+    this.isSolid = isSolid;
   }
 }

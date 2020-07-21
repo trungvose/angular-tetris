@@ -130,6 +130,19 @@ export class TetrisService {
     this._update();
   }
 
+  drop() {
+    if (this._locked) {
+      return;
+    }
+    while (!this._isCollidesBottom) {
+      this._clearPiece()
+      this._setCurrentPiece(this._current.store());
+      this._setCurrentPiece(this._current.moveDown());
+    }
+    this._setCurrentPiece(this._current.revert());
+    this._drawPiece();
+  }
+
   setSound() {
     let sound = this._query.raw.sound;
     this._store.update({
@@ -181,6 +194,7 @@ export class TetrisService {
 
     if (this._isCollidesBottom) {
       this._setCurrentPiece(this._current.revert());
+      this._markAsSolid();
       this._drawPiece();
       this._clearFullLines();
       this._setCurrentPiece(this._next);
@@ -201,7 +215,7 @@ export class TetrisService {
     for (let row = MatrixUtil.Height - 1; row >= 0; row--) {
       let pos = row * MatrixUtil.Width;
       let fullRowTiles = newMatrix.slice(pos, pos + MatrixUtil.Width);
-      let isFullRow = fullRowTiles.every((x) => x.isFilled);
+      let isFullRow = fullRowTiles.every((x) => x.isSolid);
       if (isFullRow) {
         numberOfClearedLines++;
         let topPortion = this._matrix.slice(0, row * MatrixUtil.Width);
@@ -254,7 +268,7 @@ export class TetrisService {
 
   private _collides(): boolean {
     return this._current.positionOnGrid.some((pos) => {
-      if (this._matrix[pos].isFilled) {
+      if (this._matrix[pos].isSolid) {
         return true;
       }
       return false;
@@ -264,7 +278,14 @@ export class TetrisService {
   private _drawPiece() {
     this._setCurrentPiece(this._current.clearStore());
     this._loopThroughPiecePosition((position) => {
-      this._updateMatrix(position, new FilledTile());
+      let isSolid = this._matrix[position].isSolid;
+      this._updateMatrix(position, new FilledTile(isSolid));
+    });
+  }
+
+  private _markAsSolid() {
+    this._loopThroughPiecePosition((position) => {
+      this._updateMatrix(position, new FilledTile(true));
     });
   }
 
@@ -284,6 +305,7 @@ export class TetrisService {
     if (!numberOfClearedLines) {
       return;
     }
+    this._soundManager.clear();
     let { points, clearedLines, speed } = this._query.raw;
     let newLines = clearedLines + numberOfClearedLines;
     let newPoints = this._getPoints(numberOfClearedLines, points);
