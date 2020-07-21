@@ -19,6 +19,7 @@ import { AkitaNgDevtools } from '@datorama/akita-ngdevtools';
 import { environment } from '../environments/environment';
 import { TileComponent } from './components/tile/tile.component';
 import { LogoComponent } from './components/logo/logo.component';
+import { GithubComponent } from './components/github/github.component';
 
 @NgModule({
   declarations: [
@@ -38,6 +39,7 @@ import { LogoComponent } from './components/logo/logo.component';
     StartLineComponent,
     TileComponent,
     LogoComponent,
+    GithubComponent,
   ],
   imports: [BrowserModule, environment.production ? [] : AkitaNgDevtools.forRoot()],
   providers: [],
