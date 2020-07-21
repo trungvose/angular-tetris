@@ -6,6 +6,7 @@ import { Piece } from '@trungk18/interface/piece/piece';
 import { Tile } from '@trungk18/interface/tile/tile';
 import { MatrixUtil } from '@trungk18/interface/utils/matrix';
 import { Speed } from '@trungk18/interface/speed';
+import { LocalStorageService } from '@trungk18/services/local-storage.service';
 
 export interface TetrisState {
   matrix: Tile[];
@@ -19,6 +20,7 @@ export interface TetrisState {
   clearedLines: number;
   gameState: GameState;
   saved: TetrisState;
+  max: number;
 }
 
 export function createInitialState(pieceFactory: PieceFactory): TetrisState {
@@ -33,7 +35,8 @@ export function createInitialState(pieceFactory: PieceFactory): TetrisState {
     clearedLines: 0,
     speed: 1,
     gameState: GameState.Loading,
-    saved: null
+    saved: null,
+    max: LocalStorageService.maxPoint
   };
 }
 

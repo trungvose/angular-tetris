@@ -12,6 +12,7 @@ import { TetrisQuery } from './tetris.query';
 import { createInitialState, TetrisStore } from './tetris.store';
 import { Speed } from '@trungk18/interface/speed';
 import { SoundManagerService } from '@trungk18/services/sound-manager.service';
+import { LocalStorageService } from '@trungk18/services/local-storage.service';
 
 @Injectable({ providedIn: 'root' })
 export class TetrisService {
@@ -136,7 +137,7 @@ export class TetrisService {
       return;
     }
     while (!this._isCollidesBottom) {
-      this._clearPiece()
+      this._clearPiece();
       this._setCurrentPiece(this._current.store());
       this._setCurrentPiece(this._current.moveDown());
     }
@@ -240,10 +241,15 @@ export class TetrisService {
   private _onGameOver() {
     this.pause();
     this._soundManager.gameOver();
+    let { points, max } = this._query.raw;
+    let maxPoint = Math.max(points, max);
     this._store.update({
       gameState: GameState.Over,
-      current: null
+      current: null,
+      max: maxPoint,
+      points: 0
     });
+    LocalStorageService.setMaxPoint(maxPoint);
   }
 
   private get _isCollidesBottom(): boolean {
