@@ -47,6 +47,7 @@ export class TetrisService {
     }
     let { initLine, speed } = this._query.raw;
     this._store.update({
+      points: 0,
       gameState: GameState.Started,
       matrix: MatrixUtil.getStartBoard(initLine)
     });
