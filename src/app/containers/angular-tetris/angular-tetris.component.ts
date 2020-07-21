@@ -71,6 +71,14 @@ export class AngularTetrisComponent implements OnInit {
     this[`keyUp${key}`]();
   }
 
+  @HostListener('window:beforeunload', ['$event'])
+  unloadHandler(event: Event) {
+    if (!!this._tetrisQuery.current) {
+      event.preventDefault();
+      event.returnValue = true;
+    }
+  }
+
   @HostListener(`${KeyDown}.${TetrisKeyboard.Left}`)
   keyDownLeft() {
     this._soundManager.move();
