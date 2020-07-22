@@ -16,6 +16,8 @@ const KeyDown = 'document:keydown';
 export class AngularTetrisComponent implements OnInit {
   drop$: Observable<boolean>;
   isShowLogo$: Observable<boolean>;
+  filling: number;  
+
   get hasCurrent() {
     return !!this._tetrisQuery.current;
   }
@@ -48,13 +50,13 @@ export class AngularTetrisComponent implements OnInit {
       scale = height / 960;
     } else {
       scale = width / 640;
-      let filling = (height - 960 * scale) / scale / 3;
-      let paddingTop = Math.floor(filling) + 42;
-      let paddingBottom = Math.floor(filling);
-      let marginTop = Math.floor(-480 - filling * 1.5);
+      this.filling = (height - 960 * scale) / scale / 3;
+      let paddingTop = Math.floor(this.filling) + 42;
+      let paddingBottom = Math.floor(this.filling);
+      let marginTop = Math.floor(-480 - this.filling * 1.5);
       this.setPaddingMargin(paddingTop, paddingBottom, marginTop);
     }
-    this._render.setStyle(this._el.nativeElement, 'transform', `scale(${scale})`);
+    this._render.setStyle(this._el.nativeElement, 'transform', `scale(${scale - 0.01})`);
   }
 
   private setPaddingMargin(paddingTop: number, paddingBottom: number, marginTop: number) {

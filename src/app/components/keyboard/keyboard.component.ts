@@ -1,4 +1,4 @@
-import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
 import { ArrowButton } from '@trungk18/interface/ui-model/arrow-button';
 import { KeyboardQuery } from '@trungk18/state/keyboard/keyboard.query';
 
@@ -9,6 +9,7 @@ import { KeyboardQuery } from '@trungk18/state/keyboard/keyboard.query';
 })
 export class KeyboardComponent implements OnInit {
   ArrowButton = ArrowButton;
+  @Input() filling: number = 20;
   @Output() onMouseDown = new EventEmitter<string>();
   @Output() onMouseUp = new EventEmitter<string>();
 
