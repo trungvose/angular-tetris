@@ -10,7 +10,7 @@ export class SoundManagerService {
   private _buffer: AudioBuffer;
 
   constructor(private _query: TetrisQuery) {
-    (window as any).tetrisSound = this;
+    
   }
 
   private get _hasWebAudioAPI(): boolean {
