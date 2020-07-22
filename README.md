@@ -21,18 +21,20 @@ Thanks a bunch for stopping by and supporting me!
 
 ## Why?
 
-Tetris was the first game that my dad bought to me and It costed about $1 US at that time. It didn't sound a lot today. But 20 years ago, 1$ can feed my family for at least few days. Put it that way, with 1\$ you can buy 2 dozens of eggs.
+Tetris was the first game that my dad bought to me and It costed about 1$ US at that time. It didn't sound a lot today. But 20 years ago, 1$ can feed my family for at least few days. Put it that way, with 1\$ you can buy 2 dozens of eggs.
 This is the only one gaming "machine" that I ever had until my first computer arrived. I have never had a SNES or PS1 at home.
 
 My Tetris was exactly in the same yellow color and it was so big, running on 2 AA battery. It is how it looks.
 
 ![Retro Tetris][tetris]
 
-Why not build the same <u>Tetris with Angular</u>? And here you go.
+After showing my wife the [Tetris game built with Vue][vue]. She told me why didn't I build the same <u>Tetris with Angular</u>? And here you go.
 
-> I designed the game to hold maximum score of 999999 (one million minus one 😂) and I have never reached to that very end.
+> I designed the game to hold maximum score of 999999 (one million minus one 😂) and I have never reached to that very end. Please [tweet][tweetmax] your screenshot together with hashtag `#angulartetris` and tag my name as well `@tuantrungvo`.
 >
-> I will give <u>a free gift</u> for the **first five** amazing gamer. Please tweet your screenshot together with hashtag `angulartetris` and tag my name as well `@tuantrungvo`.
+> The **first five** amazing gamer that reached to 999999 points will received a <u>free gift</u>
+
+[tweetmax]: https://twitter.com/intent/tweet?url=https%3A%2F%2Fgithub.com%2Ftrungk18%2Fangular-tetris&text=Woo-hoo!%20I%20got%20a%20999999%20points%20on%20Angular%20Tetris%20%40tuantrungvo.%20Wanna%20join%20the%20party%3F%20&hashtags=angular,angulartetris,akita,typescript
 
 ## Who is this for?
 
@@ -46,7 +48,7 @@ I built this game dedicated to:
 ### Before playing
 
 - You can use both keyboard and mouse to play. But prefer to use <u>keyboard</u>
-- Press arrow left and right to change the speed of the game **(1 - 6)**. The higher the number, the faster the piece will fall.
+- Press arrow left and right to change the speed of the game **(1 - 6)**. The higher the number, the faster the piece will fall
 - Press arrow up and down to change how many of lines has been filled before starting the game **(1 - 10)**
 - Press `Space` to start the game
 - Press `P` for pause/resume game
@@ -59,6 +61,8 @@ I built this game dedicated to:
 - Press `Arrow left` and `right` for moving left and right
 - Press `Arrow up` to rotate the piece
 - Press `Arrow down` to move a piece faster
+- When clearing lines, you will received a point - 100 points for 1 line, 300 points for 2 lines, 700 points for 3 lines, 1500 points for 4 lines
+- The drop speed of the pieces increases with the number of rows eliminated (one level up for every 20 lines cleared)
 
 ## Techstack
 
@@ -70,9 +74,121 @@ I built it barely with Angular and Akita, no additional UI framework/library was
 
 I got the inspiration from the same same but different [Tetris game built with Vue][vue]. To not reinvented the wheel, I started to look at Vue code and thought it would be very identical to Angular. But later one, I realized a few catches:
 
-- The Vue source code was written few years ago with pure JS. I could find several problems that the complier didn't tell you. Such as giving `parseInt` a number. It is still working though, but I don't really like it.
+- The Vue source code was written few years ago with pure JS. I could find several problems that the complier didn't tell you. Such as giving `parseInt` a number. It is still working though, but I don't like it.
 - There was an extensively uses of `setTimeout` and `setInterval` for making animations. I rewrote all of the animation logic using RxJS. You will see the detail below.
 - The brain of the game also used `setTimeout` for the game loop. It was not a problem, but I was having a <u>hard time</u> understanding the code on some essential elements: how to render the piece to the UI, how the calculation make senses with xy axis. In the end, I changed all of the logic to a proper OOP way using TypeScript class, based on [@chrum/ngx-tetris][ngx-tetris].
+
+### Tetris Core
+
+It is the most important part of the game. As I am following the Vue source code, It is getting harder to understand what was the developer's intention. The Vue version gave me the inspiration but I think I have to write the core tetris differently.
+
+Take a look at the two block of code below which do the same rendering piece on the screen and you will understand what I am talking about. The left side was rewritten with Angular and TypeScript and the right side was the JS version.
+
+![Angular Tetris][compare01]
+
+I always think that your code must be written as you talk to people, without explaining a word. Otherwise when someone come in and read your code and maintain it, they will be struggling.
+
+> “ Code is like humor. When you have to explain it, it’s bad.” – Cory House
+
+And let me emphasize it again, I didn't write the brain of the game from the scratch. I adapted the well-written source by [@chrum/ngx-tetris][ngx-tetris] for tetris core. I did refactor some parts to support Akita and wrote some new functionality as well.
+
+### Akita state management + dev tool support
+
+Although you don't dispatch any action, Akita will still do it undo the hood as the Update action. And you still can see the data with [Redux DevTools][redux-devtool]. Remember to put that option into your `AppModule`
+
+```ts
+imports: [BrowserModule, environment.production ? [] : AkitaNgDevtools.forRoot()];
+```
+
+I turn it on all the time on [tetris.trungk18.com][angular-tetris], you can open the DevTools and start seeing the data flow.
+
+![Angular Tetris][akita-devtool]
+
+> Note: opening the DevTools could reduce the performance of the game significantly. I recommended you turn it off when you want to archive a high score 🤓
+
+### Web Audio API
+
+There are many sound effects in the game such as when you press space, or left, right. In reality, all of the sound was reference to a single file [assets/tetris-sound.mp3][sounds].
+
+I don't have much experience working with audio before but the Web Audio API looks very promising. You could do more with it.
+
+- See the [official documentation][webaudio]
+- See how I load the mp3 file and store it in [sound-manager.service.ts][sound-manager]
+
+### Animation
+
+I rewrote the animation with RxJS. See the comparison below for the simple dinosaurs running animation at the beginning of the game.
+
+You could do a lot of stuff if you know RxJS well enough :) I think I need to strengthen my RxJS knowledge soon enough as well. Super powerful.
+
+![Angular Tetris][compare02]
+
+The actual result doesn't look very identical but it is good enough in my standard.
+
+![Angular Tetris][compare02-result]
+
+### Keyboard handling
+
+I planned to use [@ngneat/hotkeys][hotkeys] but I decided to use `@HostListener` instead. A simple implementation could looks like:
+
+```typescript
+@HostListener(`${KeyDown}.${TetrisKeyboard.Left}`)
+keyDownLeft() {
+  this._soundManager.move();
+  this._keyboardService.setKeỵ({
+    left: true
+  });
+  if (this.hasCurrent) {
+    this._tetrisService.moveLeft();
+  } else {
+    this._tetrisService.decreaseLevel();
+  }
+}
+```
+
+See more at [containers/angular-tetris/angular-tetris.component.ts][hotkeys-implementation]
+
+## Features and Roadmap
+
+### Phase 1 - Angular Tetris basic functionality
+
+> July 10 - 23, 2020
+
+- [x] Proven, scalable, and easy to understand project structure
+- [x] Basic Tetris functionality
+- [x] Six levels
+- [x] Local storage high score
+- [x] Sounds effects
+
+### Phase 2 - Firebase high score, more sounds effect, more animation
+
+> TBD
+
+- [ ] Firebase high score
+- [ ] More sound effects
+- [ ] More animations
+
+## Time spending
+
+I was actually still working with [Chau Tran][chautran] on phase two of [Angular Jira clone][jira-clone] and I saw a Tetris game. My wife really want to have a version that I built so that I decided to finish the Angular Tetris first before completing Jira clone phase two.
+
+According to waka time report, I have spent about 30 hours working on this project. Which is equal to [run a marathon five times][marathon] at my current speed 😩
+
+![Angular Tetris][timespending]
+
+## Setting up development environment 🛠
+
+- `git clone https://github.com/trungk18/angular-tetris.git`
+- `cd angular-tetris`
+- `npm start`
+- The app should run on `http://localhost:4200/`
+
+## Author: Trung Vo ✍️
+
+- A young and passionate front-end engineer. Working with Angular and TypeScript. Like photography, running, cooking, and reading books.
+- Author of Angular Jira clone -> [jira.trungk18.com][jira-clone]
+- Personal blog: https://trungk18.com/
+- Say hello: trungk18 [et] gmail [dot] com
 
 ## Credits and references
 
@@ -83,9 +199,36 @@ I got the inspiration from the same same but different [Tetris game built with V
 | [Game Development: Tetris in Angular][medium] | A detailed excellent article about how to built a complete Tetris game. I didn't check the code but I learned much more from the article |
 | [Super Rotation System][srs]                  | A standard for how the piece behave. I didn't follow everything but it is good to know as wells                                          |
 
+## Contributing
+
+If you have any ideas, just [open an issue][issues] and tell me what you think.
+
+If you'd like to contribute, please fork the repository and make changes as you'd like. [Pull requests][pull] are warmly welcome.
+
+## License
+
+Feel free to use my code on your project. It would be great if you put a reference to this repository.
+
+[MIT](https://opensource.org/licenses/MIT)
+
+[angular-tetris]: https://tetris.trungk18.com
 [medium]: https://medium.com/angular-in-depth/game-development-tetris-in-angular-64ef96ce56f7
 [srs]: https://tetris.fandom.com/wiki/SRS
 [vue]: https://github.com/Binaryify/vue-tetris
-[tetris]: src/assets/img/retro-tetris.jpg
+[tetris]: src/assets/readme/retro-tetris.jpg
 [ngx-tetris]: https://github.com/chrum/ngx-tetris
-[techstack]: src/assets/img/tech-stack.png
+[techstack]: src/assets/readme/tech-stack.png
+[compare01]: src/assets/readme/compare01.png
+[compare02]: src/assets/readme/compare02.png
+[compare02-result]: src/assets/readme/compare02-result.gif
+[timespending]: src/assets/readme/time-spending.png
+[akita-devtool]: src/assets/readme/akita-devtool.gif
+[sounds]: assets/tetris-sound.mp3
+[sound-manager]: src/app/services/sound-manager.service.ts
+[webaudio]: https://developer.mozilla.org/en-US/docs/Web/API/Web_Audio_API
+[redux-devtool]: https://chrome.google.com/webstore/detail/redux-devtools/lmhkpmbekcpmknklioeibfkpmmfibljd?hl=en
+[hotkeys]: https://github.com/ngneat/hotkeys
+[hotkeys-implementation]: src/app/containers/angular-tetris/angular-tetris.component.ts
+[chautran]: https://github.com/nartc
+[jira-clone]: https://github.com/trungk18/jira-clone-angular
+[marathon]: https://www.strava.com/activities/2902245728
