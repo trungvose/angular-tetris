@@ -20,6 +20,7 @@ import { environment } from '../environments/environment';
 import { TileComponent } from './components/tile/tile.component';
 import { LogoComponent } from './components/logo/logo.component';
 import { GithubComponent } from './components/github/github.component';
+import { TwitterButtonComponent } from './components/twitter-button/twitter-button.component';
 
 @NgModule({
   declarations: [
@@ -40,6 +41,7 @@ import { GithubComponent } from './components/github/github.component';
     TileComponent,
     LogoComponent,
     GithubComponent,
+    TwitterButtonComponent,
   ],
   imports: [BrowserModule, environment.production ? [] : AkitaNgDevtools.forRoot()],
   providers: [],

@@ -19,7 +19,8 @@
         </div>
     </div>
 </div>
-<t-keyboard (onMouseDown)="keyboardMouseDown($event)"
+<t-keyboard [filling]="filling"
+            (onMouseDown)="keyboardMouseDown($event)"
             (onMouseUp)="keyboardMouseUp($event)">
 </t-keyboard>
 <t-github></t-github>

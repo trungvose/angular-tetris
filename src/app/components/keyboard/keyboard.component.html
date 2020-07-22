@@ -1,4 +1,5 @@
-<div class="keyboard">
+<div class="keyboard"
+     [style.margin-top.px]='filling'>
     <t-button className="blue btn-md"
               [active$]="keyboardQuery.up$"
               [arrowButton]="ArrowButton.UP"
