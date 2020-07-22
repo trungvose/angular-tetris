@@ -316,7 +316,7 @@ export class TetrisService {
     let { points, clearedLines, speed } = this._query.raw;
     let newLines = clearedLines + numberOfClearedLines;
     let newPoints = this._getPoints(numberOfClearedLines, points);
-    let newSpeed = this._getSpeed(newLines, speed);
+    let newSpeed = this._getSpeed(newLines);
 
     this._store.update({
       points: newPoints,
@@ -330,11 +330,9 @@ export class TetrisService {
     }
   }
 
-  private _getSpeed(totalLines: number, initSpeed: number): Speed {
-    let addedSpeed = Math.floor(totalLines / MatrixUtil.Height);
-    let newSpeed = <Speed>(initSpeed + addedSpeed);
-    newSpeed = newSpeed > 6 ? 6 : newSpeed;
-    return newSpeed;
+  private _getSpeed(totalLines: number): Speed {
+    let newSpeed = Math.floor(totalLines / MatrixUtil.Height);    
+    return <Speed>(newSpeed > 6 ? 6 : newSpeed);
   }
 
   private _getPoints(numberOfClearedLines: number, points: number): number {

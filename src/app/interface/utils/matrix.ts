@@ -33,7 +33,7 @@ export class MatrixUtil {
 
   static getRandomFilledRow(min: number, max: number): Tile[] {
     const count = parseInt(`${(max - min + 1) * Math.random() + min}`, 10);
-    const line: Tile[] = new Array(count).fill(new FilledTile());
+    const line: Tile[] = new Array(count).fill(new FilledTile(true));
 
     for (let i = 0, len = 10 - count; i < len; i++) {
       const index = parseInt(`${(line.length + 1) * Math.random()}`, 10);

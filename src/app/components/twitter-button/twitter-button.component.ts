@@ -7,7 +7,6 @@ import { Component, OnInit, Input } from '@angular/core';
 })
 export class TwitterButtonComponent implements OnInit {
   @Input() tweetUrl = '';
-  @Input() label = 'Tweet';
 
   constructor() {}
 

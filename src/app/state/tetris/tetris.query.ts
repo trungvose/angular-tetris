@@ -52,6 +52,8 @@ export class TetrisQuery extends Query<TetrisState> {
   clearedLines$ = this.select('clearedLines');
   initLine$ = this.select('initLine');
   speed$ = this.select('speed');
+  max$ = this.select('max');
+
   isShowLogo$ = combineLatest(this.gameState$, this.select('current')).pipe(
     switchMap(([state, current]) => {
       let isLoadingOrOver = state === GameState.Loading || state === GameState.Over;

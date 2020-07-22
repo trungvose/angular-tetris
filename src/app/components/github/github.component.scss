@@ -41,8 +41,12 @@
   flex-direction: column;
 }
 
-.twitter {
+.tweet-button {
   cursor: pointer;
-  margin-top: 15px;
+  margin-top: 5px;
   margin-bottom: 5px;
+  
+  &.top {
+    margin-top: 15px;
+  }
 }
