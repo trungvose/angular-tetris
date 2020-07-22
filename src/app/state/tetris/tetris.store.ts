@@ -15,6 +15,7 @@ export interface TetrisState {
   points: number;
   locked: boolean;
   sound: boolean;
+  initSpeed: Speed;
   speed: Speed;
   initLine: number;
   clearedLines: number;
@@ -33,6 +34,7 @@ export function createInitialState(pieceFactory: PieceFactory): TetrisState {
     sound: true,
     initLine: 0,
     clearedLines: 0,
+    initSpeed: 1,
     speed: 1,
     gameState: GameState.Loading,
     saved: null,
