@@ -1,4 +1,10 @@
 <p>Level</p>
-<t-number [num]="speed$ | async"
+<t-number *ngIf="hasCurrent$ | async; else initSpeedTmpl"
+          [num]="speed$ | async"
           [length]="1">
 </t-number>
+<ng-template #initSpeedTmpl>
+    <t-number [num]="initSpeed$ | async"
+              [length]="1">
+    </t-number>
+</ng-template>

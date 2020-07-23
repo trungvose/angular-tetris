@@ -6,8 +6,17 @@
     <img atl="QR Code to play on mobile"
          src="https://res.cloudinary.com/dvujyxh7e/image/upload/v1595380432/angular-tetris-qr-code-no-text.png" />
   </div>
-  <div class="twitter">
-    <t-twitter-button [tweetUrl]="tweetAngularTetrisUrl">
+  <div class="tweet-button top"
+       *ngIf="max$ | async as maxPoint">
+    <t-twitter-button [tweetUrl]="getTweetMaxScoreShareUrl(maxPoint)"
+                      (click)="sendTwitterShareMaxScoreEvent()">
+      Share Your Score - {{ maxPoint }}
+    </t-twitter-button>
+  </div>
+  <div class="tweet-button">
+    <t-twitter-button [tweetUrl]="tweetAngularTetrisUrl"
+                      (click)="sendTwitterShareEvent()">
+      Tweet
     </t-twitter-button>
   </div>
   <iframe src="https://ghbtns.com/github-btn.html?user=trungk18&repo=angular-tetris&type=star&count=true&size=large"
@@ -24,10 +33,4 @@
           height="30"
           title="Angular Tetris Fork">
   </iframe>
-  <iframe src="https://ghbtns.com/github-btn.html?user=trungk18&repo=angular-tetris&type=follow&count=true&size=large"
-          frameborder="0"
-          scrolling="0"
-          width="230"
-          height="30"
-          title="GitHub"></iframe>
 </div>

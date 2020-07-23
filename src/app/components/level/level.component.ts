@@ -10,9 +10,14 @@ import { TetrisQuery } from '@trungk18/state/tetris/tetris.query';
 })
 export class LevelComponent implements OnInit {
   speed$: Observable<Speed>;
+  initSpeed$: Observable<Speed>;
+  hasCurrent$: Observable<boolean>;
+
   constructor(private _query: TetrisQuery) {}
 
   ngOnInit(): void {
     this.speed$ = this._query.speed$;
+    this.hasCurrent$ = this._query.hasCurrent$;
+    this.initSpeed$ = this._query.initSpeed$;
   }
 }

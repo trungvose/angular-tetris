@@ -43,7 +43,7 @@ import { TwitterButtonComponent } from './components/twitter-button/twitter-butt
     GithubComponent,
     TwitterButtonComponent,
   ],
-  imports: [BrowserModule, environment.production ? [] : AkitaNgDevtools.forRoot()],
+  imports: [BrowserModule, AkitaNgDevtools.forRoot()],
   providers: [],
   bootstrap: [AppComponent],
 })

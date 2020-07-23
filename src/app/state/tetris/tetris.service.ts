@@ -46,14 +46,15 @@ export class TetrisService {
       this._setCurrentPiece(this._next);
       this._setNext();
     }
-    let { initLine, speed } = this._query.raw;
+    let { initLine, initSpeed } = this._query.raw;
     this._store.update({
       points: 0,
       gameState: GameState.Started,
-      matrix: MatrixUtil.getStartBoard(initLine)
+      matrix: MatrixUtil.getStartBoard(initLine),
+      speed: initSpeed
     });
     this._unsubscribe();
-    this.auto(MatrixUtil.getSpeedDelay(speed));
+    this.auto(MatrixUtil.getSpeedDelay(initSpeed));
     this._setLocked(false);
   }
 
@@ -153,18 +154,18 @@ export class TetrisService {
   }
 
   decreaseLevel() {
-    let { speed } = this._query.raw;
-    let newSpeed = (speed - 1 < 1 ? 6 : speed - 1) as Speed;
+    let { initSpeed } = this._query.raw;
+    let newSpeed = (initSpeed - 1 < 1 ? 6 : initSpeed - 1) as Speed;
     this._store.update({
-      speed: newSpeed
+      initSpeed: newSpeed
     });
   }
 
   increaseLevel() {
-    let { speed } = this._query.raw;
-    let newSpeed = (speed + 1 > 6 ? 1 : speed + 1) as Speed;
+    let { initSpeed } = this._query.raw;
+    let newSpeed = (initSpeed + 1 > 6 ? 1 : initSpeed + 1) as Speed;
     this._store.update({
-      speed: newSpeed
+      initSpeed: newSpeed
     });
   }
 
@@ -313,10 +314,10 @@ export class TetrisService {
       return;
     }
     this._soundManager.clear();
-    let { points, clearedLines, speed } = this._query.raw;
+    let { points, clearedLines, speed, initSpeed } = this._query.raw;
     let newLines = clearedLines + numberOfClearedLines;
     let newPoints = this._getPoints(numberOfClearedLines, points);
-    let newSpeed = this._getSpeed(newLines, speed);
+    let newSpeed = this._getSpeed(newLines, initSpeed);
 
     this._store.update({
       points: newPoints,
