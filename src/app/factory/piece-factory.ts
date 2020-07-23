@@ -19,7 +19,7 @@ export class PieceFactory {
   private _available: typeof Piece[] = [];
 
   constructor() {
-    this._available.push(PieceDot);
+    //this._available.push(PieceDot);
     this._available.push(PieceI);
     this._available.push(PieceJ);
     this._available.push(PieceL);
