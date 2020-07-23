@@ -2,6 +2,37 @@
 
 A childhood memory Tetris game built with Angular 10 and Akita.
 
+<details>
+  <summary>Table Of Content</summary>
+  <p>
+
+- [Angular Tetris](#angular-tetris)
+  - [Working Game](#working-game)
+  - [Why?](#why)
+  - [Who is this for?](#who-is-this-for)
+  - [How to play](#how-to-play)
+    - [Before playing](#before-playing)
+    - [Playing game](#playing-game)
+  - [Techstack](#techstack)
+  - [Development Challenge](#development-challenge)
+    - [Tetris Core](#tetris-core)
+    - [Akita state management + dev tool support](#akita-state-management--dev-tool-support)
+    - [Customizing Piece](#customizing-piece)
+    - [Animation](#animation)
+    - [Web Audio API](#web-audio-api)
+    - [Keyboard handling](#keyboard-handling)
+  - [Features and Roadmap](#features-and-roadmap)
+    - [Phase 1 - Angular Tetris basic functionality](#phase-1---angular-tetris-basic-functionality)
+    - [Phase 2 - Firebase high score, service worker, more sounds effect, more animation](#phase-2---firebase-high-score-service-worker-more-sounds-effect-more-animation)
+  - [Time spending](#time-spending)
+  - [Setting up development environment 🛠](#setting-up-development-environment-)
+  - [Author: Trung Vo ✍️](#author-trung-vo-️)
+  - [Credits and references](#credits-and-references)
+  - [Contributing](#contributing)
+  - [License](#license)
+  </p>
+  </details>
+
 ## Working Game
 
 Check out the **working game** -> https://tetris.trungk18.com
@@ -97,7 +128,7 @@ And let me emphasize it again, I didn't write the brain of the game from scratch
 Although you don't dispatch any action, Akita will still do it undo the hood as the Update action. And you still can see the data with [Redux DevTools][redux-devtool]. Remember to put that option into your `AppModule`
 
 ```ts
-imports: [BrowserModule, environment.production ? [] : AkitaNgDevtools.forRoot()];
+imports: [environment.production ? [] : AkitaNgDevtools.forRoot()];
 ```
 
 I turn it on all the time on [tetris.trungk18.com][angular-tetris], you can open the DevTools and start seeing the data flow.
@@ -105,6 +136,146 @@ I turn it on all the time on [tetris.trungk18.com][angular-tetris], you can open
 ![Angular Tetris][akita-devtool]
 
 > Note: opening the DevTools could reduce the performance of the game significantly. I recommended you turn it off when you want to archive a high score 🤓
+
+### Customizing Piece
+
+I defined a base [Piece class][piece-class] for a piece. And for each type of piece, it will extend from the same base class to inherit the same capability
+[piece-class]: src/app/interface/piece/piece.ts
+
+```ts
+export class Piece {
+  x: number;
+  y: number;
+  rotation = PieceRotation.Deg0;
+  type: PieceTypes;
+  shape: Shape;
+  next: Shape;
+
+  private _shapes: Shapes;
+  private _lastConfig: Partial<Piece>;
+
+  constructor(x: number, y: number) {
+    this.x = x;
+    this.y = y;
+  }
+
+  store(): Piece {
+    this._lastConfig = {
+      x: this.x,
+      y: this.y,
+      rotation: this.rotation,
+      shape: this.shape
+    };
+    return this._newPiece();
+  }
+
+  //code removed for brevity
+}
+```
+
+For example, I have a piece L. I create a new class name [PieceL][piecel]. I will contain the shape of L in four different rotation so that I don't have to mess up with the math to do minus plus on the XY axis. And I think defining in that way makes the code self-express better. If you see 1, it means on the matrix it will be filled, 0 mean empty tile.
+
+If my team member needs to maintain the code, I hope he will understand what I was trying to write immediately. Or maybe not 🤣
+
+One import property of the Piece is the `next` property to display the piece shape on the decoration box for the upcoming piece.
+
+[piecel]: src/app/interface/piece/L.ts
+
+```ts
+const ShapesL: Shapes = [];
+ShapesL[PieceRotation.Deg0] = [
+  [0, 0, 0, 0],
+  [1, 0, 0, 0],
+  [1, 0, 0, 0],
+  [1, 1, 0, 0]
+];
+
+ShapesL[PieceRotation.Deg90] = [
+  [0, 0, 0, 0],
+  [0, 0, 0, 0],
+  [1, 1, 1, 0],
+  [1, 0, 0, 0]
+];
+//code removed for brevity
+
+];
+
+export class PieceL extends Piece {
+  constructor(x: number, y: number) {
+    super(x, y);
+    this.type = PieceTypes.L;
+    this.next = [
+      [0, 0, 1, 0],
+      [1, 1, 1, 0]
+    ];
+    this.setShapes(ShapesL);
+  }
+}
+```
+
+Now is the interesting part, you create a custom piece by yourself. Simply create a new class that extends from `Piece` with different rotations.
+
+For instance, I will define a new piece call F with class name [`PieceF`][piecef]. That is how it should look like.
+
+[piecef]: https://github.com/trungk18/angular-tetris/blob/feature/pieceF/src/app/interface/piece/F.ts
+
+```ts
+const ShapesF: Shapes = [];
+ShapesF[PieceRotation.Deg0] = [
+  [1, 0, 0, 0],
+  [1, 1, 0, 0],
+  [1, 0, 0, 0],
+  [1, 1, 0, 0]
+];
+
+export class PieceF extends Piece {
+  constructor(x, y) {
+    super(x, y);
+    this.type = PieceTypes.F;
+    this.next = [
+      [1, 0, 1, 0],
+      [1, 1, 1, 1]
+    ];
+    this.setShapes(ShapesF);
+  }
+}
+```
+
+And the last step, go to [PieceFactory][piecefactory] to add the new PieceF into the available pieces.
+
+[piecefactory]: src/app/factory/piece-factory.ts
+
+```ts
+export class PieceFactory {
+  private _available: typeof Piece[] = [];
+
+  constructor() {
+    //code removed for brevity
+    this._available.push(PieceF);
+  }
+}
+```
+
+And you're all set, this is the result. See how easy it is to understand the code and add a custom piece that you like.
+
+The source code for that custom piece F, you can see at [feature/pieceF][feature/piecef] branch.
+
+![Angular Tetris Piece F][piecef-demo]
+
+[feature/piecef]: https://github.com/trungk18/angular-tetris/tree/feature/pieceF
+[piecef-demo]: src/assets/readme/piecef-demo.gif
+
+### Animation
+
+I rewrote the animation with RxJS. See the comparison below for the simple dinosaurs running animation at the beginning of the game.
+
+You could do a lot of stuff if you know RxJS well enough :) I think I need to strengthen my RxJS knowledge soon enough as well. Super powerful.
+
+![Angular Tetris][compare02]
+
+The actual result doesn't look very identical but it is good enough in my standard.
+
+![Angular Tetris][compare02-result]
 
 ### Web Audio API
 
@@ -114,30 +285,6 @@ I don't have much experience working with audio before but the Web Audio API loo
 
 - See the [official documentation][webaudio]
 - See how I load the mp3 file and store it in [sound-manager.service.ts][sound-manager]
-
-### Animation
-
-I rewrote the animation with RxJS. See the comparison below for the simple dinosaurs running animation at the beginning of the game.
-
-You could do a lot of stuff if you know RxJS well enough :) I think I need to strengthen my RxJS knowledge soon enough as well. Super powerful.
-
-![Angular Tetris][compare02]
-
-The actual result doesn't look very identical but it is good enough in my standard.
-
-![Angular Tetris][compare02-result]
-
-### Animation
-
-I rewrote the animation with RxJS. See the comparison below for the simple dinosaurs running animation at the beginning of the game.
-
-You could do a lot of stuff if you know RxJS well enough :) I think I need to strengthen my RxJS knowledge soon enough as well. Super powerful.
-
-![Angular Tetris][compare02]
-
-The actual result doesn't look very identical but it is good enough in my standard.
-
-![Angular Tetris][compare02-result]
 
 ### Keyboard handling
 
@@ -172,10 +319,11 @@ See more at [containers/angular-tetris/angular-tetris.component.ts][hotkeys-impl
 - [x] Local storage high score
 - [x] Sounds effects
 
-### Phase 2 - Firebase high score, more sounds effect, more animation
+### Phase 2 - Firebase high score, service worker, more sounds effect, more animation
 
 > TBD
 
+- [ ] Offline mode (play without internet connection)
 - [ ] Firebase high score
 - [ ] More sound effects
 - [ ] More animations
