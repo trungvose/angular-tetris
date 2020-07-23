@@ -8,12 +8,14 @@
   </div>
   <div class="tweet-button top"
        *ngIf="max$ | async as maxPoint">
-    <t-twitter-button [tweetUrl]="getTweetMaxScoreShareUrl(maxPoint)">
+    <t-twitter-button [tweetUrl]="getTweetMaxScoreShareUrl(maxPoint)"
+                      (click)="sendTwitterShareMaxScoreEvent()">
       Share Your Score - {{ maxPoint }}
     </t-twitter-button>
   </div>
   <div class="tweet-button">
-    <t-twitter-button [tweetUrl]="tweetAngularTetrisUrl">
+    <t-twitter-button [tweetUrl]="tweetAngularTetrisUrl"
+                      (click)="sendTwitterShareEvent()">
       Tweet
     </t-twitter-button>
   </div>
