@@ -50,7 +50,8 @@ Thanks a bunch for stopping by and supporting me!
 
 [tweet]: https://twitter.com/intent/tweet?url=https%3A%2F%2Fgithub.com%2Ftrungk18%2Fangular-tetris&text=Awesome%20Tetris%20game%20built%20with%20Angular%2010%20and%20Akita%2C%20can%20you%20get%20999999%20points%3F&hashtags=angular,angulartetris,akita,typescript
 
-> The mobile device support is very limited at the moment - no sounds, can play but lagging, no button press effect. I will spend the next few days working on it. The screenshot below recorded on iPhone X. I tested again on a Samsung device and saw it was running smoother with sounds as well. If tweet and tag me for any issues that you are currently facing!!
+> The mobile device support is very limited at the moment - no sounds, can play but lagging, no button press effect. I will spend the next few days working on it. The screenshot below recorded on iPhone X. I tested again on a Samsung device it was running smoother - with sounds as well.
+> Please tweet and tag me for any issues that you are currently facing!!
 >
 > Thanks for your understanding. Stay tuned!
 
