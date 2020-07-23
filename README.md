@@ -39,7 +39,7 @@ Check out the **working game** -> https://tetris.trungk18.com
 
 The game has sounds, wear your 🎧 or turn on your 🔊 for a better experience.
 
-![A child-hood memory Tetris game built with Angular 10 and Akita][demo]
+![A childhood memory Tetris game built with Angular 10 and Akita][demo]
 
 If you like my work, feel free to:
 
@@ -49,6 +49,12 @@ If you like my work, feel free to:
 Thanks a bunch for stopping by and supporting me!
 
 [tweet]: https://twitter.com/intent/tweet?url=https%3A%2F%2Fgithub.com%2Ftrungk18%2Fangular-tetris&text=Awesome%20Tetris%20game%20built%20with%20Angular%2010%20and%20Akita%2C%20can%20you%20get%20999999%20points%3F&hashtags=angular,angulartetris,akita,typescript
+
+> The mobile device support is very limited at the moment - no sounds, can play but lagging, no button press effect. I will spend the next few days working on it. The screenshot below recorded on iPhone X.
+>
+> Thanks for your understanding. Stay tuned!
+
+![A childhood memory Tetris game built with Angular 10 and Akita][iphonex]
 
 ## Why?
 
@@ -318,11 +324,13 @@ See more at [containers/angular-tetris/angular-tetris.component.ts][hotkeys-impl
 - [x] Six levels
 - [x] Local storage high score
 - [x] Sounds effects
+- [x] Limited mobile support
 
 ### Phase 2 - Firebase high score, service worker, more sounds effect, more animation
 
 > TBD
 
+- [ ] Fully mobile support
 - [ ] Offline mode (play without internet connection)
 - [ ] Firebase high score
 - [ ] More sound effects
@@ -381,6 +389,7 @@ Feel free to use my code on your project. It would be great if you put a referen
 [vue]: https://github.com/Binaryify/vue-tetris
 [tetris]: src/assets/readme/retro-tetris.jpg
 [demo]: src/assets/readme/angular-tetris-demo.gif
+[iphonex]: src/assets/readme/angular-tetris-iphonex.gif
 [ngx-tetris]: https://github.com/chrum/ngx-tetris
 [techstack]: src/assets/readme/tech-stack.png
 [compare01]: src/assets/readme/compare01.png
