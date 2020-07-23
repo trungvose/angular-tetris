@@ -15,7 +15,7 @@ export class LogoComponent implements OnInit {
     concat(this.run(), this.eyes())
       .pipe(
         delay(5000),
-        repeat(10)
+        repeat(1000)
       )
       .subscribe();
   }
