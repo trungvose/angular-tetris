@@ -13,5 +13,8 @@ export enum PieceTypes {
   L = 'L',
   J = 'J',
   Z = 'Z',
-  S = 'S'
+  S = 'S',
+
+  //custom
+  F = "F"
 }

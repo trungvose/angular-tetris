@@ -8,6 +8,7 @@ import { PieceS } from '../interface/piece/S';
 import { PieceT } from '../interface/piece/T';
 import { PieceZ } from '../interface/piece/Z';
 import { Injectable } from '@angular/core';
+import { PieceF } from '@trungk18/interface/piece/F';
 
 export const SPAWN_POSITION_X = 4;
 export const SPAWN_POSITION_Y = -4;
@@ -19,14 +20,15 @@ export class PieceFactory {
   private _available: typeof Piece[] = [];
 
   constructor() {
-    this._available.push(PieceDot);
-    this._available.push(PieceI);
-    this._available.push(PieceJ);
-    this._available.push(PieceL);
-    this._available.push(PieceO);
-    this._available.push(PieceS);
-    this._available.push(PieceT);
-    this._available.push(PieceZ);
+    // this._available.push(PieceDot);
+    // this._available.push(PieceI);
+    // this._available.push(PieceJ);
+    // this._available.push(PieceL);
+    // this._available.push(PieceO);
+    // this._available.push(PieceS);
+    // this._available.push(PieceT);
+    // this._available.push(PieceZ);
+    this._available.push(PieceF)
   }
 
   getRandomPiece(x = SPAWN_POSITION_X, y = SPAWN_POSITION_Y): Piece {
