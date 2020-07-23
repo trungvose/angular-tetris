@@ -232,6 +232,7 @@ Feel free to use my code on your project. It would be great if you put a referen
 [srs]: https://tetris.fandom.com/wiki/SRS
 [vue]: https://github.com/Binaryify/vue-tetris
 [tetris]: src/assets/readme/retro-tetris.jpg
+[demo]: src/assets/readme/angular-tetris-demo.gif
 [ngx-tetris]: https://github.com/chrum/ngx-tetris
 [techstack]: src/assets/readme/tech-stack.png
 [compare01]: src/assets/readme/compare01.png
