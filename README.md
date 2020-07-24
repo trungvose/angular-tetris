@@ -59,7 +59,7 @@ Thanks a bunch for stopping by and supporting me!
 
 ## Why?
 
-Tetris was the first game that my dad bought for me and It cost about 1$ US at that time. It didn't sound a lot today. But 20 years ago, 1$ can feed my family for at least a few days. Put it that way, with 1\$ you can buy 2 dozens eggs.
+Tetris was the first game that my dad bought for me and It cost about 1$ US at that time. It didn't sound a lot today. But 20 years ago, 1$ can feed my family for at least a few days. Put it that way, with 1$ you can buy two dozens eggs.
 This is the only gaming "machine" that I ever had until my first computer arrived. I have never had a SNES or PS1 at home.
 
 My Tetris was exactly in the same yellow color and it was so big, running on 2 AA battery. It is how it looks.
@@ -70,7 +70,7 @@ After showing my wife the [Tetris game built with Vue][vue]. She told me why did
 
 > I designed the game to hold a maximum score of 999999 (one million minus one 😂) and I have never reached that very end. Please [tweet][tweetmax] your screenshot together with hashtag `#angulartetris` and tag my name as well `@tuantrungvo`.
 >
-> The **first five** amazing gamer that reached to 999999 points will receive a <u>free gift</u>
+> **The first five amazing gamer that reached to 999999 points** will receive a <u>free gift</u>
 
 [tweetmax]: https://twitter.com/intent/tweet?url=https%3A%2F%2Fgithub.com%2Ftrungk18%2Fangular-tetris&text=Woo-hoo!%20I%20got%20a%20999999%20points%20on%20Angular%20Tetris%20%40tuantrungvo.%20Wanna%20join%20the%20party%3F%20&hashtags=angular,angulartetris,akita,typescript
 
@@ -147,6 +147,7 @@ I turn it on all the time on [tetris.trungk18.com][angular-tetris], you can open
 ### Customizing Piece
 
 I defined a base [Piece class][piece-class] for a piece. And for each type of piece, it will extend from the same base class to inherit the same capability
+
 [piece-class]: src/app/interface/piece/piece.ts
 
 ```ts
@@ -363,12 +364,12 @@ The flow was easy. I designed a simple [to do list][todolist], then start readin
 
 ## Credits and references
 
-| Resource                                      | Description                                                                                                                              |
-| --------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------- |
-| [@Binaryify/vue-tetris][vue]                  | Vue Tetris, I reused part of HTML, CSS and static assets from that project                                                               |
-| [@chrum/ngx-tetris][ngx-tetris]               | A comprehensive core Tetris written with Angular, I reused part of that for the brain of the game.                                       |
-| [Game Development: Tetris in Angular][medium] | A detailed excellent article about how to build a complete Tetris game. I didn't check the code but I learned much more from the article |
-| [Super Rotation System][srs]                  | A standard for how the piece behaves. I didn't follow everything but it is good to know as wells                                         |
+| Resource                                      | Description                                                                                                                       |
+| --------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------- |
+| [@Binaryify/vue-tetris][vue]                  | Vue Tetris, I reused part of HTML, CSS and static assets from that project                                                        |
+| [@chrum/ngx-tetris][ngx-tetris]               | A comprehensive core Tetris written with Angular, I reused part of that for the brain of the game.                                |
+| [Game Development: Tetris in Angular][medium] | A detailed excellent article about how to build a complete Tetris game. I didn't check the code but I learned much more from that |
+| [Super Rotation System][srs]                  | A standard for how the piece behaves. I didn't follow everything but it is good to know as wells                                  |
 
 ## Contributing
 
