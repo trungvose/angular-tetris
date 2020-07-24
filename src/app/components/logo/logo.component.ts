@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
+import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { concat, Observable, timer } from 'rxjs';
 import { delay, finalize, map, repeat, startWith, takeWhile, tap } from 'rxjs/operators';
 
+@UntilDestroy()
 @Component({
   selector: 't-logo',
   templateUrl: './logo.component.html',
@@ -9,13 +11,16 @@ import { delay, finalize, map, repeat, startWith, takeWhile, tap } from 'rxjs/op
 })
 export class LogoComponent implements OnInit {
   className: string = '';
-  constructor() {}
+
+  constructor() {
+  }
 
   ngOnInit(): void {
     concat(this.run(), this.eyes())
       .pipe(
         delay(5000),
-        repeat(1000)
+        repeat(1000),
+        untilDestroyed(this)
       )
       .subscribe();
   }
@@ -27,7 +32,7 @@ export class LogoComponent implements OnInit {
       takeWhile((x) => x < 6),
       tap((x) => {
         let state = x % 2 === 0 ? 1 : 2;
-        this.className = `l${state}`;
+        this.className = `l${ state }`;
       })
     );
   }
@@ -43,10 +48,10 @@ export class LogoComponent implements OnInit {
           side = side === 'r' ? 'l' : 'r';
         }
         let state = x % 2 === 0 ? 3 : 4;
-        this.className = `${side}${state}`;
+        this.className = `${ side }${ state }`;
       }),
       finalize(() => {
-        this.className = `${side}1`;
+        this.className = `${ side }1`;
       })
     );
   }
