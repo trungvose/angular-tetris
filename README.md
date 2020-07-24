@@ -293,6 +293,7 @@ I don't have much experience working with audio before but the Web Audio API loo
 
 - See the [official documentation][webaudio]
 - See how I load the mp3 file and store it in [sound-manager.service.ts][sound-manager]
+- [Writing Web Audio API code that works in every browser][Web_Audio_API_cross_browser]
 
 ### Keyboard handling
 
@@ -409,3 +410,4 @@ Feel free to use my code on your project. It would be great if you put a referen
 [jira-clone]: https://github.com/trungk18/jira-clone-angular
 [marathon]: https://www.strava.com/activities/2902245728
 [todolist]: https://www.notion.so/trungk18/Phase-1-be1ae0fbbf2c4c2fb92887e2218413db
+[Web_Audio_API_cross_browser]: https://developer.mozilla.org/en-US/docs/Web/Guide/Audio_and_video_delivery/Web_Audio_API_cross_browser

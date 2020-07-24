@@ -13,10 +13,6 @@ export class SoundManagerService {
     
   }
 
-  private get _hasWebAudioAPI(): boolean {
-    return !!AudioContext && location.protocol.indexOf('http') !== -1;
-  }
-
   start() {
     this._playMusic(0, 3.7202, 3.6224);
   }
@@ -52,10 +48,6 @@ export class SoundManagerService {
 
   private _loadSound(): Promise<AudioBufferSourceNode> {
     return new Promise((resolve, reject) => {
-      if (!this._hasWebAudioAPI) {
-        resolve(null);
-        return;
-      }
       if (this._context && this._buffer) {
         resolve(this._getSource(this._context, this._buffer));
         return;
