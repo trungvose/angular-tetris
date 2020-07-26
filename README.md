@@ -68,9 +68,9 @@ My Tetris was exactly in the same yellow color and it was so big, running on 2 A
 
 After showing my wife the [Tetris game built with Vue][vue]. She asked me why I didn't build the same <u>Tetris with Angular</u>? And here you go.
 
-> I designed the game to hold a maximum score of 999999 (one million minus one 😂) and I have never reached that very end. Please [tweet][tweetmax] your high score screenshot together with hashtag `#angulartetris` and tag my name as well `@tuantrungvo`.
+> The game can hold up to a maximum score of 999999 (one million minus one 😂) and I have never reached that very end.
 >
-> **The first five amazing gamer that reach 999999 points and tag me on Twitter** will receive a <u>free gift</u>
+> Please [tweet][tweetmax] the screenshot with your highest score, together with hashtag `#angulartetris` and my name tagged as well `@tuantrungvo`. I will send **a free gift** to the one having the highest score of the day, from now till <u>1 Aug 2020</u>.
 
 [tweetmax]: https://twitter.com/intent/tweet?url=https%3A%2F%2Fgithub.com%2Ftrungk18%2Fangular-tetris&text=Woo-hoo!%20I%20got%20a%20999999%20points%20on%20Angular%20Tetris%20%40tuantrungvo.%20Wanna%20join%20the%20party%3F%20&hashtags=angular,angulartetris,akita,typescript
 
