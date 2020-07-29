@@ -6,7 +6,13 @@
     <img atl="QR Code to play on mobile"
          src="https://res.cloudinary.com/dvujyxh7e/image/upload/v1595380432/angular-tetris-qr-code-no-text.png" />
   </div>
-  <div class="tweet-button top"
+  <div class="tweet-button top">
+    <t-twitter-button [showIcon]="false"
+                      [tweetUrl]="'https://jira.trungk18.com/'">
+      🔨 Angular Jira Clone
+    </t-twitter-button>
+  </div>
+  <div class="tweet-button"
        *ngIf="max$ | async as maxPoint">
     <t-twitter-button [tweetUrl]="getTweetMaxScoreShareUrl(maxPoint)"
                       (click)="sendTwitterShareMaxScoreEvent()">
