@@ -8,6 +8,7 @@ A childhood memory Tetris game built with Angular 10 and Akita.
 
 - [Angular Tetris](#angular-tetris)
   - [Working Game](#working-game)
+  - [Support](#support)
   - [Why?](#why)
   - [Who is this for?](#who-is-this-for)
   - [How to play](#how-to-play)
@@ -41,25 +42,26 @@ The game has sounds, wear your 🎧 or turn on your 🔊 for a better experience
 
 ![A childhood memory Tetris game built with Angular 10 and Akita][demo]
 
+> Please tweet and tag me @tuantrungvo for any issues that you are currently facing!
+> Thanks for your understanding. Stay tuned!
+
+![A childhood memory Tetris game built with Angular 10 and Akita][iphonex]
+
+## Support
+
 If you like my work, feel free to:
 
+- ⭐ this repository. And we will be happy together :)
 - [![Tweet](https://img.shields.io/twitter/url/http/shields.io.svg?style=social)][tweet] about Angular Tetris
-- :star: this repository. And we will be happy together :)
+- <a title="Thanks for your support!" href="https://www.buymeacoffee.com/tuantrungvo" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/default-orange.png" alt="Buy Me A Coffee" style="max-width: 120px;" ></a>
 
 Thanks a bunch for stopping by and supporting me!
 
 [tweet]: https://twitter.com/intent/tweet?url=https%3A%2F%2Fgithub.com%2Ftrungk18%2Fangular-tetris&text=Awesome%20Tetris%20game%20built%20with%20Angular%2010%20and%20Akita%2C%20can%20you%20get%20999999%20points%3F&hashtags=angular,angulartetris,akita,typescript
 
-> The mobile device support is very limited at the moment - can play but tapping multiple times will be an issue, no button press effect. I will spend the next few days working on it. The screenshot below recorded on iPhone X.
-> Please tweet and tag me for any issues that you are currently facing!!
->
-> Thanks for your understanding. Stay tuned!
-
-![A childhood memory Tetris game built with Angular 10 and Akita][iphonex]
-
 ## Why?
 
-Tetris was the first game that my dad bought for me and It cost about 1$ US at that time. It didn't sound a lot today. But 20 years ago, 1$ can feed my family for at least a few days. Put it that way, with 1$ you can buy two dozens eggs.
+Tetris was the first game that my dad bought for me and It cost about 1$ US at that time. It didn't sound a lot today. But 20 years ago, 1$ can feed my family for at least a few days. Put it that way, with 1\$ you can buy two dozens eggs.
 This is the only gaming "machine" that I ever had until my first computer arrived. I have never had a SNES or PS1 at home.
 
 My Tetris was exactly in the same yellow color and it was so big, running on 2 AA battery. It is how it looks.
@@ -293,7 +295,7 @@ I don't have much experience working with audio before but the Web Audio API loo
 
 - See the [official documentation][webaudio]
 - See how I load the mp3 file and store it in [sound-manager.service.ts][sound-manager]
-- [Writing Web Audio API code that works in every browser][Web_Audio_API_cross_browser]
+- [Writing Web Audio API code that works in every browser][web_audio_api_cross_browser]
 
 ### Keyboard handling
 
@@ -410,4 +412,4 @@ Feel free to use my code on your project. It would be great if you put a referen
 [jira-clone]: https://github.com/trungk18/jira-clone-angular
 [marathon]: https://www.strava.com/activities/2902245728
 [todolist]: https://www.notion.so/trungk18/Phase-1-be1ae0fbbf2c4c2fb92887e2218413db
-[Web_Audio_API_cross_browser]: https://developer.mozilla.org/en-US/docs/Web/Guide/Audio_and_video_delivery/Web_Audio_API_cross_browser
+[web_audio_api_cross_browser]: https://developer.mozilla.org/en-US/docs/Web/Guide/Audio_and_video_delivery/Web_Audio_API_cross_browser

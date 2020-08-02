@@ -4,16 +4,12 @@
   transform: translateY(-50%);
   left: -300px;
 
-  iframe {
-    margin-top: 5px;
-    margin-bottom: 5px;
-  }
-
   .qr {
     left: auto;
     top: 5%;
     text-align: left;
     cursor: pointer;
+
     .hint {
       margin-bottom: 10px;
       font-size: 14px;
@@ -21,19 +17,15 @@
       color: #cfd2d6;
       opacity: 0;
     }
-    &:hover {
-      img {
-        transform: scale(4.5);
-      }
-      .hint {
-        opacity: 1;
-      }
-    }
+
     img {
       width: 60px;
       height: 60px;
       transition: transform 0.2s;
       transform-origin: 0 0;
+      &:hover {
+        transform: scale(4.5);
+      }
     }
   }
 
@@ -43,9 +35,9 @@
 
 .tweet-button {
   cursor: pointer;
-  margin-top: 5px;
-  margin-bottom: 7px;
-  
+  margin-top: 7px;
+  margin-bottom: 10px;
+
   &.top {
     margin-top: 15px;
   }
