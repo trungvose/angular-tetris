@@ -1,13 +1,12 @@
-import {Piece} from '../interface/piece/piece';
-import {PieceDot} from '../interface/piece/Dot';
-import {PieceI} from '../interface/piece/I';
-import {PieceJ} from '../interface/piece/J';
-import {PieceL} from '../interface/piece/L';
-import {PieceO} from '../interface/piece/O';
-import {PieceS} from '../interface/piece/S';
-import {PieceT} from '../interface/piece/T';
-import {PieceZ} from '../interface/piece/Z';
-import {Injectable} from '@angular/core';
+import { Piece } from '../interface/piece/piece';
+import { PieceI } from '../interface/piece/I';
+import { PieceJ } from '../interface/piece/J';
+import { PieceL } from '../interface/piece/L';
+import { PieceO } from '../interface/piece/O';
+import { PieceS } from '../interface/piece/S';
+import { PieceT } from '../interface/piece/T';
+import { PieceZ } from '../interface/piece/Z';
+import { Injectable } from '@angular/core';
 
 export const SPAWN_POSITION_X = 4;
 export const SPAWN_POSITION_Y = -4;
