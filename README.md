@@ -112,7 +112,7 @@ I built it barely with Angular and Akita, no additional UI framework/library was
 
 ## Development Challenge
 
-I got the inspiration from the same but different [Tetris game built with Vue][vue]. To not reinvented the wheel, I started to look at Vue code and thought it would be very identical to Angular. But later one, I realized a few catches:
+I got the inspiration from the same but different [Tetris game built with Vue][vue]. To not reinvented the wheel, I started to look at Vue code and thought it would be very identical to Angular. But later on, I realized a few catches:
 
 - The Vue source code was written a few years ago with pure JS. I could find several problems that the compiler didn't tell you. Such as giving `parseInt` a number. It is still working though, but I don't like it.
 - There was extensive use of `setTimeout` and `setInterval` for making animations. I rewrote all of the animation logic using RxJS. You will see the detail below.
@@ -207,8 +207,6 @@ ShapesL[PieceRotation.Deg90] = [
   [1, 0, 0, 0]
 ];
 //code removed for brevity
-
-];
 
 export class PieceL extends Piece {
   constructor(x: number, y: number) {
