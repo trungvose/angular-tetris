@@ -27,6 +27,8 @@
     "@angular/router": "~10.0.2",
     "@datorama/akita": "^4.22.0",
     "@ngneat/until-destroy": "^7.3.2",
+    "@sentry/angular": "^5.29.2",
+    "@sentry/tracing": "^5.29.2",
     "rxjs": "~6.5.4",
     "tslib": "^2.0.0",
     "zone.js": "~0.10.2"
