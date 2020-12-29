@@ -39,6 +39,10 @@ export class TetrisQuery extends Query<TetrisState> {
     return this.raw.gameState === GameState.Started;
   }
 
+  get isPause() {
+    return this.raw.gameState === GameState.Paused;
+  }
+
   get isEnableSound(): boolean {
     return !!this.raw.sound;
   }
