@@ -1,5 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import { ErrorHandler, NgModule } from '@angular/core';
+import * as Sentry from "@sentry/angular";
 
 import { AppComponent } from './app.component';
 import { AngularTetrisComponent } from './containers/angular-tetris/angular-tetris.component';
@@ -16,7 +17,6 @@ import { NextComponent } from './components/next/next.component';
 import { LevelComponent } from './components/level/level.component';
 import { StartLineComponent } from './components/start-line/start-line.component';
 import { AkitaNgDevtools } from '@datorama/akita-ngdevtools';
-import { environment } from '../environments/environment';
 import { TileComponent } from './components/tile/tile.component';
 import { LogoComponent } from './components/logo/logo.component';
 import { GithubComponent } from './components/github/github.component';
@@ -44,7 +44,12 @@ import { TwitterButtonComponent } from './components/twitter-button/twitter-butt
     TwitterButtonComponent,
   ],
   imports: [BrowserModule, AkitaNgDevtools.forRoot()],
-  providers: [],
+  providers: [
+    {
+      provide: ErrorHandler,
+      useValue: Sentry.createErrorHandler(),
+    }
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

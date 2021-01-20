@@ -39,6 +39,10 @@ export class TetrisQuery extends Query<TetrisState> {
     return this.raw.gameState === GameState.Started;
   }
 
+  get isPause() {
+    return this.raw.gameState === GameState.Paused;
+  }
+
   get isEnableSound(): boolean {
     return !!this.raw.sound;
   }
@@ -55,7 +59,7 @@ export class TetrisQuery extends Query<TetrisState> {
   initSpeed$ = this.select('initSpeed');
   max$ = this.select('max');
 
-  isShowLogo$ = combineLatest(this.gameState$, this.select('current')).pipe(
+  isShowLogo$ = combineLatest([this.gameState$, this.select('current')]).pipe(
     switchMap(([state, current]) => {
       let isLoadingOrOver = state === GameState.Loading || state === GameState.Over;
       let isRenderingLogo$ = of(isLoadingOrOver && !current);

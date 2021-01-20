@@ -1,1 +1,5 @@
-@import "../src/app/styles/tetris.scss";
+@import '../src/app/styles/tetris.scss';
+
+t-keyboard, t-button {
+  touch-action: pan-x pan-y pinch-zoom;
+}

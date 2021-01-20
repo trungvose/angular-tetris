@@ -8,29 +8,36 @@
   </div>
   <div class="tweet-button top"
        *ngIf="max$ | async as maxPoint">
-    <t-twitter-button [tweetUrl]="getTweetMaxScoreShareUrl(maxPoint)"
+    <t-twitter-button [url]="getTweetMaxScoreShareUrl(maxPoint)"
                       (click)="sendTwitterShareMaxScoreEvent()">
       Share Your Score - {{ maxPoint }}
     </t-twitter-button>
   </div>
-  <div class="tweet-button">
-    <t-twitter-button [tweetUrl]="tweetAngularTetrisUrl"
+  <div class="tweet-button" title="This is one of my favorite project!">
+    <t-twitter-button [showIcon]="false"
+                      [url]="'https://jira.trungk18.com/'">
+      🔨 Angular Jira Clone
+    </t-twitter-button>
+  </div>
+  <div class="tweet-button" title="Thanks for your support!">
+    <t-twitter-button [showIcon]="false"
+                      [url]="'https://www.buymeacoffee.com/tuantrungvo'">
+      🍺 Buy me a beer
+    </t-twitter-button>
+  </div>
+  <div class="tweet-button" style="margin-top: 2px;">
+    <t-twitter-button [url]="tweetAngularTetrisUrl"
                       (click)="sendTwitterShareEvent()">
       Tweet
     </t-twitter-button>
   </div>
-  <iframe src="https://ghbtns.com/github-btn.html?user=trungk18&repo=angular-tetris&type=star&count=true&size=large"
-          frameborder="0"
-          scrolling="0"
-          width="170"
-          height="30"
-          title="Angular Tetris Star">
-  </iframe>
-  <iframe src="https://ghbtns.com/github-btn.html?user=trungk18&repo=angular-tetris&type=fork&count=true&size=large"
-          frameborder="0"
-          scrolling="0"
-          width="170"
-          height="30"
-          title="Angular Tetris Fork">
-  </iframe>
+  <div class="star-button">
+    <iframe src="https://ghbtns.com/github-btn.html?user=trungk18&repo=angular-tetris&type=star&count=true&size=large"
+            frameborder="0"
+            scrolling="0"
+            width="170"
+            height="30"
+            title="Angular Tetris Star">
+    </iframe>
+  </div>
 </div>

@@ -6,7 +6,8 @@ import { Component, OnInit, Input } from '@angular/core';
   styleUrls: ['./twitter-button.component.scss']
 })
 export class TwitterButtonComponent implements OnInit {
-  @Input() tweetUrl = '';
+  @Input() showIcon = true;
+  @Input() url = '';
 
   constructor() {}
 

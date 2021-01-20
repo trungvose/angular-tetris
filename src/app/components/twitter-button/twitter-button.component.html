@@ -1,8 +1,9 @@
 <a class="twitter-button"
-   [href]="tweetUrl"
+   [href]="url"
    rel="noopener noreferrer"
    target="_blank">
-    <svg class="icon"
+    <svg *ngIf="showIcon"
+         class="icon"
          style="enable-background:new 0 0 512 512;"
          version="1.1"
          viewBox="0 0 512 512"

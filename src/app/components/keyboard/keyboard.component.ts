@@ -13,15 +13,17 @@ export class KeyboardComponent implements OnInit {
   @Output() onMouseDown = new EventEmitter<string>();
   @Output() onMouseUp = new EventEmitter<string>();
 
-  constructor(public keyboardQuery: KeyboardQuery) {}
+  constructor(public keyboardQuery: KeyboardQuery) { }
 
-  ngOnInit(): void {}
+  ngOnInit(): void { }
 
-  mouseDown(key: string) {
+  mouseDown(e: Event, key: string) {
+    e.preventDefault();
     this.onMouseDown.emit(key);
   }
 
-  mouseUp(key: string) {
+  mouseUp(e: Event, key: string) {
+    e.preventDefault();    
     this.onMouseUp.emit(key);
   }
 }

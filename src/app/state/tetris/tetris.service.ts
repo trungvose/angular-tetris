@@ -65,6 +65,9 @@ export class TetrisService {
   }
 
   resume() {
+    if (!this._query.isPause) {
+      return;
+    }
     let { speed } = this._query.raw;
     this._store.update({
       locked: false,
@@ -74,6 +77,9 @@ export class TetrisService {
   }
 
   pause() {
+    if (!this._query.isPlaying) {
+      return;
+    }
     this._store.update({
       locked: true,
       gameState: GameState.Paused
@@ -82,7 +88,11 @@ export class TetrisService {
   }
 
   reset() {
-    this._store.update(createInitialState(this._pieceFactory));
+    const { sound } = this._query.raw;
+    this._store.update({
+      ...createInitialState(this._pieceFactory),
+      sound
+    });
   }
 
   moveLeft() {
@@ -242,15 +252,15 @@ export class TetrisService {
   private _onGameOver() {
     this.pause();
     this._soundManager.gameOver();
-    let { points, max } = this._query.raw;
+    let { points, max, sound } = this._query.raw;
     let maxPoint = Math.max(points, max);
-    this._store.update({
-      gameState: GameState.Over,
-      current: null,
-      max: maxPoint,
-      points: 0
-    });
     LocalStorageService.setMaxPoint(maxPoint);
+    this._store.update({
+      ...createInitialState(this._pieceFactory),
+      max: maxPoint,
+      gameState: GameState.Over,
+      sound
+    });
   }
 
   private get _isCollidesBottom(): boolean {
