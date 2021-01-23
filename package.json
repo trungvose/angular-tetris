@@ -4,7 +4,7 @@
   "author": {
     "name": "Trung Vo",
     "email": "trungk18@gmail.com",
-    "url": "https://github.com/trungk18/jira-clone-angular"
+    "url": "https://github.com/trungk18/angular-tetris"
   },
   "description": "Tetris game built with Angular and Akita 🎮",
   "scripts": {
