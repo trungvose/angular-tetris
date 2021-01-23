@@ -13,18 +13,16 @@ export interface KeyboardState {
   drop: boolean;
 }
 
-export function createInitialState(): KeyboardState {
-  return {
-    up: false,
-    down: false,
-    left: false,
-    right: false,
-    pause: false,
-    sound: false,
-    reset: false,
-    drop: false
-  };
-}
+export const createInitialState = (): KeyboardState => ({
+  up: false,
+  down: false,
+  left: false,
+  right: false,
+  pause: false,
+  sound: false,
+  reset: false,
+  drop: false
+});
 
 @Injectable({ providedIn: 'root' })
 @StoreConfig({ name: 'AngularTetrisKeyboard' })

@@ -24,8 +24,7 @@ export interface TetrisState {
   max: number;
 }
 
-export function createInitialState(pieceFactory: PieceFactory): TetrisState {
-  return {
+export const createInitialState = (pieceFactory: PieceFactory): TetrisState => ({
     matrix: MatrixUtil.getStartBoard(),
     current: null,
     next: pieceFactory.getRandomPiece(),
@@ -39,8 +38,7 @@ export function createInitialState(pieceFactory: PieceFactory): TetrisState {
     gameState: GameState.Loading,
     saved: null,
     max: LocalStorageService.maxPoint
-  };
-}
+  });
 
 @Injectable({ providedIn: 'root' })
 @StoreConfig({ name: 'AngularTetris' })

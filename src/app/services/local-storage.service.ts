@@ -7,7 +7,7 @@ export class LocalStorageService {
   }
 
   static get maxPoint(): number {
-    let max = parseInt(localStorage.getItem(ANGULAR_TETRIS_STORAGE_KEY));
+    const max = parseInt(localStorage.getItem(ANGULAR_TETRIS_STORAGE_KEY));
     return Number.isInteger(max) ? max : 0;
   }
 }

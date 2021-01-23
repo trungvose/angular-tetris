@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { TetrisQuery } from '@trungk18/state/tetris/tetris.query';
 
-const SoundFilePath = '/assets/tetris-sound.mp3';
+const SOUND_FILE_PATH = '/assets/tetris-sound.mp3';
 @Injectable({
   providedIn: 'root'
 })
@@ -9,9 +9,7 @@ export class SoundManagerService {
   private _context: AudioContext;
   private _buffer: AudioBuffer;
 
-  constructor(private _query: TetrisQuery) {
-    
-  }
+  constructor(private _query: TetrisQuery) {}
 
   start() {
     this._playMusic(0, 3.7202, 3.6224);
@@ -42,7 +40,9 @@ export class SoundManagerService {
       return;
     }
     this._loadSound().then((source) => {
-      source && source.start(when, offset, duration);
+      if (source) {
+        source.start(when, offset, duration);
+      }
     });
   }
 
@@ -54,7 +54,7 @@ export class SoundManagerService {
       }
       const context = new AudioContext();
       const req = new XMLHttpRequest();
-      req.open('GET', SoundFilePath, true);
+      req.open('GET', SOUND_FILE_PATH, true);
       req.responseType = 'arraybuffer';
 
       req.onload = () => {
@@ -66,7 +66,7 @@ export class SoundManagerService {
             resolve(this._getSource(context, buffer));
           },
           () => {
-            let msg = 'Sorry lah, cannot play sound. But I hope you still enjoy Angular Tetris!!';
+            const msg = 'Sorry lah, cannot play sound. But I hope you still enjoy Angular Tetris!!';
             alert(msg);
             reject(msg);
           }
@@ -77,7 +77,7 @@ export class SoundManagerService {
   }
 
   private _getSource(context: AudioContext, buffer: AudioBuffer): AudioBufferSourceNode {
-    let source = context.createBufferSource();
+    const source = context.createBufferSource();
     source.buffer = buffer;
     source.connect(context.destination);
     return source;

@@ -1,3 +1,4 @@
+/* eslint-disable no-shadow */
 export enum PieceRotation {
   Deg0,
   Deg90,
@@ -15,3 +16,4 @@ export enum PieceTypes {
   Z = 'Z',
   S = 'S'
 }
+/* eslint-enable no-shadow */

@@ -1,4 +1,4 @@
-export enum ArrowButton {
+export enum ArrowButton { // eslint-disable-line no-shadow
   UP = 'UP',
   DOWN = 'DOWN',
   LEFT = 'LEFT',

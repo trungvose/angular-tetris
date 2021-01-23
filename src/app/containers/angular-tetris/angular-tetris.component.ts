@@ -9,18 +9,14 @@ import { Observable } from 'rxjs';
 const KeyUp = 'document:keyup';
 const KeyDown = 'document:keydown';
 @Component({
-  selector: 'angular-tetris',
+  selector: 'angular-tetris', // eslint-disable-line @angular-eslint/component-selector
   templateUrl: './angular-tetris.component.html',
   styleUrls: ['./angular-tetris.component.scss']
 })
 export class AngularTetrisComponent implements OnInit {
   drop$: Observable<boolean>;
   isShowLogo$: Observable<boolean>;
-  filling: number;  
-
-  get hasCurrent() {
-    return !!this._tetrisQuery.current;
-  }
+  filling: number;
 
   constructor(
     private _tetrisService: TetrisService,
@@ -32,45 +28,23 @@ export class AngularTetrisComponent implements OnInit {
     private _render: Renderer2
   ) {}
 
-  ngOnInit(): void {
-    this.drop$ = this._keyboardQuery.drop$;
-    this.isShowLogo$ = this._tetrisQuery.isShowLogo$;
-    setTimeout(() => {
-      this.resize();
-    });
-  }
-
   @HostListener('window:resize', ['$event'])
   resize() {
-    let width = document.documentElement.clientWidth;
-    let height = document.documentElement.clientHeight;
-    let ratio = height / width;
+    const width = document.documentElement.clientWidth;
+    const height = document.documentElement.clientHeight;
+    const ratio = height / width;
     let scale = 1;
     if (ratio < 1.5) {
       scale = height / 960;
     } else {
       scale = width / 640;
       this.filling = (height - 960 * scale) / scale / 3;
-      let paddingTop = Math.floor(this.filling) + 42;
-      let paddingBottom = Math.floor(this.filling);
-      let marginTop = Math.floor(-480 - this.filling * 1.5);
+      const paddingTop = Math.floor(this.filling) + 42;
+      const paddingBottom = Math.floor(this.filling);
+      const marginTop = Math.floor(-480 - this.filling * 1.5);
       this.setPaddingMargin(paddingTop, paddingBottom, marginTop);
     }
     this._render.setStyle(this._el.nativeElement, 'transform', `scale(${scale - 0.01})`);
-  }
-
-  private setPaddingMargin(paddingTop: number, paddingBottom: number, marginTop: number) {
-    this._render.setStyle(this._el.nativeElement, 'padding-top', `${paddingTop}px`);
-    this._render.setStyle(this._el.nativeElement, 'padding-bottom', `${paddingBottom}px`);
-    this._render.setStyle(this._el.nativeElement, 'margin-top', `${marginTop}px`);
-  }
-
-  keyboardMouseDown(key: string) {
-    this[`keyDown${key}`]();
-  }
-
-  keyboardMouseUp(key: string) {
-    this[`keyUp${key}`]();
   }
 
   @HostListener('window:beforeunload', ['$event'])
@@ -240,5 +214,31 @@ export class AngularTetrisComponent implements OnInit {
     this._keyboardService.setKeỵ({
       reset: false
     });
+  }
+
+  get hasCurrent() {
+    return !!this._tetrisQuery.current;
+  }
+
+  ngOnInit(): void {
+    this.drop$ = this._keyboardQuery.drop$;
+    this.isShowLogo$ = this._tetrisQuery.isShowLogo$;
+    setTimeout(() => {
+      this.resize();
+    });
+  }
+
+  keyboardMouseDown(key: string) {
+    this[`keyDown${key}`]();
+  }
+
+  keyboardMouseUp(key: string) {
+    this[`keyUp${key}`]();
+  }
+
+  private setPaddingMargin(paddingTop: number, paddingBottom: number, marginTop: number) {
+    this._render.setStyle(this._el.nativeElement, 'padding-top', `${paddingTop}px`);
+    this._render.setStyle(this._el.nativeElement, 'padding-bottom', `${paddingBottom}px`);
+    this._render.setStyle(this._el.nativeElement, 'margin-top', `${marginTop}px`);
   }
 }

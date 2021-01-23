@@ -27,13 +27,13 @@ export class MatrixComponent implements OnInit {
         if (gameState !== GameState.Over && gameState !== GameState.Loading) {
           return of(matrix);
         }
-        let newMatrix = [...matrix];
-        let rowsLength = MatrixUtil.Height * 2;
-        let animatedMatrix$: Observable<Tile[]> = timer(0, rowsLength).pipe(
+        const newMatrix = [...matrix];
+        const rowsLength = MatrixUtil.Height * 2;
+        const animatedMatrix$: Observable<Tile[]> = timer(0, rowsLength).pipe(
           map((x) => x + 1),
           takeWhile((x) => x <= rowsLength + 1),
           switchMap((idx) => {
-            let gridIndex = idx - 1;
+            const gridIndex = idx - 1;
             if (gridIndex < MatrixUtil.Height) {
               newMatrix.splice(
                 gridIndex * MatrixUtil.Width,
@@ -42,7 +42,7 @@ export class MatrixComponent implements OnInit {
               );
             }
             if (gridIndex > MatrixUtil.Height && gridIndex <= rowsLength) {
-              let startIdx =
+              const startIdx =
                 (MatrixUtil.Height - (gridIndex - MatrixUtil.Height)) * MatrixUtil.Width;
               newMatrix.splice(startIdx, MatrixUtil.Width, ...MatrixUtil.EmptyRow);
             }

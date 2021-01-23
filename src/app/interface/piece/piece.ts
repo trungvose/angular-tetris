@@ -18,11 +18,6 @@ export class Piece {
     this.y = y;
   }
 
-  protected setShapes(shapes: Shapes) {
-    this._shapes = shapes;
-    this.shape = shapes[this.rotation];
-  }
-
   store(): Piece {
     this._lastConfig = {
       x: this.x,
@@ -52,8 +47,8 @@ export class Piece {
 
   rotate(): Piece {
     const keys = Object.keys(this._shapes);
-    let idx = keys.indexOf(this.rotation.toString());
-    let isTurnOver = idx >= keys.length - 1;
+    const idx = keys.indexOf(this.rotation.toString());
+    const isTurnOver = idx >= keys.length - 1;
     this.rotation = Number(isTurnOver ? keys[0] : keys[idx + 1]);
     this.shape = this._shapes[this.rotation];
     return this._newPiece();
@@ -75,7 +70,7 @@ export class Piece {
   }
 
   get positionOnGrid(): number[] {
-    let positions = [];
+    const positions = [];
     for (let row = 0; row < 4; row++) {
       for (let col = 0; col < 4; col++) {
         if (this.shape[row][col]) {
@@ -109,8 +104,13 @@ export class Piece {
     return this.x;
   }
 
+  protected setShapes(shapes: Shapes) {
+    this._shapes = shapes;
+    this.shape = shapes[this.rotation];
+  }
+
   private _newPiece(): Piece {
-    let piece = new Piece(this.x, this.y);
+    const piece = new Piece(this.x, this.y);
     piece.rotation = this.rotation;
     piece.type = this.type;
     piece.next = this.next;
