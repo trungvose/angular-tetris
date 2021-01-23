@@ -28,8 +28,8 @@ export class PointComponent implements OnInit {
         }
         return timer(0, REFRESH_LABEL_INTERVAL).pipe(
           map((val) => {
-            let isOdd = val % 2 === 0;
-            let { points, max } = this._query.raw;
+            const isOdd = val % 2 === 0;
+            const { points, max } = this._query.raw;
             return isOdd ? new LabelAndNumber('Score', points) : new LabelAndNumber('Max ', max);
           })
         );

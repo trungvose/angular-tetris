@@ -2,8 +2,8 @@ import { Piece } from './piece';
 import { Shapes } from './shape';
 import { PieceRotation, PieceTypes } from './piece-enum';
 
-const ShapesDot: Shapes = [];
-ShapesDot[PieceRotation.Deg0] = [
+const SHAPES_DOT: Shapes = [];
+SHAPES_DOT[PieceRotation.Deg0] = [
   [0, 0, 0, 0],
   [0, 0, 0, 0],
   [0, 0, 0, 0],
@@ -18,6 +18,6 @@ export class PieceDot extends Piece {
       [0, 0, 0, 0],
       [1, 0, 0, 0]
     ];
-    this.setShapes(ShapesDot);
+    this.setShapes(SHAPES_DOT);
   }
 }

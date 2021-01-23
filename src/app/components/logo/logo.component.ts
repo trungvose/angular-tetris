@@ -10,7 +10,7 @@ import { delay, finalize, map, repeat, startWith, takeWhile, tap } from 'rxjs/op
   styleUrls: ['./logo.component.scss']
 })
 export class LogoComponent implements OnInit {
-  className: string = '';
+  className = '';
 
   constructor() {
   }
@@ -31,7 +31,7 @@ export class LogoComponent implements OnInit {
       map((x) => x + 1),
       takeWhile((x) => x < 6),
       tap((x) => {
-        let state = x % 2 === 0 ? 1 : 2;
+        const state = x % 2 === 0 ? 1 : 2;
         this.className = `l${ state }`;
       })
     );
@@ -47,7 +47,7 @@ export class LogoComponent implements OnInit {
         if (x === 10 || x === 20 || x === 30) {
           side = side === 'r' ? 'l' : 'r';
         }
-        let state = x % 2 === 0 ? 3 : 4;
+        const state = x % 2 === 0 ? 3 : 4;
         this.className = `${ side }${ state }`;
       }),
       finalize(() => {

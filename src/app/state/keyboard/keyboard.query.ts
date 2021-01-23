@@ -4,10 +4,6 @@ import { KeyboardStore, KeyboardState } from './keyboard.store';
 
 @Injectable({ providedIn: 'root' })
 export class KeyboardQuery extends Query<KeyboardState> {
-  constructor(protected store: KeyboardStore) {
-    super(store);
-  }
-
   up$ = this.select('up');
   down$ = this.select('down');
   left$ = this.select('left');
@@ -16,4 +12,8 @@ export class KeyboardQuery extends Query<KeyboardState> {
   pause$ = this.select('pause');
   sound$ = this.select('sound');
   reset$ = this.select('reset');
+
+  constructor(protected store: KeyboardStore) {
+    super(store);
+  }
 }

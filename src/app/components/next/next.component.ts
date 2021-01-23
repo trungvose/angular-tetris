@@ -16,9 +16,7 @@ export class NextComponent implements OnInit {
 
   ngOnInit(): void {
     this.next$ = this._tetrisQuery.next$.pipe(
-      map((piece) => {
-        return piece.next.map((row) => row.map((value) => new Tile(value as TileValue)));
-      })
+      map((piece) => piece.next.map((row) => row.map((value) => new Tile(value as TileValue))))
     );
   }
 }

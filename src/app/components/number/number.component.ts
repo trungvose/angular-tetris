@@ -6,11 +6,11 @@ import { Component, OnInit, Input } from '@angular/core';
   styleUrls: ['./number.component.scss']
 })
 export class NumberComponent implements OnInit {
-  @Input() num: number = 0;
+  @Input() num = 0;
   @Input() length = 6;
 
   get nums(): string[] {
-    let str = `${this.num}`;
+    const str = `${this.num}`;
     return str.padStart(this.length, 'n').split('');
   }
 

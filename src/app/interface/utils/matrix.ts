@@ -2,15 +2,19 @@ import { EmptyTile } from '../tile/empty-tile';
 import { Tile } from '../tile/tile';
 import { FilledTile } from '../tile/filled-tile';
 
+/* eslint-disable @typescript-eslint/naming-convention */
 export class MatrixUtil {
   static readonly Width = 10;
   static readonly Height = 20;
+  static Points = [100, 300, 700, 1500];
+  static MaxPoint = 999999;
+  static SpeedDelay = [700, 600, 450, 320, 240, 160];
 
   static getStartBoard(startLines: number = 0): Tile[] {
     if (startLines === 0) {
       return new Array(this.Width * this.Height).fill(new EmptyTile());
     }
-    let startMatrix: Tile[] = [];
+    const startMatrix: Tile[] = [];
 
     for (let i = 0; i < startLines; i++) {
       if (i <= 2) {
@@ -51,11 +55,8 @@ export class MatrixUtil {
     return new Array(this.Width).fill(new FilledTile());
   }
 
-  static Points = [100, 300, 700, 1500];
-  static MaxPoint = 999999;
-  static SpeedDelay = [700, 600, 450, 320, 240, 160];
-
   static getSpeedDelay(speed: number) {
     return this.SpeedDelay[speed - 1] ?? this.SpeedDelay[0];
   }
 }
+/* eslint-enable @typescript-eslint/naming-convention */

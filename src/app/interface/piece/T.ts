@@ -2,29 +2,29 @@ import { Piece } from './piece';
 import { Shapes } from './shape';
 import { PieceRotation, PieceTypes } from './piece-enum';
 
-const ShapesT: Shapes = [];
-ShapesT[PieceRotation.Deg0] = [
+const SHAPES_T: Shapes = [];
+SHAPES_T[PieceRotation.Deg0] = [
   [0, 0, 0, 0],
   [0, 0, 0, 0],
   [0, 1, 0, 0],
   [1, 1, 1, 0]
 ];
 
-ShapesT[PieceRotation.Deg90] = [
+SHAPES_T[PieceRotation.Deg90] = [
   [0, 0, 0, 0],
   [1, 0, 0, 0],
   [1, 1, 0, 0],
   [1, 0, 0, 0]
 ];
 
-ShapesT[PieceRotation.Deg180] = [
+SHAPES_T[PieceRotation.Deg180] = [
   [0, 0, 0, 0],
   [0, 0, 0, 0],
   [1, 1, 1, 0],
   [0, 1, 0, 0]
 ];
 
-ShapesT[PieceRotation.Deg270] = [
+SHAPES_T[PieceRotation.Deg270] = [
   [0, 0, 0, 0],
   [0, 1, 0, 0],
   [1, 1, 0, 0],
@@ -39,6 +39,6 @@ export class PieceT extends Piece {
       [0, 1, 0, 0],
       [1, 1, 1, 0]
     ];
-    this.setShapes(ShapesT);
+    this.setShapes(SHAPES_T);
   }
 }

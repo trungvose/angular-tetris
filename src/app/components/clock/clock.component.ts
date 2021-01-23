@@ -23,11 +23,11 @@ export class ClockComponent implements OnInit {
   }
 
   renderClock(): string[] {
-    let now = new Date();
-    let hours = this.formatTwoDigits(now.getHours());
-    let minutes = this.formatTwoDigits(now.getMinutes());
-    let isOddSecond = now.getSeconds() % 2 !== 0;
-    let blinking = `colon-${isOddSecond ? 'solid' : 'faded'}`;
+    const now = new Date();
+    const hours = this.formatTwoDigits(now.getHours());
+    const minutes = this.formatTwoDigits(now.getMinutes());
+    const isOddSecond = now.getSeconds() % 2 !== 0;
+    const blinking = `colon-${isOddSecond ? 'solid' : 'faded'}`;
     return [...hours, blinking, ...minutes];
   }
 

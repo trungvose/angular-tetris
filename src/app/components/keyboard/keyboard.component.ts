@@ -8,10 +8,10 @@ import { KeyboardQuery } from '@trungk18/state/keyboard/keyboard.query';
   styleUrls: ['./keyboard.component.scss']
 })
 export class KeyboardComponent implements OnInit {
-  ArrowButton = ArrowButton;
-  @Input() filling: number = 20;
+  @Input() filling = 20;
   @Output() onMouseDown = new EventEmitter<string>();
   @Output() onMouseUp = new EventEmitter<string>();
+  ArrowButton = ArrowButton;//eslint-disable-line @typescript-eslint/naming-convention
 
   constructor(public keyboardQuery: KeyboardQuery) { }
 
@@ -23,7 +23,7 @@ export class KeyboardComponent implements OnInit {
   }
 
   mouseUp(e: Event, key: string) {
-    e.preventDefault();    
+    e.preventDefault();
     this.onMouseUp.emit(key);
   }
 }
