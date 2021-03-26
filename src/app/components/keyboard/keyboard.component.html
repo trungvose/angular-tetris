@@ -83,6 +83,6 @@
               (touchend)="mouseUp($event, 'Pause')"
               [top]="0"
               [left]="16">
-              {{ pauseButtonLabel }}
+              {{ pauseButtonLabel$ | async}} (P)
     </t-button>
 </div>
