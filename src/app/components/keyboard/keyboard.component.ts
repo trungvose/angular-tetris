@@ -1,6 +1,8 @@
 import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
 import { ArrowButton } from '@trungk18/interface/ui-model/arrow-button';
 import { KeyboardQuery } from '@trungk18/state/keyboard/keyboard.query';
+import { GameState } from '@trungk18/interface/game-state';
+import { TetrisQuery } from '@trungk18/state/tetris/tetris.query';
 
 @Component({
   selector: 't-keyboard',
@@ -12,10 +14,19 @@ export class KeyboardComponent implements OnInit {
   @Output() onMouseDown = new EventEmitter<string>();
   @Output() onMouseUp = new EventEmitter<string>();
   ArrowButton = ArrowButton;//eslint-disable-line @typescript-eslint/naming-convention
+  pauseButtonLabel: string;
 
-  constructor(public keyboardQuery: KeyboardQuery) { }
+  constructor(public keyboardQuery: KeyboardQuery, private _query: TetrisQuery) { }
 
-  ngOnInit(): void { }
+  ngOnInit(): void {
+    this._query.gameState$.subscribe(state => {
+      if (state === GameState.Paused) {
+        this.pauseButtonLabel = 'Play (P)';
+      } else {
+        this.pauseButtonLabel = 'Pause (P)';
+      }
+    });
+  }
 
   mouseDown(e: Event, key: string) {
     e.preventDefault();
