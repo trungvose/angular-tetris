@@ -7,7 +7,7 @@ import { EmptyTile } from '@trungk18/interface/tile/empty-tile';
 import { FilledTile } from '@trungk18/interface/tile/filled-tile';
 import { Tile } from '@trungk18/interface/tile/tile';
 import { MatrixUtil } from '@trungk18/interface/utils/matrix';
-import { Subscription, timer } from 'rxjs';
+import { Observable, Subscription, timer } from 'rxjs';
 import { TetrisQuery } from './tetris.query';
 import { createInitialState, TetrisStore } from './tetris.store';
 import { Speed } from '@trungk18/interface/speed';
@@ -39,6 +39,18 @@ export class TetrisService {
 
   private get _matrix() {
     return this._query.matrix;
+  }
+
+  get isShowLogo$(): Observable<boolean> {
+    return this._query.isShowLogo$;
+  }
+
+  get hasCurrent(): boolean {
+    return !!this._current;
+  }
+
+  get canStartGame(): boolean {
+    return this._query.canStartGame;
   }
 
   start() {

@@ -1,9 +1,7 @@
 import { Component, HostListener, OnInit, ElementRef, Renderer2 } from '@angular/core';
 import { TetrisKeyboard } from '@trungk18/interface/keyboard';
 import { SoundManagerService } from '@trungk18/services/sound-manager.service';
-import { KeyboardQuery } from '@trungk18/state/keyboard/keyboard.query';
 import { KeyboardService } from '@trungk18/state/keyboard/keyboard.service';
-import { TetrisQuery } from '@trungk18/state/tetris/tetris.query';
 import { TetrisService } from '@trungk18/state/tetris/tetris.service';
 import { Observable } from 'rxjs';
 const KeyUp = 'document:keyup';
@@ -20,9 +18,7 @@ export class AngularTetrisComponent implements OnInit {
 
   constructor(
     private _tetrisService: TetrisService,
-    private _tetrisQuery: TetrisQuery,
     private _keyboardService: KeyboardService,
-    private _keyboardQuery: KeyboardQuery,
     private _soundManager: SoundManagerService,
     private _el: ElementRef,
     private _render: Renderer2
@@ -49,7 +45,7 @@ export class AngularTetrisComponent implements OnInit {
 
   @HostListener('window:beforeunload', ['$event'])
   unloadHandler(event: Event) {
-    if (!!this._tetrisQuery.current) {
+    if (this.hasCurrent) {
       event.preventDefault();
       event.returnValue = true;
     }
@@ -178,7 +174,7 @@ export class AngularTetrisComponent implements OnInit {
     this._keyboardService.setKeỵ({
       pause: true
     });
-    if (this._tetrisQuery.canStartGame) {
+    if (this._tetrisService.canStartGame) {
       this._tetrisService.resume();
     } else {
       this._tetrisService.pause();
@@ -217,12 +213,12 @@ export class AngularTetrisComponent implements OnInit {
   }
 
   get hasCurrent() {
-    return !!this._tetrisQuery.current;
+    return this._tetrisService.hasCurrent;
   }
 
   ngOnInit(): void {
-    this.drop$ = this._keyboardQuery.drop$;
-    this.isShowLogo$ = this._tetrisQuery.isShowLogo$;
+    this.drop$ = this._keyboardService.drop$;
+    this.isShowLogo$ =  this._tetrisService.isShowLogo$;
     setTimeout(() => {
       this.resize();
     });
