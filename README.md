@@ -2,38 +2,6 @@
 
 A childhood memory Tetris game built with Angular 10 and Akita.
 
-<details>
-  <summary>Table Of Content</summary>
-  <p>
-
-- [Angular Tetris](#angular-tetris)
-  - [Working Game](#working-game)
-  - [Support](#support)
-  - [Why?](#why)
-  - [Who is this for?](#who-is-this-for)
-  - [How to play](#how-to-play)
-    - [Before playing](#before-playing)
-    - [Playing game](#playing-game)
-  - [Techstack](#techstack)
-  - [Development Challenge](#development-challenge)
-    - [Tetris Core](#tetris-core)
-    - [Akita state management + dev tool support](#akita-state-management--dev-tool-support)
-    - [Customizing Piece](#customizing-piece)
-    - [Animation](#animation)
-    - [Web Audio API](#web-audio-api)
-    - [Keyboard handling](#keyboard-handling)
-  - [Features and Roadmap](#features-and-roadmap)
-    - [Phase 1 - Angular Tetris basic functionality](#phase-1---angular-tetris-basic-functionality)
-    - [Phase 2 - Firebase high score, service worker, more sounds effect, more animation](#phase-2---firebase-high-score-service-worker-more-sounds-effect-more-animation)
-  - [Time spending](#time-spending)
-  - [Setting up development environment 🛠](#setting-up-development-environment-)
-  - [Author: Trung Vo ✍️](#author-trung-vo-️)
-  - [Credits and references](#credits-and-references)
-  - [Contributing](#contributing)
-  - [License](#license)
-  </p>
-  </details>
-
 ## Working Game
 
 Check out the **working game** -> https://tetris.trungk18.com
@@ -58,6 +26,17 @@ If you like my work, feel free to:
 Thanks a bunch for stopping by and supporting me!
 
 [tweet]: https://twitter.com/intent/tweet?url=https%3A%2F%2Fgithub.com%2Ftrungk18%2Fangular-tetris&text=Awesome%20Tetris%20game%20built%20with%20Angular%2010%20and%20Akita%2C%20can%20you%20get%20999999%20points%3F&hashtags=angular,angulartetris,akita,typescript
+
+## Cake Defi
+
+I am working at [Cake Defi][cake]. We offer the easiest way to generate consistently high returns from your crypto assets. We are a team of passionate people who are committed to building a better future for everyone.
+
+I built the landing page at [cakedefi.com][cake] and architect the entire app at [app.cakedefi.com][cakeapp].
+
+[Sign up using my referral code: 136431][cake] to get started and get $20 FREE.
+
+[cake]: https://cakedefi.com/?ref=136431&utm_source=trungvo
+[cakeapp]: https://app.cakedefi.com/?ref=136431&utm_source=trungvo
 
 ## Why?
 
