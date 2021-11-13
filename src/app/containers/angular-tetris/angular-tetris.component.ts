@@ -152,6 +152,22 @@ export class AngularTetrisComponent implements OnInit {
     });
   }
 
+  @HostListener(`${KeyDown}.${TetrisKeyboard.C}`)
+  keyDownHold() {
+    this._soundManager.move();
+    this._keyboardService.setKeỵ({
+      hold: true
+    });
+    this._tetrisService.holdPiece();
+  }
+
+  @HostListener(`${KeyUp}.${TetrisKeyboard.C}`)
+  keyUpHold() {
+    this._keyboardService.setKeỵ({
+      hold: false
+    });
+  }
+
   @HostListener(`${KeyDown}.${TetrisKeyboard.S}`)
   keyDownSound() {
     this._soundManager.move();

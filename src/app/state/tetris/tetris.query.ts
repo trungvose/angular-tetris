@@ -8,6 +8,7 @@ import { combineLatest, of } from 'rxjs';
 @Injectable({ providedIn: 'root' })
 export class TetrisQuery extends Query<TetrisState> {
   next$ = this.select('next');
+  hold$ = this.select('hold');
   matrix$ = this.select('matrix');
   sound$ = this.select('sound');
   gameState$ = this.select('gameState');
@@ -53,6 +54,14 @@ export class TetrisQuery extends Query<TetrisState> {
 
   get canStartGame() {
     return this.raw.gameState !== GameState.Started;
+  }
+
+  get hold() {
+    return this.raw.hold;
+  }
+
+  get canHold() {
+    return this.raw.canHold;
   }
 
   get isPlaying() {
