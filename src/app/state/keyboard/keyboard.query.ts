@@ -12,6 +12,7 @@ export class KeyboardQuery extends Query<KeyboardState> {
   pause$ = this.select('pause');
   sound$ = this.select('sound');
   reset$ = this.select('reset');
+  hold$ = this.select('hold');
 
   constructor(protected store: KeyboardStore) {
     super(store);

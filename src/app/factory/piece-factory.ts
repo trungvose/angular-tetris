@@ -1,4 +1,5 @@
 import { Piece } from '../interface/piece/piece';
+import { NonePiece } from '../interface/piece/none';
 import { PieceI } from '../interface/piece/I';
 import { PieceJ } from '../interface/piece/J';
 import { PieceL } from '../interface/piece/L';
@@ -34,6 +35,10 @@ export class PieceFactory {
     }
     const nextPiece = this._currentBag.pop();
     return new nextPiece(x, y);
+  }
+
+  getNonePiece(x = SPAWN_POSITION_X, y = SPAWN_POSITION_Y): Piece {
+    return new NonePiece(x, y);
   }
 
   generateNewBag() {

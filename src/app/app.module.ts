@@ -14,6 +14,7 @@ import { SoundComponent } from './components/sound/sound.component';
 import { PauseComponent } from './components/pause/pause.component';
 import { PointComponent } from './components/point/point.component';
 import { NextComponent } from './components/next/next.component';
+import { HoldComponent } from './components/hold/hold.component';
 import { LevelComponent } from './components/level/level.component';
 import { StartLineComponent } from './components/start-line/start-line.component';
 import { AkitaNgDevtools } from '@datorama/akita-ngdevtools';
@@ -36,6 +37,7 @@ import { TwitterButtonComponent } from './components/twitter-button/twitter-butt
     PauseComponent,
     PointComponent,
     NextComponent,
+    HoldComponent,
     LevelComponent,
     StartLineComponent,
     TileComponent,

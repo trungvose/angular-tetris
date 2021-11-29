@@ -7,6 +7,7 @@ export enum TetrisKeyboard {
   Space = 'space',
   P = 'p',
   R = 'r',
-  S = 's'
+  S = 's',
+  C = 'c'
 }
 /* eslint-enable no-shadow */

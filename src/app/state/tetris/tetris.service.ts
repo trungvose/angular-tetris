@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { PieceFactory } from '@trungk18/factory/piece-factory';
+import { PieceFactory, SPAWN_POSITION_X, SPAWN_POSITION_Y } from '@trungk18/factory/piece-factory';
 import { CallBack } from '@trungk18/interface/callback';
 import { GameState } from '@trungk18/interface/game-state';
 import { Piece } from '@trungk18/interface/piece/piece';
@@ -39,6 +39,18 @@ export class TetrisService {
 
   private get _matrix() {
     return this._query.matrix;
+  }
+
+  private get _canHold() {
+    return this._query.canHold;
+  }
+
+  private get _hold() {
+    return this._query.hold;
+  }
+
+  get hold$() {
+    return this._query.hold$;
   }
 
   get isShowLogo$(): Observable<boolean> {
@@ -166,6 +178,23 @@ export class TetrisService {
     }
     this._setCurrentPiece(this._current.revert());
     this._drawPiece();
+    this._setCanHold(true);
+  }
+
+  holdPiece(): void {
+    if (this._locked || !this._canHold) {
+      return;
+    }
+    this._clearPiece();
+    const isHoldPieceNone = this._hold.isNone();
+    const newCurrent = isHoldPieceNone ? this._next : this._hold;
+    if (isHoldPieceNone) {
+      this._setNext();
+    }
+    this._setHolded(this._current.reset());
+    this._setCurrentPiece(newCurrent);
+    this._resetPosition(this._hold);
+    this._setCanHold(false);
   }
 
   setSound() {
@@ -224,6 +253,7 @@ export class TetrisService {
       this._clearFullLines();
       this._setCurrentPiece(this._next);
       this._setNext();
+      this._setCanHold(true);
       if (this._isGameOver) {
         this._onGameOver();
         return;
@@ -396,9 +426,34 @@ export class TetrisService {
     });
   }
 
+  private _setHolded(piece: Piece): void {
+    this._store.update({
+      hold: piece
+    });
+  }
+
+  private _blockHold() {
+    this._setCanHold(false);
+  }
+
+  private _unblockHold() {
+    this._setCanHold(true);
+  }
+
+  private _setCanHold(canHoldPiece: boolean) {
+    this._store.update({
+      canHold: canHoldPiece
+    });
+  }
+
   private _unsubscribe() {
     if (this._gameInterval) {
       this._gameInterval.unsubscribe();
     }
+  }
+
+  private _resetPosition(piece: Piece) {
+    piece.x = SPAWN_POSITION_X;
+    piece.y = SPAWN_POSITION_Y;
   }
 }

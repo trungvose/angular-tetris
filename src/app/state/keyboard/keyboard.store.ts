@@ -11,6 +11,7 @@ export interface KeyboardState {
   sound: boolean;
   reset: boolean;
   drop: boolean;
+  hold: boolean;
 }
 
 export const createInitialState = (): KeyboardState => ({
@@ -21,7 +22,8 @@ export const createInitialState = (): KeyboardState => ({
   pause: false,
   sound: false,
   reset: false,
-  drop: false
+  drop: false,
+  hold: false
 });
 
 @Injectable({ providedIn: 'root' })

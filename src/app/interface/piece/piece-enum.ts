@@ -14,6 +14,7 @@ export enum PieceTypes {
   L = 'L',
   J = 'J',
   Z = 'Z',
-  S = 'S'
+  S = 'S',
+  None = 'None'
 }
 /* eslint-enable no-shadow */

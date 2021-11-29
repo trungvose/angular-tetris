@@ -45,6 +45,16 @@
               [left]="464">
         Right
     </t-button>
+    <t-button className="blue btn-md"
+              [active$]="keyboardQuery.hold$"
+              (mousedown)="mouseDown($event, 'Hold')"
+              (mouseup)="mouseUp($event, 'Hold')"
+              (touchstart)="mouseDown($event, 'Hold')"
+              (touchend)="mouseUp($event, 'Hold')"
+              [top]="100"
+              [left]="0">
+        Hold (C)
+    </t-button>
     <t-button className="blue btn-lg"
               [active$]="keyboardQuery.drop$"
               (mousedown)="mouseDown($event, 'Space')"
@@ -52,7 +62,7 @@
               (touchstart)="mouseDown($event, 'Space')"
               (touchend)="mouseUp($event, 'Space')"
               [top]="100"
-              [left]="52">
+              [left]="110">
         Drop (SPACE)
     </t-button>
     <t-button className="red btn-sm"
