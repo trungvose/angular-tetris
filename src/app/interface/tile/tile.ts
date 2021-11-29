@@ -6,6 +6,7 @@ export class Tile {
   constructor(val: TileValue) {
     this._value = val;
   }
+
   get isFilled(): boolean {
     return this._value === 1;
   }

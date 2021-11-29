@@ -186,9 +186,9 @@ export class TetrisService {
       return;
     }
     this._clearPiece();
-    const isHoldPieceNone = this._hold.isNone();
-    const newCurrent = isHoldPieceNone ? this._next : this._hold;
-    if (isHoldPieceNone) {
+    const isHoldNonePiece = this._hold.isNone();
+    const newCurrent = isHoldNonePiece ? this._next : this._hold;
+    if (isHoldNonePiece) {
       this._setNext();
     }
     this._setHolded(this._current.reset());
