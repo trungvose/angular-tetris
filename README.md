@@ -27,17 +27,6 @@ Thanks a bunch for stopping by and supporting me!
 
 [tweet]: https://twitter.com/intent/tweet?url=https%3A%2F%2Fgithub.com%2Ftrungk18%2Fangular-tetris&text=Awesome%20Tetris%20game%20built%20with%20Angular%2010%20and%20Akita%2C%20can%20you%20get%20999999%20points%3F&hashtags=angular,angulartetris,akita,typescript
 
-## Cake Defi
-
-I am working at [Cake Defi][cake]. We offer the easiest way to generate consistently high returns from your crypto assets. We are a team of passionate people who are committed to building a better future for everyone.
-
-I built the landing page at [cakedefi.com][cake] and architect the entire app at [app.cakedefi.com][cakeapp].
-
-[Sign up using my referral code: 136431][cake] to get started and get $20 FREE.
-
-[cake]: https://cakedefi.com/?ref=136431&utm_source=trungvo
-[cakeapp]: https://app.cakedefi.com/?ref=136431&utm_source=trungvo
-
 ## Why?
 
 Tetris was the first game that my dad bought for me and It cost about 1$ US at that time. It didn't sound a lot today. But 20 years ago, 1$ can feed my family for at least a few days. Put it that way, with 1\$ you can buy two dozens eggs.
