@@ -72,6 +72,7 @@
             ]
           }
         ],
+        "@typescript-eslint/member-ordering": "off",
         "typescript-eslint/quotes": "off",
         "no-underscore-dangle": "off",
         "radix": "off"
