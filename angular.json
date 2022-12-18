@@ -1,5 +1,8 @@
 {
   "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
+  "cli": {
+    "analytics": "ea20bcd9-1c36-4071-913f-75da1051415d"
+  },
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
@@ -145,9 +148,5 @@
         }
       }
     }
-  },
-  "defaultProject": "angular-tetris",
-  "cli": {
-    "defaultCollection": "@datorama/akita"
   }
 }
