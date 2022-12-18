@@ -10,7 +10,7 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
-    "build": "ng build --prod=true --sourceMap=true",
+    "build": "ng build --configuration production",
     "test": "ng test",
     "lint": "ng lint",
     "lint:fix": "ng lint --fix",
