@@ -33,8 +33,8 @@
     "@angular/router": "~15.0.4",
     "@datorama/akita": "^4.22.0",
     "@ngneat/until-destroy": "^7.3.2",
-    "@sentry/angular": "^6.0.1",
-    "@sentry/tracing": "^6.0.1",
+    "@sentry/angular": "7.27.0",
+    "@sentry/tracing": "7.27.0",
     "rxjs": "~6.5.4",
     "tslib": "^2.0.0",
     "zone.js": "~0.12.0"
