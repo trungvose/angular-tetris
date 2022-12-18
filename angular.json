@@ -1,5 +1,8 @@
 {
   "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
+  "cli": {
+    "analytics": "ea20bcd9-1c36-4071-913f-75da1051415d"
+  },
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
@@ -68,7 +71,7 @@
               },
               "optimization": true,
               "outputHashing": "all",
-              "sourceMap": false,
+              "sourceMap": true,
               "namedChunks": false,
               "extractLicenses": true,
               "vendorChunk": false,
@@ -146,8 +149,12 @@
       }
     }
   },
-  "defaultProject": "angular-tetris",
-  "cli": {
-    "defaultCollection": "@datorama/akita"
+  "schematics": {
+    "@angular-eslint/schematics:application": {
+      "setParserOptionsProject": true
+    },
+    "@angular-eslint/schematics:library": {
+      "setParserOptionsProject": true
+    }
   }
 }
