@@ -1,11 +1,14 @@
+import { NgClass, NgFor, NgStyle } from '@angular/common';
 import { Component, OnInit, Input } from '@angular/core';
 
 @Component({
   selector: 't-number',
+  standalone: true,
+  imports: [NgFor, NgClass],
   templateUrl: './number.component.html',
   styleUrls: ['./number.component.scss']
 })
-export class NumberComponent implements OnInit {
+export class NumberComponent {
   @Input() num = 0;
   @Input() length = 6;
 
@@ -13,8 +16,4 @@ export class NumberComponent implements OnInit {
     const str = `${this.num}`;
     return str.padStart(this.length, 'n').split('');
   }
-
-  constructor() {}
-
-  ngOnInit(): void {}
 }

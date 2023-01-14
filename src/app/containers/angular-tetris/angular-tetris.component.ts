@@ -1,4 +1,18 @@
+import { AsyncPipe, NgIf } from '@angular/common';
 import { Component, HostListener, OnInit, ElementRef, Renderer2 } from '@angular/core';
+import { ClockComponent } from '@trungk18/components/clock/clock.component';
+import { GithubComponent } from '@trungk18/components/github/github.component';
+import { HoldComponent } from '@trungk18/components/hold/hold.component';
+import { KeyboardComponent } from '@trungk18/components/keyboard/keyboard.component';
+import { LevelComponent } from '@trungk18/components/level/level.component';
+import { LogoComponent } from '@trungk18/components/logo/logo.component';
+import { MatrixComponent } from '@trungk18/components/matrix/matrix.component';
+import { NextComponent } from '@trungk18/components/next/next.component';
+import { PauseComponent } from '@trungk18/components/pause/pause.component';
+import { PointComponent } from '@trungk18/components/point/point.component';
+import { ScreenDecorationComponent } from '@trungk18/components/screen-decoration/screen-decoration.component';
+import { SoundComponent } from '@trungk18/components/sound/sound.component';
+import { StartLineComponent } from '@trungk18/components/start-line/start-line.component';
 import { TetrisKeyboard } from '@trungk18/interface/keyboard';
 import { SoundManagerService } from '@trungk18/services/sound-manager.service';
 import { KeyboardService } from '@trungk18/state/keyboard/keyboard.service';
@@ -8,6 +22,24 @@ const KeyUp = 'document:keyup';
 const KeyDown = 'document:keydown';
 @Component({
   selector: 'angular-tetris', // eslint-disable-line @angular-eslint/component-selector
+  standalone: true,
+  imports: [
+    AsyncPipe,
+    NgIf,
+    ClockComponent,
+    GithubComponent,
+    HoldComponent,
+    KeyboardComponent,
+    LevelComponent,
+    LogoComponent,
+    MatrixComponent,
+    NextComponent,
+    PauseComponent,
+    PointComponent,
+    ScreenDecorationComponent,
+    SoundComponent,
+    StartLineComponent
+  ],
   templateUrl: './angular-tetris.component.html',
   styleUrls: ['./angular-tetris.component.scss']
 })
@@ -234,7 +266,7 @@ export class AngularTetrisComponent implements OnInit {
 
   ngOnInit(): void {
     this.drop$ = this._keyboardService.drop$;
-    this.isShowLogo$ =  this._tetrisService.isShowLogo$;
+    this.isShowLogo$ = this._tetrisService.isShowLogo$;
     setTimeout(() => {
       this.resize();
     });

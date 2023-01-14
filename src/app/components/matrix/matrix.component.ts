@@ -1,3 +1,4 @@
+import { AsyncPipe, NgFor } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { GameState } from '@trungk18/interface/game-state';
@@ -5,10 +6,13 @@ import { Tile } from '@trungk18/interface/tile/tile';
 import { MatrixUtil } from '@trungk18/interface/utils/matrix';
 import { TetrisQuery } from '@trungk18/state/tetris/tetris.query';
 import { combineLatest, Observable, of, timer } from 'rxjs';
-import { delay, map, startWith, switchMap, takeWhile } from 'rxjs/operators';
+import { map, switchMap, takeWhile } from 'rxjs/operators';
+import { TileComponent } from '../tile/tile.component';
 @UntilDestroy()
 @Component({
   selector: 't-matrix',
+  standalone: true,
+  imports: [TileComponent, NgFor, AsyncPipe],
   templateUrl: './matrix.component.html',
   styleUrls: ['./matrix.component.scss']
 })

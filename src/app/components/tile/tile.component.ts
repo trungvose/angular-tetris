@@ -3,6 +3,7 @@ import { Tile } from '@trungk18/interface/tile/tile';
 
 @Component({
   selector: 't-tile',
+  standalone: true,
   template: ``,
   styleUrls: ['./tile.component.scss'],
 })

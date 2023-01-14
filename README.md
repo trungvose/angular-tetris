@@ -1,6 +1,6 @@
 # Angular Tetris
 
-A childhood memory Tetris game built with Angular 10 and Akita.
+A childhood memory Tetris game built with Angular and Akita.
 
 ## Working Game
 
@@ -8,12 +8,12 @@ Check out the **working game** -> https://tetris.trungk18.com
 
 The game has sounds, wear your 🎧 or turn on your 🔊 for a better experience.
 
-![A childhood memory Tetris game built with Angular 10 and Akita][demo]
+![A childhood memory Tetris game built with Angular and Akita][demo]
 
 > Please tweet and tag me @tuantrungvo for any issues that you are currently facing!
 > Thanks for your understanding. Stay tuned!
 
-![A childhood memory Tetris game built with Angular 10 and Akita][iphonex]
+![A childhood memory Tetris game built with Angular and Akita][iphonex]
 
 ## Support
 

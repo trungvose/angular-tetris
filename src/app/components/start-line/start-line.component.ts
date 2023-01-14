@@ -1,21 +1,19 @@
-import { Component, OnInit } from '@angular/core';
+import { AsyncPipe, NgIf } from '@angular/common';
+import { Component } from '@angular/core';
 import { TetrisQuery } from '@trungk18/state/tetris/tetris.query';
-import { Observable } from 'rxjs';
+import { NumberComponent } from '../number/number.component';
 
 @Component({
   selector: 't-start-line',
+  standalone: true,
+  imports: [NumberComponent, NgIf, AsyncPipe],
   templateUrl: './start-line.component.html',
   styleUrls: ['./start-line.component.scss']
 })
-export class StartLineComponent implements OnInit {
-  hasCurrent$: Observable<boolean>;
-  clearedLines$: Observable<number>;
-  initLine$: Observable<number>;
-  constructor(public _query: TetrisQuery) {}
+export class StartLineComponent {
+  hasCurrent$ = this._query.hasCurrent$;
+  clearedLines$ = this._query.clearedLines$;
+  initLine$ = this._query.initLine$;
 
-  ngOnInit(): void {
-    this.hasCurrent$ = this._query.hasCurrent$;
-    this.clearedLines$ = this._query.clearedLines$;
-    this.initLine$ = this._query.initLine$;
-  }
+  constructor(public _query: TetrisQuery) {}
 }

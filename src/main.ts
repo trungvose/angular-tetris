@@ -1,10 +1,10 @@
-import { enableProdMode } from '@angular/core';
-import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
+import { enableProdMode, ErrorHandler, importProvidersFrom } from '@angular/core';
+import { bootstrapApplication } from '@angular/platform-browser';
+import { AkitaNgDevtools } from '@datorama/akita-ngdevtools';
 import * as Sentry from '@sentry/angular';
 import { Integrations } from '@sentry/tracing';
-import { AppModule } from './app/app.module';
+import { AppComponent } from '@trungk18/app.component';
 import { environment } from './environments/environment';
-
 
 const initSentry = () => {
   Sentry.init({
@@ -13,10 +13,10 @@ const initSentry = () => {
     integrations: [
       new Integrations.BrowserTracing({
         tracingOrigins: ['localhost', 'https://tetris.trungk18.com'],
-        routingInstrumentation: Sentry.routingInstrumentation,
-      }),
+        routingInstrumentation: Sentry.routingInstrumentation
+      })
     ],
-    tracesSampleRate: 1.0,
+    tracesSampleRate: 1.0
   });
 };
 
@@ -25,5 +25,12 @@ if (environment.production) {
   initSentry();
 }
 
-platformBrowserDynamic().bootstrapModule(AppModule)
-  .catch(err => console.error(err));
+bootstrapApplication(AppComponent, {
+  providers: [
+    importProvidersFrom(AkitaNgDevtools.forRoot()),
+    {
+      provide: ErrorHandler,
+      useValue: Sentry.createErrorHandler()
+    }
+  ]
+});

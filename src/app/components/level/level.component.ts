@@ -1,23 +1,19 @@
-import { Component, OnInit } from '@angular/core';
-import { Observable } from 'rxjs';
-import { Speed } from '@trungk18/interface/speed';
+import { AsyncPipe, NgIf } from '@angular/common';
+import { Component } from '@angular/core';
 import { TetrisQuery } from '@trungk18/state/tetris/tetris.query';
+import { NumberComponent } from '../number/number.component';
 
 @Component({
   selector: 't-level',
+  standalone: true,
+  imports: [AsyncPipe, NgIf, NumberComponent],
   templateUrl: './level.component.html',
   styleUrls: ['./level.component.scss']
 })
-export class LevelComponent implements OnInit {
-  speed$: Observable<Speed>;
-  initSpeed$: Observable<Speed>;
-  hasCurrent$: Observable<boolean>;
-
+export class LevelComponent  {
   constructor(private _query: TetrisQuery) {}
 
-  ngOnInit(): void {
-    this.speed$ = this._query.speed$;
-    this.hasCurrent$ = this._query.hasCurrent$;
-    this.initSpeed$ = this._query.initSpeed$;
-  }
+  speed$ = this._query.speed$;
+  hasCurrent$ = this._query.hasCurrent$;
+  initSpeed$ = this._query.initSpeed$;
 }
