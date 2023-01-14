@@ -1,4 +1,4 @@
-import { AsyncPipe } from '@angular/common';
+import { AsyncPipe, NgIf } from '@angular/common';
 import { Component, HostListener, OnInit, ElementRef, Renderer2 } from '@angular/core';
 import { ClockComponent } from '@trungk18/components/clock/clock.component';
 import { GithubComponent } from '@trungk18/components/github/github.component';
@@ -25,6 +25,7 @@ const KeyDown = 'document:keydown';
   standalone: true,
   imports: [
     AsyncPipe,
+    NgIf,
     ClockComponent,
     GithubComponent,
     HoldComponent,
