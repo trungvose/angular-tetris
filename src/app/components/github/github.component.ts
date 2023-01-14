@@ -2,13 +2,13 @@ import { AsyncPipe, NgIf } from '@angular/common';
 import { Component } from '@angular/core';
 import { GoogleAnalyticsService } from '@trungk18/services/google-analytics.service';
 import { TetrisQuery } from '@trungk18/state/tetris/tetris.query';
-import { TwitterButtonComponent } from '../twitter-button/twitter-button.component';
+import { SharedButtonComponent } from '../shared-button/shared-button.component';
 const HASHTAG = 'angular,angulartetris,akita,typescript';
 
 @Component({
   selector: 't-github',
   standalone: true,
-  imports: [TwitterButtonComponent, AsyncPipe, NgIf],
+  imports: [SharedButtonComponent, AsyncPipe, NgIf],
   templateUrl: './github.component.html',
   styleUrls: ['./github.component.scss']
 })
