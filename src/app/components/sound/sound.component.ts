@@ -1,19 +1,18 @@
-import { Component, OnInit } from '@angular/core';
-import { Observable } from 'rxjs';
+import { AsyncPipe } from '@angular/common';
+import { Component } from '@angular/core';
 import { TetrisQuery } from '@trungk18/state/tetris/tetris.query';
+import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
 @Component({
   selector: 't-sound',
+  standalone: true,
+  imports: [AsyncPipe],
   templateUrl: './sound.component.html',
   styleUrls: ['./sound.component.scss']
 })
-export class SoundComponent implements OnInit {
-  muted$: Observable<boolean>;
+export class SoundComponent {
+  muted$: Observable<boolean> = this._query.sound$.pipe(map((sound) => !sound));
 
   constructor(private _query: TetrisQuery) {}
-
-  ngOnInit(): void {
-    this.muted$ = this._query.sound$.pipe(map((sound) => !sound));
-  }
 }
