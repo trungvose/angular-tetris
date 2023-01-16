@@ -6,7 +6,7 @@
     "email": "trungk18@gmail.com",
     "url": "https://github.com/trungk18/angular-tetris"
   },
-  "description": "Tetris game built with Angular and Akita 🎮",
+  "description": "Tetris game built with Angular and StateAdapt 🎮",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
@@ -31,11 +31,13 @@
     "@angular/platform-browser": "~16.1.6",
     "@angular/platform-browser-dynamic": "~16.1.6",
     "@angular/router": "~16.1.6",
-    "@datorama/akita": "^4.22.0",
     "@ngneat/until-destroy": "^7.3.2",
     "@sentry/angular": "7.27.0",
     "@sentry/tracing": "7.27.0",
-    "rxjs": "~6.5.4",
+    "@state-adapt/angular": "^1.0.0",
+    "@state-adapt/core": "^1.0.0",
+    "@state-adapt/rxjs": "^1.0.0",
+    "rxjs": "^6.6.6",
     "tslib": "^2.0.0",
     "zone.js": "~0.13.1"
   },
@@ -49,7 +51,6 @@
     "@angular-eslint/template-parser": "16.1.0",
     "@angular/cli": "~16.1.5",
     "@angular/compiler-cli": "~16.1.6",
-    "@datorama/akita-ngdevtools": "^3.0.2",
     "@types/jasmine": "~3.6.0",
     "@types/jasminewd2": "~2.0.3",
     "@types/node": "^12.11.1",
