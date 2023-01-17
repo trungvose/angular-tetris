@@ -1,89 +1,44 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import {
   PieceFactory,
   SPAWN_POSITION_X,
   SPAWN_POSITION_Y
 } from '@angular-tetris/factory/piece-factory';
 import { CallBack } from '@angular-tetris/interface/callback';
-import { GameState } from '@angular-tetris/interface/game-state';
 import { Piece } from '@angular-tetris/interface/piece/piece';
 import { EmptyTile } from '@angular-tetris/interface/tile/empty-tile';
 import { FilledTile } from '@angular-tetris/interface/tile/filled-tile';
 import { Tile } from '@angular-tetris/interface/tile/tile';
 import { MatrixUtil } from '@angular-tetris/interface/utils/matrix';
-import { Observable, Subscription, timer } from 'rxjs';
-import { TetrisQuery } from './tetris.query';
-import { createInitialState, TetrisStore } from './tetris.store';
-import { Speed } from '@angular-tetris/interface/speed';
 import { SoundManagerService } from '@angular-tetris/services/sound-manager.service';
-import { LocalStorageService } from '@angular-tetris/services/local-storage.service';
+import { Subscription, combineLatest, timer } from 'rxjs';
+import { take, pairwise, takeUntil, tap } from 'rxjs/operators';
+import { TetrisStore } from './tetris.store';
 
 @Injectable({ providedIn: 'root' })
 export class TetrisService {
   gameInterval: Subscription;
+  store = inject(TetrisStore);
+  hold$ = this.store.hold$;
+  isShowLogo$ = this.store.isShowLogo$;
+  hasCurrent$ = this.store.hasCurrent$;
+  canStartGame$ = this.store.canStartGame$;
 
-  constructor(
-    private store: TetrisStore,
-    private query: TetrisQuery,
-    private soundManager: SoundManagerService,
-    private pieceFactory: PieceFactory
-  ) {}
-
-  private get locked(): boolean {
-    return this.query.locked;
-  }
-
-  private get current() {
-    return this.query.current;
-  }
-
-  private get next() {
-    return this.query.next;
-  }
-
-  private get matrix() {
-    return this.query.matrix;
-  }
-
-  private get canHold() {
-    return this.query.canHold;
-  }
-
-  private get hold() {
-    return this.query.hold;
-  }
-
-  get hold$() {
-    return this.query.hold$;
-  }
-
-  get isShowLogo$(): Observable<boolean> {
-    return this.query.isShowLogo$;
-  }
-
-  get hasCurrent(): boolean {
-    return !!this.current;
-  }
-
-  get canStartGame(): boolean {
-    return this.query.canStartGame;
-  }
+  constructor(private soundManager: SoundManagerService, private pieceFactory: PieceFactory) {}
 
   start() {
-    if (!this.current) {
-      this.setCurrentPiece(this.next);
-      this.setNext();
-    }
-    const { initLine, initSpeed } = this.query.raw;
-    this.store.update({
-      points: 0,
-      gameState: GameState.Started,
-      matrix: MatrixUtil.getStartBoard(initLine),
-      speed: initSpeed
+    this.store.state$.pipe(take(1)).subscribe(({ current, next }) => {
+      if (!current) {
+        this.setCurrentPiece(next);
+        this.setNext();
+      }
+      this.store.startGame();
+      this.unsubscribe();
+      this.store.initSpeed$.pipe(take(1)).subscribe((initSpeed) => {
+        this.auto(MatrixUtil.getSpeedDelay(initSpeed));
+        this.setLocked(false);
+      });
     });
-    this.unsubscribe();
-    this.auto(MatrixUtil.getSpeedDelay(initSpeed));
-    this.setLocked(false);
   }
 
   auto(delay: number) {
@@ -93,78 +48,77 @@ export class TetrisService {
   }
 
   resume() {
-    if (!this.query.isPause) {
-      return;
-    }
-    const { speed } = this.query.raw;
-    this.store.update({
-      locked: false,
-      gameState: GameState.Started
-    });
-    this.auto(MatrixUtil.getSpeedDelay(speed));
+    combineLatest([this.store.isPaused$, this.store.speed$])
+      .pipe(take(1))
+      .subscribe(([isPaused, speed]) => {
+        if (!isPaused) {
+          return;
+        }
+        this.store.resume();
+        this.auto(MatrixUtil.getSpeedDelay(speed));
+      });
   }
 
   pause() {
-    if (!this.query.isPlaying) {
-      return;
-    }
-    this.store.update({
-      locked: true,
-      gameState: GameState.Paused
+    this.store.isPlaying$.pipe(take(1)).subscribe((isPlaying) => {
+      if (!isPlaying) {
+        return;
+      }
+      this.store.pause();
+      this.unsubscribe();
     });
-    this.unsubscribe();
   }
 
-  reset() {
-    const { sound } = this.query.raw;
-    this.store.update({
-      ...createInitialState(this.pieceFactory),
-      sound
-    });
-  }
+  reset = () => this.store.resetAllButSound(this.pieceFactory);
 
   moveLeft() {
-    if (this.locked) {
-      return;
-    }
-    this.clearPiece();
-    this.setCurrentPiece(this.current.store());
-    this.setCurrentPiece(this.current.moveLeft());
-    if (this.isCollidesLeft) {
-      this.setCurrentPiece(this.current.revert());
-    }
-    this.drawPiece();
+    this.store.state$.pipe(take(1)).subscribe(({ locked, current }) => {
+      if (locked) {
+        return;
+      }
+      this.clearPiece();
+      this.setCurrentPiece(current!.store());
+      this.setCurrentPiece(current!.moveLeft());
+      if (this.isCollidesLeft) {
+        this.setCurrentPiece(current!.revert());
+      }
+      this.drawPiece();
+    });
   }
 
   moveRight() {
-    if (this.locked) {
-      return;
-    }
-    this.clearPiece();
-    this.setCurrentPiece(this.current.store());
-    this.setCurrentPiece(this.current.moveRight());
-    if (this.isCollidesRight) {
-      this.setCurrentPiece(this.current.revert());
-    }
-    this.drawPiece();
+    this.store.state$.pipe(take(1)).subscribe(({ locked, current }) => {
+      if (locked) {
+        return;
+      }
+      this.clearPiece();
+      this.setCurrentPiece(current!.store());
+      this.setCurrentPiece(current!.moveRight());
+      if (this.isCollidesRight) {
+        this.setCurrentPiece(current!.revert());
+      }
+      this.drawPiece();
+    });
   }
 
   rotate() {
-    if (this.locked) {
-      return;
-    }
-
-    this.clearPiece();
-    this.setCurrentPiece(this.current.store());
-    this.setCurrentPiece(this.current.rotate());
-    while (this.isCollidesRight) {
-      this.setCurrentPiece(this.current.moveLeft());
-      if (this.isCollidesLeft) {
-        this.setCurrentPiece(this.current.revert());
-        break;
+    this.store.state$.pipe(take(1)).subscribe(({ locked, current }) => {
+      if (locked) {
+        return;
       }
-    }
-    this.drawPiece();
+
+      this.clearPiece();
+      this.setCurrentPiece(current!.store());
+      this.setCurrentPiece(current!.rotate());
+      while (this.isCollidesRight) {
+        this.setCurrentPiece(current!.moveLeft());
+        if (this.isCollidesLeft) {
+          this.setCurrentPiece(current!.revert());
+          break;
+        }
+      }
+      this.drawPiece();
+    });
   }
 
   moveDown() {
@@ -172,117 +126,104 @@ export class TetrisService {
   }
 
   drop() {
-    if (this.locked) {
-      return;
-    }
-    while (!this.isCollidesBottom) {
-      this.clearPiece();
-      this.setCurrentPiece(this.current.store());
-      this.setCurrentPiece(this.current.moveDown());
-    }
-    this.setCurrentPiece(this.current.revert());
-    this.drawPiece();
-    this.setCanHold(true);
+    this.store.state$.pipe(take(1)).subscribe(({ locked, current }) => {
+      if (locked) {
+        return;
+      }
+      while (!this.isCollidesBottom) {
+        this.clearPiece();
+        this.setCurrentPiece(current!.store());
+        this.setCurrentPiece(current!.moveDown());
+      }
+      this.setCurrentPiece(current!.revert());
+      this.drawPiece();
+      this.setCanHold(true);
+    });
   }
 
   holdPiece(): void {
-    if (this.locked || !this.canHold) {
-      return;
-    }
-    this.clearPiece();
-    const isHoldNonePiece = this.hold.isNone();
-    const newCurrent = isHoldNonePiece ? this.next : this.hold;
-    if (isHoldNonePiece) {
-      this.setNext();
-    }
-    this.setHolded(this.current.reset());
-    this.setCurrentPiece(newCurrent);
-    this.resetPosition(this.hold);
-    this.setCanHold(false);
-  }
-
-  setSound() {
-    const sound = this.query.raw.sound;
-    this.store.update({
-      sound: !sound
-    });
-  }
-
-  decreaseLevel() {
-    const { initSpeed } = this.query.raw;
-    const newSpeed = (initSpeed - 1 < 1 ? 6 : initSpeed - 1) as Speed;
-    this.store.update({
-      initSpeed: newSpeed
-    });
-  }
-
-  increaseLevel() {
-    const { initSpeed } = this.query.raw;
-    const newSpeed = (initSpeed + 1 > 6 ? 1 : initSpeed + 1) as Speed;
-    this.store.update({
-      initSpeed: newSpeed
-    });
-  }
-
-  increaseStartLine() {
-    const { initLine } = this.query.raw;
-    const startLine = initLine + 1 > 10 ? 1 : initLine + 1;
-    this.store.update({
-      initLine: startLine
-    });
-  }
-
-  decreaseStartLine() {
-    const { initLine } = this.query.raw;
-    const startLine = initLine - 1 < 1 ? 10 : initLine - 1;
-    this.store.update({
-      initLine: startLine
-    });
-  }
-
-  private update() {
-    if (this.locked) {
-      return;
-    }
-    this.setLocked(true);
-    this.setCurrentPiece(this.current.revert());
-    this.clearPiece();
-    this.setCurrentPiece(this.current.store());
-    this.setCurrentPiece(this.current.moveDown());
-
-    if (this.isCollidesBottom) {
-      this.setCurrentPiece(this.current.revert());
-      this.markAsSolid();
-      this.drawPiece();
-      this.clearFullLines();
-      this.setCurrentPiece(this.next);
-      this.setNext();
-      this.setCanHold(true);
-      if (this.isGameOver) {
-        this.onGameOver();
+    this.store.state$.pipe(take(1)).subscribe(({ locked, current, canHold, next, hold }) => {
+      if (locked || !canHold) {
         return;
       }
-    }
+      this.clearPiece();
+      const isHoldNonePiece = hold.isNone();
+      const newCurrent = isHoldNonePiece ? next : hold;
+      if (isHoldNonePiece) {
+        this.setNext();
+      }
+      this.setHolded(current!.reset());
+      this.setCurrentPiece(newCurrent);
+      this.resetPosition(hold);
+      this.setCanHold(false);
+    });
+  }
 
-    this.drawPiece();
-    this.setLocked(false);
+  setSound = this.store.toggleSound;
+  decreaseLevel = this.store.decreaseLevel;
+  increaseLevel = this.store.increaseLevel;
+  increaseStartLine = this.store.increaseStartLine;
+  decreaseStartLine = this.store.decreaseStartLine;
+
+  private update() {
+    this.store.state$.pipe(take(1)).subscribe(({ locked, current, next }) => {
+      if (locked) {
+        return;
+      }
+      this.setLocked(true);
+      this.setCurrentPiece(current!.revert());
+      this.clearPiece();
+      this.setCurrentPiece(current!.store());
+      this.setCurrentPiece(current!.moveDown());
+
+      if (this.isCollidesBottom) {
+        this.setCurrentPiece(current!.revert());
+        this.markAsSolid();
+        this.drawPiece();
+        this.clearFullLines();
+        this.setCurrentPiece(next);
+        this.setNext();
+        this.setCanHold(true);
+        if (this.isGameOver) {
+          this.onGameOver();
+          return;
+        }
+      }
+
+      this.drawPiece();
+      this.setLocked(false);
+    });
   }
 
   private clearFullLines() {
-    let numberOfClearedLines = 0;
-    const newMatrix = [...this.matrix];
-    for (let row = MatrixUtil.Height - 1; row >= 0; row--) {
-      const pos = row * MatrixUtil.Width;
-      const fullRowTiles = newMatrix.slice(pos, pos + MatrixUtil.Width);
-      const isFullRow = fullRowTiles.every((x) => x.isSolid);
-      if (isFullRow) {
-        numberOfClearedLines++;
-        const topPortion = this.matrix.slice(0, row * MatrixUtil.Width);
-        newMatrix.splice(0, ++row * MatrixUtil.Width, ...MatrixUtil.EmptyRow.concat(topPortion));
-        this.setMatrix(newMatrix);
+    this.store.matrix$.pipe(take(1)).subscribe((matrix) => {
+      let numberOfClearedLines = 0;
+      const newMatrix = [...matrix];
+      for (let row = MatrixUtil.Height - 1; row >= 0; row--) {
+        const pos = row * MatrixUtil.Width;
+        const fullRowTiles = newMatrix.slice(pos, pos + MatrixUtil.Width);
+        const isFullRow = fullRowTiles.every((x) => x.isSolid);
+        if (isFullRow) {
+          numberOfClearedLines++;
+          const topPortion = newMatrix.slice(0, pos);
+          newMatrix.splice(0, ++row * MatrixUtil.Width, ...MatrixUtil.EmptyRow.concat(topPortion));
+          this.setMatrix([...newMatrix]);
+        }
       }
-    }
-    this.setPointsAndSpeed(numberOfClearedLines);
+      this.setPointsAndSpeed(numberOfClearedLines);
+    });
+  }
+
+  get current(): Piece {
+    let current: Piece;
+    this.store.current$.pipe(take(1)).subscribe((c) => (current = c!));
+    return current!;
+  }
+
+  private get matrix(): Tile[] {
+    let matrix: Tile[];
+    this.store.matrix$.pipe(take(1)).subscribe((m) => (matrix = m));
+    return matrix!;
   }
 
   private get isGameOver() {
@@ -298,15 +239,7 @@ export class TetrisService {
   private onGameOver() {
     this.pause();
     this.soundManager.gameOver();
-    const { points, max, sound } = this.query.raw;
-    const maxPoint = Math.max(points, max);
-    LocalStorageService.setMaxPoint(maxPoint);
-    this.store.update({
-      ...createInitialState(this.pieceFactory),
-      max: maxPoint,
-      gameState: GameState.Over,
-      sound
-    });
+    this.store.endGame(this.pieceFactory);
   }
 
   private get isCollidesBottom(): boolean {
@@ -324,7 +257,7 @@ export class TetrisService {
   }
 
   private get isCollidesRight(): boolean {
-    if (this.current.rightCol >= MatrixUtil.Width) {
+    if (this.current.rightCol! >= MatrixUtil.Width) {
       return true;
     }
     return this.collides();
@@ -370,34 +303,15 @@ export class TetrisService {
       return;
     }
     this.soundManager.clear();
-    const { points, clearedLines, speed, initSpeed } = this.query.raw;
-    const newLines = clearedLines + numberOfClearedLines;
-    const newPoints = this.getPoints(numberOfClearedLines, points);
-    const newSpeed = this.getSpeed(newLines, initSpeed);
-
-    this.store.update({
-      points: newPoints,
-      clearedLines: newLines,
-      speed: newSpeed
-    });
-
-    if (newSpeed !== speed) {
-      this.unsubscribe();
-      this.auto(MatrixUtil.getSpeedDelay(newSpeed));
-    }
-  }
-
-  private getSpeed(totalLines: number, initSpeed: number): Speed {
-    const addedSpeed = Math.floor(totalLines / MatrixUtil.Height);
-    let newSpeed = (initSpeed + addedSpeed) as Speed;
-    newSpeed = newSpeed > 6 ? 6 : newSpeed;
-    return newSpeed;
-  }
-
-  private getPoints(numberOfClearedLines: number, points: number): number {
-    const addedPoints = MatrixUtil.Points[numberOfClearedLines - 1];
-    const newPoints = points + addedPoints;
-    return newPoints > MatrixUtil.MaxPoint ? MatrixUtil.MaxPoint : newPoints;
+    this.store.speed$
+      .pipe(pairwise(), take(1), takeUntil(timer(0)))
+      .subscribe(([speed, newSpeed]) => {
+        if (newSpeed !== speed) {
+          this.unsubscribe();
+          this.auto(MatrixUtil.getSpeedDelay(newSpeed));
+        }
+      });
+    this.store.handleClearedLines(numberOfClearedLines);
   }
 
   private updateMatrix(pos: number, tile: Tile) {
@@ -406,41 +320,14 @@ export class TetrisService {
     this.setMatrix(newMatrix);
   }
 
-  private setNext() {
-    this.store.update({
-      next: this.pieceFactory.getRandomPiece()
-    });
-  }
-
-  private setCurrentPiece(piece: Piece) {
-    this.store.update({
-      current: piece
-    });
-  }
-
-  private setMatrix(matrix: Tile[]) {
-    this.store.update({
-      matrix
-    });
-  }
-
-  private setLocked(locked: boolean) {
-    this.store.update({
-      locked
-    });
-  }
-
-  private setHolded(piece: Piece): void {
-    this.store.update({
-      hold: piece
-    });
-  }
-
-  private setCanHold(canHoldPiece: boolean) {
-    this.store.update({
-      canHold: canHoldPiece
-    });
-  }
+  private setNext = () => this.store.setNext(this.pieceFactory.getRandomPiece());
+  private setCurrentPiece = this.store.setCurrent;
+  private setMatrix = this.store.setMatrix;
+  private setLocked = this.store.setLocked;
+  private setHolded = this.store.setHold;
+  private blockHold = this.store.setCanHoldFalse;
+  private unblockHold = this.store.setCanHoldTrue;
+  private setCanHold = this.store.setCanHold;
 
   private unsubscribe() {
     if (this.gameInterval) {

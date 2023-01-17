@@ -1,12 +1,12 @@
 import { AsyncPipe } from '@angular/common';
-import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { GameState } from '@angular-tetris/interface/game-state';
+import { Component, EventEmitter, Input, Output, inject } from '@angular/core';
 import { ArrowButton } from '@angular-tetris/interface/ui-model/arrow-button';
-import { KeyboardQuery } from '@angular-tetris/state/keyboard/keyboard.query';
-import { TetrisQuery } from '@angular-tetris/state/tetris/tetris.query';
+
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { ButtonComponent } from '../button/button.component';
+import { KeyboardStore } from '@angular-tetris/state/keyboard/keyboard.store';
+import { TetrisStore } from '@angular-tetris/state/tetris/tetris.store';
 
 @Component({
   selector: 't-keyboard',
@@ -20,11 +20,10 @@ export class KeyboardComponent {
   @Output() onMouseDown = new EventEmitter<string>();
   @Output() onMouseUp = new EventEmitter<string>();
   ArrowButton = ArrowButton;
-  pauseButtonLabel$: Observable<string> = this.query.gameState$.pipe(
-    map((state) => (state === GameState.Paused ? 'Play' : 'Pause'))
+  pauseButtonLabel$: Observable<string> = inject(TetrisStore).isPaused$.pipe(
+    map((isPaused) => (isPaused ? 'Play' : 'Pause'))
   );
-
-  constructor(public keyboardQuery: KeyboardQuery, private query: TetrisQuery) {}
+  keyboardStore = inject(KeyboardStore);
 
   mouseDown(e: Event, key: string) {
     e.preventDefault();

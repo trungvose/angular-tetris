@@ -29,7 +29,7 @@ export class Piece {
   }
 
   clearStore(): Piece {
-    this.lastConfig = null;
+    this.lastConfig = null!;
     return this.newPiece();
   }
 
@@ -40,7 +40,7 @@ export class Piece {
           this[key] = this.lastConfig[key];
         }
       }
-      this.lastConfig = null;
+      this.lastConfig = null!;
     }
     return this.newPiece();
   }
@@ -80,7 +80,7 @@ export class Piece {
   }
 
   get positionOnGrid(): number[] {
-    const positions = [];
+    const positions = [] as number[];
     for (let row = 0; row < 4; row++) {
       for (let col = 0; col < 4; col++) {
         if (this.shape[row][col]) {

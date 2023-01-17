@@ -1,6 +1,8 @@
-import { Injectable } from '@angular/core';
-import { Store, StoreConfig } from '@datorama/akita';
+import { Injectable, InjectionToken } from '@angular/core';
+import { booleanAdapter } from '@state-adapt/core/adapters';
+import { joinAdapters } from '@state-adapt/core';
 import { TetrisKeyboard } from '@angular-tetris/interface/keyboard';
+import { adapt } from '@state-adapt/angular';
 
 export interface KeyboardState {
   up: boolean;
@@ -14,6 +16,18 @@ export interface KeyboardState {
   hold: boolean;
 }
 
+const adapter = joinAdapters<KeyboardState>()({
+  up: booleanAdapter,
+  down: booleanAdapter,
+  left: booleanAdapter,
+  right: booleanAdapter,
+  pause: booleanAdapter,
+  sound: booleanAdapter,
+  reset: booleanAdapter,
+  drop: booleanAdapter,
+  hold: booleanAdapter
+})();
+
 export const createInitialState = (): KeyboardState => ({
   up: false,
   down: false,
@@ -26,10 +40,7 @@ export const createInitialState = (): KeyboardState => ({
   hold: false
 });
 
-@Injectable({ providedIn: 'root' })
-@StoreConfig({ name: 'AngularTetrisKeyboard' })
-export class KeyboardStore extends Store<KeyboardState> {
-  constructor() {
-    super(createInitialState());
-  }
-}
+export const KeyboardStore = new InjectionToken('KeyboardStore', {
+  providedIn: 'root',
+  factory: () => adapt(['keyboard', createInitialState()], adapter)
+});

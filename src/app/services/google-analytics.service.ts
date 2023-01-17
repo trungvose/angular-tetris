@@ -10,8 +10,8 @@ export class GoogleAnalyticsService {
   public sendEvent(
     eventName: string,
     eventCategory: string,
-    eventLabel: string = null,
-    eventValue: number = null
+    eventLabel: string = null!,
+    eventValue: number = null!
   ) {
     if (!gtag) {
       return;
