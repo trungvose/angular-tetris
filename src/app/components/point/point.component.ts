@@ -1,7 +1,7 @@
 import { AsyncPipe, NgIf } from '@angular/common';
 import { Component } from '@angular/core';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
-import { TetrisQuery } from '@trungk18/state/tetris/tetris.query';
+import { TetrisQuery } from '@angular-tetris/state/tetris/tetris.query';
 import { Observable, of, timer } from 'rxjs';
 import { map, switchMap } from 'rxjs/operators';
 import { NumberComponent } from '../number/number.component';

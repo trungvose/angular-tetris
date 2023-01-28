@@ -1,7 +1,7 @@
 import { AsyncPipe } from '@angular/common';
 import { Component } from '@angular/core';
-import { GameState } from '@trungk18/interface/game-state';
-import { TetrisQuery } from '@trungk18/state/tetris/tetris.query';
+import { GameState } from '@angular-tetris/interface/game-state';
+import { TetrisQuery } from '@angular-tetris/state/tetris/tetris.query';
 import { interval, Observable, of } from 'rxjs';
 import { map, switchMap } from 'rxjs/operators';
 

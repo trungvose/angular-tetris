@@ -1,6 +1,6 @@
 import { AsyncPipe } from '@angular/common';
 import { Component } from '@angular/core';
-import { TetrisQuery } from '@trungk18/state/tetris/tetris.query';
+import { TetrisQuery } from '@angular-tetris/state/tetris/tetris.query';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 

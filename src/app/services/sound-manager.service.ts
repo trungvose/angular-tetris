@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { TetrisQuery } from '@trungk18/state/tetris/tetris.query';
+import { TetrisQuery } from '@angular-tetris/state/tetris/tetris.query';
 
 const SOUND_FILE_PATH = '/assets/tetris-sound.mp3';
 @Injectable({

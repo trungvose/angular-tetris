@@ -1,7 +1,7 @@
 import { AsyncPipe, NgIf } from '@angular/common';
 import { Component } from '@angular/core';
-import { GoogleAnalyticsService } from '@trungk18/services/google-analytics.service';
-import { TetrisQuery } from '@trungk18/state/tetris/tetris.query';
+import { GoogleAnalyticsService } from '@angular-tetris/services/google-analytics.service';
+import { TetrisQuery } from '@angular-tetris/state/tetris/tetris.query';
 import { SharedButtonComponent } from '../shared-button/shared-button.component';
 const HASHTAG = 'angular,angulartetris,akita,typescript';
 

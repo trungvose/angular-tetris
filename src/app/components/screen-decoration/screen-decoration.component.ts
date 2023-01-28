@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { FilledTile } from '@trungk18/interface/tile/filled-tile';
+import { FilledTile } from '@angular-tetris/interface/tile/filled-tile';
 import { TileComponent } from '../tile/tile.component';
 
 @Component({

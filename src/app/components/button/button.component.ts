@@ -1,6 +1,6 @@
 import { AsyncPipe, NgClass, NgIf, NgStyle } from '@angular/common';
 import { Component, Input } from '@angular/core';
-import { ArrowButton, ArrowButtonTransform } from '@trungk18/interface/ui-model/arrow-button';
+import { ArrowButton, ArrowButtonTransform } from '@angular-tetris/interface/ui-model/arrow-button';
 import { Observable } from 'rxjs';
 @Component({
   selector: 't-button',

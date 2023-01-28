@@ -1,18 +1,18 @@
 import { Injectable } from '@angular/core';
-import { PieceFactory, SPAWN_POSITION_X, SPAWN_POSITION_Y } from '@trungk18/factory/piece-factory';
-import { CallBack } from '@trungk18/interface/callback';
-import { GameState } from '@trungk18/interface/game-state';
-import { Piece } from '@trungk18/interface/piece/piece';
-import { EmptyTile } from '@trungk18/interface/tile/empty-tile';
-import { FilledTile } from '@trungk18/interface/tile/filled-tile';
-import { Tile } from '@trungk18/interface/tile/tile';
-import { MatrixUtil } from '@trungk18/interface/utils/matrix';
+import { PieceFactory, SPAWN_POSITION_X, SPAWN_POSITION_Y } from '@angular-tetris/factory/piece-factory';
+import { CallBack } from '@angular-tetris/interface/callback';
+import { GameState } from '@angular-tetris/interface/game-state';
+import { Piece } from '@angular-tetris/interface/piece/piece';
+import { EmptyTile } from '@angular-tetris/interface/tile/empty-tile';
+import { FilledTile } from '@angular-tetris/interface/tile/filled-tile';
+import { Tile } from '@angular-tetris/interface/tile/tile';
+import { MatrixUtil } from '@angular-tetris/interface/utils/matrix';
 import { Observable, Subscription, timer } from 'rxjs';
 import { TetrisQuery } from './tetris.query';
 import { createInitialState, TetrisStore } from './tetris.store';
-import { Speed } from '@trungk18/interface/speed';
-import { SoundManagerService } from '@trungk18/services/sound-manager.service';
-import { LocalStorageService } from '@trungk18/services/local-storage.service';
+import { Speed } from '@angular-tetris/interface/speed';
+import { SoundManagerService } from '@angular-tetris/services/sound-manager.service';
+import { LocalStorageService } from '@angular-tetris/services/local-storage.service';
 
 @Injectable({ providedIn: 'root' })
 export class TetrisService {

@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, Renderer2, ElementRef } from '@angular/core';
-import { Tile } from '@trungk18/interface/tile/tile';
+import { Tile } from '@angular-tetris/interface/tile/tile';
 
 @Component({
   selector: 't-tile',

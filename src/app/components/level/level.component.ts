@@ -1,6 +1,6 @@
 import { AsyncPipe, NgIf } from '@angular/common';
 import { Component } from '@angular/core';
-import { TetrisQuery } from '@trungk18/state/tetris/tetris.query';
+import { TetrisQuery } from '@angular-tetris/state/tetris/tetris.query';
 import { NumberComponent } from '../number/number.component';
 
 @Component({

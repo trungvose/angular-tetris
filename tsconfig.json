@@ -3,10 +3,10 @@
   "compilerOptions": {
     "baseUrl": "./",
     "paths": {
-      "@trungk18/*": [
+      "@angular-tetris/*": [
         "src/app/*"
       ],
-      "@trungk18/interface/*": [
+      "@angular-tetris/interface/*": [
         "src/app/interface/*"
       ]
     },

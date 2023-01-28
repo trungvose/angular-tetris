@@ -1,9 +1,9 @@
 import { AsyncPipe } from '@angular/common';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { GameState } from '@trungk18/interface/game-state';
-import { ArrowButton } from '@trungk18/interface/ui-model/arrow-button';
-import { KeyboardQuery } from '@trungk18/state/keyboard/keyboard.query';
-import { TetrisQuery } from '@trungk18/state/tetris/tetris.query';
+import { GameState } from '@angular-tetris/interface/game-state';
+import { ArrowButton } from '@angular-tetris/interface/ui-model/arrow-button';
+import { KeyboardQuery } from '@angular-tetris/state/keyboard/keyboard.query';
+import { TetrisQuery } from '@angular-tetris/state/tetris/tetris.query';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { ButtonComponent } from '../button/button.component';

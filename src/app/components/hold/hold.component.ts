@@ -1,7 +1,7 @@
 import { AsyncPipe, NgFor } from '@angular/common';
 import { Component } from '@angular/core';
-import { Tile, TileValue } from '@trungk18/interface/tile/tile';
-import { TetrisService } from '@trungk18/state/tetris/tetris.service';
+import { Tile, TileValue } from '@angular-tetris/interface/tile/tile';
+import { TetrisService } from '@angular-tetris/state/tetris/tetris.service';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { TileComponent } from '../tile/tile.component';
