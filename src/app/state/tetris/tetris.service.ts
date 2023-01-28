@@ -130,7 +130,7 @@ export class TetrisService {
     this.clearPiece();
     this.setCurrentPiece(this.current.store());
     this.setCurrentPiece(this.current.moveLeft());
-    if (this._isCollidesLeft) {
+    if (this.isCollidesLeft) {
       this.setCurrentPiece(this.current.revert());
     }
     this.drawPiece();
@@ -143,7 +143,7 @@ export class TetrisService {
     this.clearPiece();
     this.setCurrentPiece(this.current.store());
     this.setCurrentPiece(this.current.moveRight());
-    if (this._isCollidesRight) {
+    if (this.isCollidesRight) {
       this.setCurrentPiece(this.current.revert());
     }
     this.drawPiece();
@@ -157,9 +157,9 @@ export class TetrisService {
     this.clearPiece();
     this.setCurrentPiece(this.current.store());
     this.setCurrentPiece(this.current.rotate());
-    while (this._isCollidesRight) {
+    while (this.isCollidesRight) {
       this.setCurrentPiece(this.current.moveLeft());
-      if (this._isCollidesLeft) {
+      if (this.isCollidesLeft) {
         this.setCurrentPiece(this.current.revert());
         break;
       }
@@ -175,7 +175,7 @@ export class TetrisService {
     if (this.locked) {
       return;
     }
-    while (!this._isCollidesBottom) {
+    while (!this.isCollidesBottom) {
       this.clearPiece();
       this.setCurrentPiece(this.current.store());
       this.setCurrentPiece(this.current.moveDown());
@@ -250,7 +250,7 @@ export class TetrisService {
     this.setCurrentPiece(this.current.store());
     this.setCurrentPiece(this.current.moveDown());
 
-    if (this._isCollidesBottom) {
+    if (this.isCollidesBottom) {
       this.setCurrentPiece(this.current.revert());
       this.markAsSolid();
       this.drawPiece();
@@ -258,7 +258,7 @@ export class TetrisService {
       this.setCurrentPiece(this.next);
       this.setNext();
       this.setCanHold(true);
-      if (this._isGameOver) {
+      if (this.isGameOver) {
         this.onGameOver();
         return;
       }
@@ -285,10 +285,10 @@ export class TetrisService {
     this.setPointsAndSpeed(numberOfClearedLines);
   }
 
-  private get _isGameOver() {
+  private get isGameOver() {
     this.setCurrentPiece(this.current.store());
     this.setCurrentPiece(this.current.moveDown());
-    if (this._isCollidesBottom) {
+    if (this.isCollidesBottom) {
       return true;
     }
     this.setCurrentPiece(this.current.revert());
@@ -309,21 +309,21 @@ export class TetrisService {
     });
   }
 
-  private get _isCollidesBottom(): boolean {
+  private get isCollidesBottom(): boolean {
     if (this.current.bottomRow >= MatrixUtil.Height) {
       return true;
     }
     return this.collides();
   }
 
-  private get _isCollidesLeft(): boolean {
+  private get isCollidesLeft(): boolean {
     if (this.current.leftCol < 0) {
       return true;
     }
     return this.collides();
   }
 
-  private get _isCollidesRight(): boolean {
+  private get isCollidesRight(): boolean {
     if (this.current.rightCol >= MatrixUtil.Width) {
       return true;
     }

@@ -138,7 +138,7 @@ export class Piece {
   }
 
   store(): Piece {
-    this._lastConfig = {
+    this.lastConfig = {
       x: this.x,
       y: this.y,
       rotation: this.rotation,
@@ -270,14 +270,14 @@ I planned to use [@ngneat/hotkeys][hotkeys] but I decided to use `@HostListener`
 ```typescript
 @HostListener(`${KeyDown}.${TetrisKeyboard.Left}`)
 keyDownLeft() {
-  this._soundManager.move();
-  this._keyboardService.setKeỵ({
+  this.soundManager.move();
+  this.keyboardService.setKeỵ({
     left: true
   });
   if (this.hasCurrent) {
-    this._tetrisService.moveLeft();
+    this.tetrisService.moveLeft();
   } else {
-    this._tetrisService.decreaseLevel();
+    this.tetrisService.decreaseLevel();
   }
 }
 ```

@@ -11,9 +11,9 @@ import { NumberComponent } from '../number/number.component';
   styleUrls: ['./start-line.component.scss']
 })
 export class StartLineComponent {
-  hasCurrent$ = this._query.hasCurrent$;
-  clearedLines$ = this._query.clearedLines$;
-  initLine$ = this._query.initLine$;
+  hasCurrent$ = this.query.hasCurrent$;
+  clearedLines$ = this.query.clearedLines$;
+  initLine$ = this.query.initLine$;
 
-  constructor(public _query: TetrisQuery) {}
+  constructor(public query: TetrisQuery) {}
 }
