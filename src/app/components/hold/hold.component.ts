@@ -14,9 +14,9 @@ import { TileComponent } from '../tile/tile.component';
   styleUrls: ['./hold.component.scss']
 })
 export class HoldComponent {
-  hold$: Observable<Tile[][]> = this._tetrisService.hold$.pipe(
+  hold$: Observable<Tile[][]> = this.tetrisService.hold$.pipe(
     map((piece) => piece.next.map((row) => row.map((value) => new Tile(value as TileValue))))
   );
 
-  constructor(private _tetrisService: TetrisService) {}
+  constructor(private tetrisService: TetrisService) {}
 }

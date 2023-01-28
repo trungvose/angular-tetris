@@ -16,22 +16,23 @@ const REFRESH_LABEL_INTERVAL = 3000;
   styleUrls: ['./point.component.scss']
 })
 export class PointComponent {
-  labelAndPoints$: Observable<LabelAndNumber> = this._query.hasCurrent$.pipe(
+  labelAndPoints$: Observable<LabelAndNumber> = this.query.hasCurrent$.pipe(
     untilDestroyed(this),
     switchMap((hasCurrent) => {
       if (hasCurrent) {
-        return of(new LabelAndNumber('Score', this._query.raw.points));
+        return of(new LabelAndNumber('Score', this.query.raw.points));
       }
       return timer(0, REFRESH_LABEL_INTERVAL).pipe(
         map((val) => {
           const isOdd = val % 2 === 0;
-          const { points, max } = this._query.raw;
+          const { points, max } = this.query.raw;
           return isOdd ? new LabelAndNumber('Score', points) : new LabelAndNumber('Max ', max);
         })
       );
     })
   );
-  constructor(private _query: TetrisQuery) {}
+
+  constructor(private query: TetrisQuery) {}
 }
 
 class LabelAndNumber {

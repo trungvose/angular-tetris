@@ -27,22 +27,22 @@ export interface TetrisState {
 }
 
 export const createInitialState = (pieceFactory: PieceFactory): TetrisState => ({
-    matrix: MatrixUtil.getStartBoard(),
-    current: null,
-    next: pieceFactory.getRandomPiece(),
-    hold: pieceFactory.getNonePiece(),
-    canHold: true,
-    points: 0,
-    locked: true,
-    sound: true,
-    initLine: 0,
-    clearedLines: 0,
-    initSpeed: 1,
-    speed: 1,
-    gameState: GameState.Loading,
-    saved: null,
-    max: LocalStorageService.maxPoint
-  });
+  matrix: MatrixUtil.getStartBoard(),
+  current: null,
+  next: pieceFactory.getRandomPiece(),
+  hold: pieceFactory.getNonePiece(),
+  canHold: true,
+  points: 0,
+  locked: true,
+  sound: true,
+  initLine: 0,
+  clearedLines: 0,
+  initSpeed: 1,
+  speed: 1,
+  gameState: GameState.Loading,
+  saved: null,
+  max: LocalStorageService.maxPoint
+});
 
 @Injectable({ providedIn: 'root' })
 @StoreConfig({ name: 'AngularTetris' })

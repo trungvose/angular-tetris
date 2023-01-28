@@ -48,14 +48,6 @@ export class AngularTetrisComponent implements OnInit {
   isShowLogo$: Observable<boolean>;
   filling: number;
 
-  constructor(
-    private _tetrisService: TetrisService,
-    private _keyboardService: KeyboardService,
-    private _soundManager: SoundManagerService,
-    private _el: ElementRef,
-    private _render: Renderer2
-  ) {}
-
   @HostListener('window:resize', ['$event'])
   resize() {
     const width = document.documentElement.clientWidth;
@@ -72,7 +64,7 @@ export class AngularTetrisComponent implements OnInit {
       const marginTop = Math.floor(-480 - this.filling * 1.5);
       this.setPaddingMargin(paddingTop, paddingBottom, marginTop);
     }
-    this._render.setStyle(this._el.nativeElement, 'transform', `scale(${scale - 0.01})`);
+    this.render.setStyle(this.el.nativeElement, 'transform', `scale(${scale - 0.01})`);
   }
 
   @HostListener('window:beforeunload', ['$event'])
@@ -85,169 +77,169 @@ export class AngularTetrisComponent implements OnInit {
 
   @HostListener(`${KeyDown}.${TetrisKeyboard.Left}`)
   keyDownLeft() {
-    this._soundManager.move();
-    this._keyboardService.setKeỵ({
+    this.soundManager.move();
+    this.keyboardService.setKeỵ({
       left: true
     });
     if (this.hasCurrent) {
-      this._tetrisService.moveLeft();
+      this.tetrisService.moveLeft();
     } else {
-      this._tetrisService.decreaseLevel();
+      this.tetrisService.decreaseLevel();
     }
   }
 
   @HostListener(`${KeyUp}.${TetrisKeyboard.Left}`)
   keyUpLeft() {
-    this._keyboardService.setKeỵ({
+    this.keyboardService.setKeỵ({
       left: false
     });
   }
 
   @HostListener(`${KeyDown}.${TetrisKeyboard.Right}`)
   keyDownRight() {
-    this._soundManager.move();
-    this._keyboardService.setKeỵ({
+    this.soundManager.move();
+    this.keyboardService.setKeỵ({
       right: true
     });
     if (this.hasCurrent) {
-      this._tetrisService.moveRight();
+      this.tetrisService.moveRight();
     } else {
-      this._tetrisService.increaseLevel();
+      this.tetrisService.increaseLevel();
     }
   }
 
   @HostListener(`${KeyUp}.${TetrisKeyboard.Right}`)
   keyUpRight() {
-    this._keyboardService.setKeỵ({
+    this.keyboardService.setKeỵ({
       right: false
     });
   }
 
   @HostListener(`${KeyDown}.${TetrisKeyboard.Up}`)
   keyDownUp() {
-    this._soundManager.rotate();
-    this._keyboardService.setKeỵ({
+    this.soundManager.rotate();
+    this.keyboardService.setKeỵ({
       up: true
     });
     if (this.hasCurrent) {
-      this._tetrisService.rotate();
+      this.tetrisService.rotate();
     } else {
-      this._tetrisService.increaseStartLine();
+      this.tetrisService.increaseStartLine();
     }
   }
 
   @HostListener(`${KeyUp}.${TetrisKeyboard.Up}`)
   keyUpUp() {
-    this._keyboardService.setKeỵ({
+    this.keyboardService.setKeỵ({
       up: false
     });
   }
 
   @HostListener(`${KeyDown}.${TetrisKeyboard.Down}`)
   keyDownDown() {
-    this._soundManager.move();
-    this._keyboardService.setKeỵ({
+    this.soundManager.move();
+    this.keyboardService.setKeỵ({
       down: true
     });
     if (this.hasCurrent) {
-      this._tetrisService.moveDown();
+      this.tetrisService.moveDown();
     } else {
-      this._tetrisService.decreaseStartLine();
+      this.tetrisService.decreaseStartLine();
     }
   }
 
   @HostListener(`${KeyUp}.${TetrisKeyboard.Down}`)
   keyUpDown() {
-    this._keyboardService.setKeỵ({
+    this.keyboardService.setKeỵ({
       down: false
     });
   }
 
   @HostListener(`${KeyDown}.${TetrisKeyboard.Space}`)
   keyDownSpace() {
-    this._keyboardService.setKeỵ({
+    this.keyboardService.setKeỵ({
       drop: true
     });
     if (this.hasCurrent) {
-      this._soundManager.fall();
-      this._tetrisService.drop();
+      this.soundManager.fall();
+      this.tetrisService.drop();
       return;
     }
-    this._soundManager.start();
-    this._tetrisService.start();
+    this.soundManager.start();
+    this.tetrisService.start();
   }
 
   @HostListener(`${KeyUp}.${TetrisKeyboard.Space}`)
   keyUpSpace() {
-    this._keyboardService.setKeỵ({
+    this.keyboardService.setKeỵ({
       drop: false
     });
   }
 
   @HostListener(`${KeyDown}.${TetrisKeyboard.C}`)
   keyDownHold() {
-    this._soundManager.move();
-    this._keyboardService.setKeỵ({
+    this.soundManager.move();
+    this.keyboardService.setKeỵ({
       hold: true
     });
-    this._tetrisService.holdPiece();
+    this.tetrisService.holdPiece();
   }
 
   @HostListener(`${KeyUp}.${TetrisKeyboard.C}`)
   keyUpHold() {
-    this._keyboardService.setKeỵ({
+    this.keyboardService.setKeỵ({
       hold: false
     });
   }
 
   @HostListener(`${KeyDown}.${TetrisKeyboard.S}`)
   keyDownSound() {
-    this._soundManager.move();
-    this._tetrisService.setSound();
-    this._keyboardService.setKeỵ({
+    this.soundManager.move();
+    this.tetrisService.setSound();
+    this.keyboardService.setKeỵ({
       sound: true
     });
   }
 
   @HostListener(`${KeyUp}.${TetrisKeyboard.S}`)
   keyUpSound() {
-    this._keyboardService.setKeỵ({
+    this.keyboardService.setKeỵ({
       sound: false
     });
   }
 
   @HostListener(`${KeyDown}.${TetrisKeyboard.P}`)
   keyDownPause() {
-    this._soundManager.move();
-    this._keyboardService.setKeỵ({
+    this.soundManager.move();
+    this.keyboardService.setKeỵ({
       pause: true
     });
-    if (this._tetrisService.canStartGame) {
-      this._tetrisService.resume();
+    if (this.tetrisService.canStartGame) {
+      this.tetrisService.resume();
     } else {
-      this._tetrisService.pause();
+      this.tetrisService.pause();
     }
   }
 
   @HostListener(`${KeyUp}.${TetrisKeyboard.P}`)
   keyUpPause() {
-    this._keyboardService.setKeỵ({
+    this.keyboardService.setKeỵ({
       pause: false
     });
   }
 
   @HostListener(`${KeyDown}.${TetrisKeyboard.R}`)
   keyDownReset() {
-    this._soundManager.move();
-    this._keyboardService.setKeỵ({
+    this.soundManager.move();
+    this.keyboardService.setKeỵ({
       reset: true
     });
-    this._tetrisService.pause();
+    this.tetrisService.pause();
     setTimeout(() => {
       if (confirm('You are having a good game. Are you sure you want to reset?')) {
-        this._tetrisService.reset();
+        this.tetrisService.reset();
       } else {
-        this._tetrisService.resume();
+        this.tetrisService.resume();
       }
       this.keyUpReset();
     });
@@ -255,18 +247,26 @@ export class AngularTetrisComponent implements OnInit {
 
   @HostListener(`${KeyUp}.${TetrisKeyboard.R}`)
   keyUpReset() {
-    this._keyboardService.setKeỵ({
+    this.keyboardService.setKeỵ({
       reset: false
     });
   }
 
   get hasCurrent() {
-    return this._tetrisService.hasCurrent;
+    return this.tetrisService.hasCurrent;
   }
 
+  constructor(
+    private tetrisService: TetrisService,
+    private keyboardService: KeyboardService,
+    private soundManager: SoundManagerService,
+    private el: ElementRef,
+    private render: Renderer2
+  ) {}
+
   ngOnInit(): void {
-    this.drop$ = this._keyboardService.drop$;
-    this.isShowLogo$ = this._tetrisService.isShowLogo$;
+    this.drop$ = this.keyboardService.drop$;
+    this.isShowLogo$ = this.tetrisService.isShowLogo$;
     setTimeout(() => {
       this.resize();
     });
@@ -281,8 +281,8 @@ export class AngularTetrisComponent implements OnInit {
   }
 
   private setPaddingMargin(paddingTop: number, paddingBottom: number, marginTop: number) {
-    this._render.setStyle(this._el.nativeElement, 'padding-top', `${paddingTop}px`);
-    this._render.setStyle(this._el.nativeElement, 'padding-bottom', `${paddingBottom}px`);
-    this._render.setStyle(this._el.nativeElement, 'margin-top', `${marginTop}px`);
+    this.render.setStyle(this.el.nativeElement, 'padding-top', `${paddingTop}px`);
+    this.render.setStyle(this.el.nativeElement, 'padding-bottom', `${paddingBottom}px`);
+    this.render.setStyle(this.el.nativeElement, 'margin-top', `${marginTop}px`);
   }
 }

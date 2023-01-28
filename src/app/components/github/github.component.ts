@@ -13,11 +13,11 @@ const HASHTAG = 'angular,angulartetris,akita,typescript';
   styleUrls: ['./github.component.scss']
 })
 export class GithubComponent {
-  max$= this._query.max$;
+  max$ = this.query.max$;
   //eslint-disable-next-line max-len
   tweetAngularTetrisUrl = `https://twitter.com/intent/tweet?url=https%3A%2F%2Fgithub.com%2Ftrungk18%2Fangular-tetris&text=Awesome%20Tetris%20game%20built%20with%20Angular%2010%20and%20Akita%2C%20can%20you%20get%20999999%20points%3F&hashtags=${HASHTAG}`;
 
-  constructor(private _query: TetrisQuery, private _googleAnalytics: GoogleAnalyticsService) {}
+  constructor(private query: TetrisQuery, private googleAnalytics: GoogleAnalyticsService) {}
 
   getTweetMaxScoreShareUrl(max: number) {
     const text = encodeURIComponent(
@@ -27,10 +27,10 @@ export class GithubComponent {
   }
 
   sendTwitterShareMaxScoreEvent() {
-    this._googleAnalytics.sendEvent('Share Twitter High Score', 'button');
+    this.googleAnalytics.sendEvent('Share Twitter High Score', 'button');
   }
 
   sendTwitterShareEvent() {
-    this._googleAnalytics.sendEvent('Share Twitter', 'button');
+    this.googleAnalytics.sendEvent('Share Twitter', 'button');
   }
 }

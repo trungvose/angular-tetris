@@ -12,7 +12,7 @@ import { map } from 'rxjs/operators';
   styleUrls: ['./sound.component.scss']
 })
 export class SoundComponent {
-  muted$: Observable<boolean> = this._query.sound$.pipe(map((sound) => !sound));
+  muted$: Observable<boolean> = this.query.sound$.pipe(map((sound) => !sound));
 
-  constructor(private _query: TetrisQuery) {}
+  constructor(private query: TetrisQuery) {}
 }

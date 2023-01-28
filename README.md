@@ -129,8 +129,8 @@ export class Piece {
   shape: Shape;
   next: Shape;
 
-  private _shapes: Shapes;
-  private _lastConfig: Partial<Piece>;
+  private shapes: Shapes;
+  private lastConfig: Partial<Piece>;
 
   constructor(x: number, y: number) {
     this.x = x;
@@ -144,7 +144,7 @@ export class Piece {
       rotation: this.rotation,
       shape: this.shape
     };
-    return this._newPiece();
+    return this.newPiece();
   }
 
   //code removed for brevity
@@ -223,11 +223,11 @@ And the last step, go to [PieceFactory][piecefactory] to add the new PieceF into
 
 ```ts
 export class PieceFactory {
-  private _available: typeof Piece[] = [];
+  private available: typeof Piece[] = [];
 
   constructor() {
     //code removed for brevity
-    this._available.push(PieceF);
+    this.available.push(PieceF);
   }
 }
 ```

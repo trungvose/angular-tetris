@@ -14,8 +14,9 @@ import { TileComponent } from '../tile/tile.component';
   styleUrls: ['./next.component.scss']
 })
 export class NextComponent {
-  next$: Observable<Tile[][]> = this._tetrisQuery.next$.pipe(
+  next$: Observable<Tile[][]> = this.tetrisQuery.next$.pipe(
     map((piece) => piece.next.map((row) => row.map((value) => new Tile(value as TileValue))))
   );
-  constructor(private _tetrisQuery: TetrisQuery) {}
+
+  constructor(private tetrisQuery: TetrisQuery) {}
 }

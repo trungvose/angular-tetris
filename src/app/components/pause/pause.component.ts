@@ -13,7 +13,7 @@ import { map, switchMap } from 'rxjs/operators';
   styleUrls: ['./pause.component.scss']
 })
 export class PauseComponent {
-  paused$: Observable<boolean> = this._query.gameState$.pipe(
+  paused$: Observable<boolean> = this.query.gameState$.pipe(
     switchMap((state) => {
       if (state === GameState.Paused) {
         return interval(250).pipe(map((num) => !!(num % 2)));
@@ -22,5 +22,5 @@ export class PauseComponent {
     })
   );
 
-  constructor(private _query: TetrisQuery) {}
+  constructor(private query: TetrisQuery) {}
 }

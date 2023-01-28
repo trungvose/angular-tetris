@@ -18,14 +18,15 @@ import { TileComponent } from '../tile/tile.component';
 })
 export class MatrixComponent implements OnInit {
   matrix$: Observable<Tile[]>;
-  constructor(private _tetrisQuery: TetrisQuery) {}
+
+  constructor(private tetrisQuery: TetrisQuery) {}
 
   ngOnInit(): void {
     this.matrix$ = this.getMatrix();
   }
 
   getMatrix(): Observable<Tile[]> {
-    return combineLatest([this._tetrisQuery.gameState$, this._tetrisQuery.matrix$]).pipe(
+    return combineLatest([this.tetrisQuery.gameState$, this.tetrisQuery.matrix$]).pipe(
       untilDestroyed(this),
       switchMap(([gameState, matrix]) => {
         if (gameState !== GameState.Over && gameState !== GameState.Loading) {
