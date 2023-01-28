@@ -7,13 +7,13 @@ import { KeyboardStore, KeyboardState } from './keyboard.store';
   providedIn: 'root'
 })
 export class KeyboardService {
-  constructor(private _store: KeyboardStore, private _query: KeyboardQuery) {}
-
-  setKeỵ(keyState: Partial<KeyboardState>) {
-    this._store.update(keyState);
+  get drop$(): Observable<boolean> {
+    return this.query.drop$;
   }
 
-  get drop$(): Observable<boolean> {
-    return this._query.drop$;
+  constructor(private store: KeyboardStore, private query: KeyboardQuery) {}
+
+  setKeỵ(keyState: Partial<KeyboardState>) {
+    this.store.update(keyState);
   }
 }

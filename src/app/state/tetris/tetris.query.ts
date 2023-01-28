@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Query } from '@datorama/akita';
 import { TetrisStore, TetrisState } from './tetris.store';
-import { GameState } from '@trungk18/interface/game-state';
+import { GameState } from '@angular-tetris/interface/game-state';
 import { map, delay, switchMap } from 'rxjs/operators';
 import { combineLatest, of } from 'rxjs';
 

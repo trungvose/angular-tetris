@@ -3,7 +3,7 @@ import { bootstrapApplication } from '@angular/platform-browser';
 import { AkitaNgDevtools } from '@datorama/akita-ngdevtools';
 import * as Sentry from '@sentry/angular';
 import { Integrations } from '@sentry/tracing';
-import { AppComponent } from '@trungk18/app.component';
+import { AppComponent } from '@angular-tetris/app.component';
 import { environment } from './environments/environment';
 
 const initSentry = () => {

@@ -1,12 +1,12 @@
 import { Injectable } from '@angular/core';
 import { Store, StoreConfig } from '@datorama/akita';
-import { PieceFactory } from '@trungk18/factory/piece-factory';
-import { GameState } from '@trungk18/interface/game-state';
-import { Piece } from '@trungk18/interface/piece/piece';
-import { Tile } from '@trungk18/interface/tile/tile';
-import { MatrixUtil } from '@trungk18/interface/utils/matrix';
-import { Speed } from '@trungk18/interface/speed';
-import { LocalStorageService } from '@trungk18/services/local-storage.service';
+import { PieceFactory } from '@angular-tetris/factory/piece-factory';
+import { GameState } from '@angular-tetris/interface/game-state';
+import { Piece } from '@angular-tetris/interface/piece/piece';
+import { Tile } from '@angular-tetris/interface/tile/tile';
+import { MatrixUtil } from '@angular-tetris/interface/utils/matrix';
+import { Speed } from '@angular-tetris/interface/speed';
+import { LocalStorageService } from '@angular-tetris/services/local-storage.service';
 
 export interface TetrisState {
   matrix: Tile[];
@@ -27,22 +27,22 @@ export interface TetrisState {
 }
 
 export const createInitialState = (pieceFactory: PieceFactory): TetrisState => ({
-    matrix: MatrixUtil.getStartBoard(),
-    current: null,
-    next: pieceFactory.getRandomPiece(),
-    hold: pieceFactory.getNonePiece(),
-    canHold: true,
-    points: 0,
-    locked: true,
-    sound: true,
-    initLine: 0,
-    clearedLines: 0,
-    initSpeed: 1,
-    speed: 1,
-    gameState: GameState.Loading,
-    saved: null,
-    max: LocalStorageService.maxPoint
-  });
+  matrix: MatrixUtil.getStartBoard(),
+  current: null,
+  next: pieceFactory.getRandomPiece(),
+  hold: pieceFactory.getNonePiece(),
+  canHold: true,
+  points: 0,
+  locked: true,
+  sound: true,
+  initLine: 0,
+  clearedLines: 0,
+  initSpeed: 1,
+  speed: 1,
+  gameState: GameState.Loading,
+  saved: null,
+  max: LocalStorageService.maxPoint
+});
 
 @Injectable({ providedIn: 'root' })
 @StoreConfig({ name: 'AngularTetris' })

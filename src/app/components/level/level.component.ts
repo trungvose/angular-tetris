@@ -1,6 +1,6 @@
 import { AsyncPipe, NgIf } from '@angular/common';
 import { Component } from '@angular/core';
-import { TetrisQuery } from '@trungk18/state/tetris/tetris.query';
+import { TetrisQuery } from '@angular-tetris/state/tetris/tetris.query';
 import { NumberComponent } from '../number/number.component';
 
 @Component({
@@ -10,10 +10,10 @@ import { NumberComponent } from '../number/number.component';
   templateUrl: './level.component.html',
   styleUrls: ['./level.component.scss']
 })
-export class LevelComponent  {
-  constructor(private _query: TetrisQuery) {}
+export class LevelComponent {
+  speed$ = this.query.speed$;
+  hasCurrent$ = this.query.hasCurrent$;
+  initSpeed$ = this.query.initSpeed$;
 
-  speed$ = this._query.speed$;
-  hasCurrent$ = this._query.hasCurrent$;
-  initSpeed$ = this._query.initSpeed$;
+  constructor(private query: TetrisQuery) {}
 }

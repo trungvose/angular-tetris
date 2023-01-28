@@ -15,7 +15,7 @@ export class NonePiece extends Piece {
     this.next = [
       [0, 0, 0, 0],
       [0, 0, 0, 0]
-    ];;
+    ];
     this.setShapes(NONE_SHAPE);
   }
 }

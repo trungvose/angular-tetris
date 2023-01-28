@@ -1,7 +1,7 @@
 import { Component, HostBinding, Input, ViewEncapsulation } from '@angular/core';
 
 @Component({
-  selector: '[t-shared-button]',//eslint-disable-line
+  selector: '[t-shared-button]', //eslint-disable-line
   standalone: true,
   templateUrl: './shared-button.component.html',
   styleUrls: ['./shared-button.component.scss'],

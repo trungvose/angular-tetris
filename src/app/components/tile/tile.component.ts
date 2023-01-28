@@ -1,15 +1,16 @@
 import { Component, OnInit, Input, Renderer2, ElementRef } from '@angular/core';
-import { Tile } from '@trungk18/interface/tile/tile';
+import { Tile } from '@angular-tetris/interface/tile/tile';
 
 @Component({
   selector: 't-tile',
   standalone: true,
   template: ``,
-  styleUrls: ['./tile.component.scss'],
+  styleUrls: ['./tile.component.scss']
 })
 export class TileComponent implements OnInit {
   @Input() tile: Tile;
-  constructor(public el: ElementRef, private _renderer: Renderer2) {}
+
+  constructor(public el: ElementRef, private renderer: Renderer2) {}
 
   ngOnInit(): void {
     if (!this.tile) {
@@ -17,11 +18,11 @@ export class TileComponent implements OnInit {
     }
 
     if (this.tile.isFilled) {
-      this._renderer.addClass(this.el.nativeElement, 'filled');
+      this.renderer.addClass(this.el.nativeElement, 'filled');
     }
 
     if (this.tile.isAnimated) {
-      this._renderer.addClass(this.el.nativeElement, 'animated');
+      this.renderer.addClass(this.el.nativeElement, 'animated');
     }
   }
 }

@@ -16,24 +16,24 @@ export const SPAWN_POSITION_Y = -4;
   providedIn: 'root'
 })
 export class PieceFactory {
-  private _available: typeof Piece[] = [];
-  private _currentBag: typeof Piece[] = [];
+  private available: (typeof Piece)[] = [];
+  private currentBag: (typeof Piece)[] = [];
 
   constructor() {
-    this._available.push(PieceI);
-    this._available.push(PieceJ);
-    this._available.push(PieceL);
-    this._available.push(PieceO);
-    this._available.push(PieceS);
-    this._available.push(PieceT);
-    this._available.push(PieceZ);
+    this.available.push(PieceI);
+    this.available.push(PieceJ);
+    this.available.push(PieceL);
+    this.available.push(PieceO);
+    this.available.push(PieceS);
+    this.available.push(PieceT);
+    this.available.push(PieceZ);
   }
 
   getRandomPiece(x = SPAWN_POSITION_X, y = SPAWN_POSITION_Y): Piece {
-    if (this._currentBag.length === 0) {
+    if (this.currentBag.length === 0) {
       this.generateNewBag();
     }
-    const nextPiece = this._currentBag.pop();
+    const nextPiece = this.currentBag.pop();
     return new nextPiece(x, y);
   }
 
@@ -42,11 +42,11 @@ export class PieceFactory {
   }
 
   generateNewBag() {
-    this._currentBag = this._available.slice();
-    this.shuffleArray(this._currentBag);
+    this.currentBag = this.available.slice();
+    this.shuffleArray(this.currentBag);
   }
 
-  shuffleArray(array: typeof Piece[]) {
+  shuffleArray(array: (typeof Piece)[]) {
     for (let i = array.length - 1; i > 0; i--) {
       const j = Math.floor(Math.random() * (i + 1));
       [array[i], array[j]] = [array[j], array[i]];

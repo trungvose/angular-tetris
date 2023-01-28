@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Store, StoreConfig } from '@datorama/akita';
-import { TetrisKeyboard } from '@trungk18/interface/keyboard';
+import { TetrisKeyboard } from '@angular-tetris/interface/keyboard';
 
 export interface KeyboardState {
   up: boolean;

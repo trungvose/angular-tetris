@@ -10,8 +10,8 @@ export class Piece {
   shape: Shape;
   next: Shape;
 
-  private _shapes: Shapes;
-  private _lastConfig: Partial<Piece>;
+  private shapes: Shapes;
+  private lastConfig: Partial<Piece>;
 
   constructor(x: number, y: number) {
     this.x = x;
@@ -19,60 +19,60 @@ export class Piece {
   }
 
   store(): Piece {
-    this._lastConfig = {
+    this.lastConfig = {
       x: this.x,
       y: this.y,
       rotation: this.rotation,
       shape: this.shape
     };
-    return this._newPiece();
+    return this.newPiece();
   }
 
   clearStore(): Piece {
-    this._lastConfig = null;
-    return this._newPiece();
+    this.lastConfig = null;
+    return this.newPiece();
   }
 
   revert(): Piece {
-    if (this._lastConfig) {
-      for (const key in this._lastConfig) {
-        if (this._lastConfig.hasOwnProperty(key)) {
-          this[key] = this._lastConfig[key];
+    if (this.lastConfig) {
+      for (const key in this.lastConfig) {
+        if (this.lastConfig.hasOwnProperty(key)) {
+          this[key] = this.lastConfig[key];
         }
       }
-      this._lastConfig = null;
+      this.lastConfig = null;
     }
-    return this._newPiece();
+    return this.newPiece();
   }
 
   rotate(): Piece {
-    const keys = Object.keys(this._shapes);
+    const keys = Object.keys(this.shapes);
     const idx = keys.indexOf(this.rotation.toString());
     const isTurnOver = idx >= keys.length - 1;
     this.rotation = Number(isTurnOver ? keys[0] : keys[idx + 1]);
-    this.shape = this._shapes[this.rotation];
-    return this._newPiece();
+    this.shape = this.shapes[this.rotation];
+    return this.newPiece();
   }
 
   reset(): Piece {
     this.rotation = PieceRotation.Deg0;
-    this.shape = this._shapes[this.rotation];
-    return this._newPiece();
+    this.shape = this.shapes[this.rotation];
+    return this.newPiece();
   }
 
   moveDown(step = 1): Piece {
     this.y = this.y + step;
-    return this._newPiece();
+    return this.newPiece();
   }
 
   moveRight(): Piece {
     this.x++;
-    return this._newPiece();
+    return this.newPiece();
   }
 
   moveLeft(): Piece {
     this.x--;
-    return this._newPiece();
+    return this.newPiece();
   }
 
   isNone(): boolean {
@@ -115,17 +115,17 @@ export class Piece {
   }
 
   protected setShapes(shapes: Shapes) {
-    this._shapes = shapes;
+    this.shapes = shapes;
     this.shape = shapes[this.rotation];
   }
 
-  private _newPiece(): Piece {
+  private newPiece(): Piece {
     const piece = new Piece(this.x, this.y);
     piece.rotation = this.rotation;
     piece.type = this.type;
     piece.next = this.next;
-    piece.setShapes(this._shapes);
-    piece._lastConfig = this._lastConfig;
+    piece.setShapes(this.shapes);
+    piece.lastConfig = this.lastConfig;
     return piece;
   }
 }
