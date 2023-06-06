@@ -1,5 +1,5 @@
 <div class="number">
-    <span *ngFor="let item of clock$ | async as nums"
+    <span *ngFor="let item of clockValues()"
           [ngClass]="['bg', 'num', 'num-' + item]">
     </span>
 </div>
