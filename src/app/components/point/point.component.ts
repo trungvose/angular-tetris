@@ -1,9 +1,14 @@
-import { AsyncPipe, NgIf } from '@angular/common';
-import { Component } from '@angular/core';
-import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
-import { TetrisQuery } from '@angular-tetris/state/tetris/tetris.query';
-import { Observable, of, timer } from 'rxjs';
-import { map, switchMap } from 'rxjs/operators';
+import { TetrisStateService } from '@angular-tetris/state/tetris/tetris.state';
+import { NgIf } from '@angular/common';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  DestroyRef,
+  effect,
+  inject,
+  signal
+} from '@angular/core';
+import { UntilDestroy } from '@ngneat/until-destroy';
 import { NumberComponent } from '../number/number.component';
 
 const REFRESH_LABEL_INTERVAL = 3000;
@@ -11,28 +16,48 @@ const REFRESH_LABEL_INTERVAL = 3000;
 @Component({
   selector: 't-point',
   standalone: true,
-  imports: [NumberComponent, NgIf, AsyncPipe],
+  imports: [NumberComponent, NgIf],
   templateUrl: './point.component.html',
-  styleUrls: ['./point.component.scss']
+  styleUrls: ['./point.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class PointComponent {
-  labelAndPoints$: Observable<LabelAndNumber> = this.query.hasCurrent$.pipe(
-    untilDestroyed(this),
-    switchMap((hasCurrent) => {
-      if (hasCurrent) {
-        return of(new LabelAndNumber('Score', this.query.raw.points));
-      }
-      return timer(0, REFRESH_LABEL_INTERVAL).pipe(
-        map((val) => {
-          const isOdd = val % 2 === 0;
-          const { points, max } = this.query.raw;
-          return isOdd ? new LabelAndNumber('Score', points) : new LabelAndNumber('Max ', max);
-        })
-      );
-    })
-  );
+  private timerRef: number;
+  private tetrisState = inject(TetrisStateService);
 
-  constructor(private query: TetrisQuery) {}
+  labelAndPoints = signal<LabelAndNumber>(null);
+
+  constructor() {
+    effect(
+      () => {
+        if (this.timerRef) {
+          clearInterval(this.timerRef);
+        }
+
+        if (this.tetrisState.hasCurrent()) {
+          this.labelAndPoints.set(new LabelAndNumber('Score', this.tetrisState.points()));
+          return;
+        }
+
+        // Replicate timer(0, 1000)
+        this.labelAndPoints.set(new LabelAndNumber('Score', this.tetrisState.points()));
+        this.timerRef = setInterval(() => {
+          this.labelAndPoints.update(({ label }) => {
+            return label === 'Max '
+              ? new LabelAndNumber('Score', this.tetrisState.points())
+              : new LabelAndNumber('Max ', this.tetrisState.max());
+          });
+        }, REFRESH_LABEL_INTERVAL);
+      },
+      { allowSignalWrites: true }
+    );
+
+    inject(DestroyRef).onDestroy(() => {
+      if (this.timerRef) {
+        clearInterval(this.timerRef);
+      }
+    });
+  }
 }
 
 class LabelAndNumber {
