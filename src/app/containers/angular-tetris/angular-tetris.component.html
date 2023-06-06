@@ -1,10 +1,10 @@
 <div class="react"
-     [class.drop]='drop$ | async'>
+     [class.drop]='drop()'>
     <t-screen-decoration></t-screen-decoration>
     <div class="screen">
         <div class="panel">
             <t-matrix></t-matrix>
-            <t-logo *ngIf="isShowLogo$ | async"></t-logo>
+            <t-logo *ngIf="isShowLogo()"></t-logo>
             <div class="state">
                 <div class="last-row">
                     <t-sound></t-sound>

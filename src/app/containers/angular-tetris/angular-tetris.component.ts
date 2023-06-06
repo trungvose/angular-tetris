@@ -1,5 +1,3 @@
-import { AsyncPipe, NgIf } from '@angular/common';
-import { Component, HostListener, OnInit, ElementRef, Renderer2 } from '@angular/core';
 import { ClockComponent } from '@angular-tetris/components/clock/clock.component';
 import { GithubComponent } from '@angular-tetris/components/github/github.component';
 import { HoldComponent } from '@angular-tetris/components/hold/hold.component';
@@ -17,14 +15,24 @@ import { TetrisKeyboard } from '@angular-tetris/interface/keyboard';
 import { SoundManagerService } from '@angular-tetris/services/sound-manager.service';
 import { KeyboardService } from '@angular-tetris/state/keyboard/keyboard.service';
 import { TetrisService } from '@angular-tetris/state/tetris/tetris.service';
-import { Observable } from 'rxjs';
+import { TetrisStateService } from '@angular-tetris/state/tetris/tetris.state';
+import { NgIf } from '@angular/common';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  ElementRef,
+  HostListener,
+  OnInit,
+  Renderer2,
+  inject
+} from '@angular/core';
+
 const KeyUp = 'document:keyup';
 const KeyDown = 'document:keydown';
 @Component({
   selector: 'angular-tetris', // eslint-disable-line @angular-eslint/component-selector
   standalone: true,
   imports: [
-    AsyncPipe,
     NgIf,
     ClockComponent,
     GithubComponent,
@@ -41,11 +49,19 @@ const KeyDown = 'document:keydown';
     StartLineComponent
   ],
   templateUrl: './angular-tetris.component.html',
-  styleUrls: ['./angular-tetris.component.scss']
+  styleUrls: ['./angular-tetris.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class AngularTetrisComponent implements OnInit {
-  drop$: Observable<boolean>;
-  isShowLogo$: Observable<boolean>;
+  private tetrisState = inject(TetrisStateService);
+  private tetrisService = inject(TetrisService);
+  private keyboardService = inject(KeyboardService);
+  private soundManager = inject(SoundManagerService);
+  private el = inject(ElementRef);
+  private render = inject(Renderer2);
+
+  drop = this.keyboardService.drop;
+  isShowLogo = this.tetrisState.isShowLogo;
   filling: number;
 
   @HostListener('window:resize', ['$event'])
@@ -195,7 +211,7 @@ export class AngularTetrisComponent implements OnInit {
   @HostListener(`${KeyDown}.${TetrisKeyboard.S}`)
   keyDownSound() {
     this.soundManager.move();
-    this.tetrisService.setSound();
+    this.tetrisService.toggleSound();
     this.keyboardService.setKeỵ({
       sound: true
     });
@@ -214,7 +230,7 @@ export class AngularTetrisComponent implements OnInit {
     this.keyboardService.setKeỵ({
       pause: true
     });
-    if (this.tetrisService.canStartGame) {
+    if (this.tetrisState.canStartGame()) {
       this.tetrisService.resume();
     } else {
       this.tetrisService.pause();
@@ -253,20 +269,10 @@ export class AngularTetrisComponent implements OnInit {
   }
 
   get hasCurrent() {
-    return this.tetrisService.hasCurrent;
+    return this.tetrisState.hasCurrent();
   }
 
-  constructor(
-    private tetrisService: TetrisService,
-    private keyboardService: KeyboardService,
-    private soundManager: SoundManagerService,
-    private el: ElementRef,
-    private render: Renderer2
-  ) {}
-
   ngOnInit(): void {
-    this.drop$ = this.keyboardService.drop$;
-    this.isShowLogo$ = this.tetrisService.isShowLogo$;
     setTimeout(() => {
       this.resize();
     });
