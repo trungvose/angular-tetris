@@ -1,19 +1,20 @@
-import { AsyncPipe, NgIf } from '@angular/common';
-import { Component } from '@angular/core';
-import { TetrisQuery } from '@angular-tetris/state/tetris/tetris.query';
+import { TetrisStateService } from '@angular-tetris/state/tetris/tetris.state';
+import { NgIf } from '@angular/common';
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { NumberComponent } from '../number/number.component';
 
 @Component({
   selector: 't-level',
   standalone: true,
-  imports: [AsyncPipe, NgIf, NumberComponent],
+  imports: [NgIf, NumberComponent],
   templateUrl: './level.component.html',
-  styleUrls: ['./level.component.scss']
+  styleUrls: ['./level.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class LevelComponent {
-  speed$ = this.query.speed$;
-  hasCurrent$ = this.query.hasCurrent$;
-  initSpeed$ = this.query.initSpeed$;
+  private tetrisState = inject(TetrisStateService);
 
-  constructor(private query: TetrisQuery) {}
+  speed = this.tetrisState.speed;
+  hasCurrent = this.tetrisState.hasCurrent;
+  initSpeed = this.tetrisState.initSpeed;
 }

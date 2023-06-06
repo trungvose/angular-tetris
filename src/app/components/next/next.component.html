@@ -1,7 +1,7 @@
 <p>Next</p>
 <div class="next">
     <div class="row"
-         *ngFor="let row of next$ | async">
+         *ngFor="let row of next()">
         <t-tile [tile]='tile'
                 *ngFor="let tile of row">
         </t-tile>

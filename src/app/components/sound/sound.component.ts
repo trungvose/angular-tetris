@@ -1,18 +1,15 @@
-import { AsyncPipe } from '@angular/common';
-import { Component } from '@angular/core';
-import { TetrisQuery } from '@angular-tetris/state/tetris/tetris.query';
-import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { TetrisStateService } from '@angular-tetris/state/tetris/tetris.state';
+import { ChangeDetectionStrategy, Component, computed, inject } from '@angular/core';
 
 @Component({
   selector: 't-sound',
   standalone: true,
-  imports: [AsyncPipe],
   templateUrl: './sound.component.html',
-  styleUrls: ['./sound.component.scss']
+  styleUrls: ['./sound.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SoundComponent {
-  muted$: Observable<boolean> = this.query.sound$.pipe(map((sound) => !sound));
+  private tetrisState = inject(TetrisStateService);
 
-  constructor(private query: TetrisQuery) {}
+  muted = computed(() => !this.tetrisState.isEnableSound());
 }

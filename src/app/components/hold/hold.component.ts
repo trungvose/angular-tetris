@@ -1,22 +1,21 @@
-import { AsyncPipe, NgFor } from '@angular/common';
-import { Component } from '@angular/core';
 import { Tile, TileValue } from '@angular-tetris/interface/tile/tile';
-import { TetrisService } from '@angular-tetris/state/tetris/tetris.service';
-import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { TetrisStateService } from '@angular-tetris/state/tetris/tetris.state';
+import { NgFor } from '@angular/common';
+import { ChangeDetectionStrategy, Component, computed, inject } from '@angular/core';
 import { TileComponent } from '../tile/tile.component';
 
 @Component({
   selector: 't-hold',
   standalone: true,
-  imports: [NgFor, TileComponent, AsyncPipe],
+  imports: [NgFor, TileComponent],
   templateUrl: './hold.component.html',
-  styleUrls: ['./hold.component.scss']
+  styleUrls: ['./hold.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class HoldComponent {
-  hold$: Observable<Tile[][]> = this.tetrisService.hold$.pipe(
-    map((piece) => piece.next.map((row) => row.map((value) => new Tile(value as TileValue))))
-  );
+  private tetrisState = inject(TetrisStateService);
 
-  constructor(private tetrisService: TetrisService) {}
+  hold = computed(() =>
+    this.tetrisState.hold().next.map((row) => row.map((value) => new Tile(value as TileValue)))
+  );
 }
