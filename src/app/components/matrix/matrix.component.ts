@@ -1,62 +1,94 @@
-import { AsyncPipe, NgFor } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
-import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { GameState } from '@angular-tetris/interface/game-state';
 import { Tile } from '@angular-tetris/interface/tile/tile';
 import { MatrixUtil } from '@angular-tetris/interface/utils/matrix';
-import { TetrisQuery } from '@angular-tetris/state/tetris/tetris.query';
-import { combineLatest, Observable, of, timer } from 'rxjs';
-import { map, switchMap, takeWhile } from 'rxjs/operators';
+import { TetrisStateService } from '@angular-tetris/state/tetris/tetris.state';
+import { NgFor } from '@angular/common';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  DestroyRef,
+  effect,
+  inject,
+  signal
+} from '@angular/core';
 import { TileComponent } from '../tile/tile.component';
-@UntilDestroy()
 @Component({
   selector: 't-matrix',
   standalone: true,
-  imports: [TileComponent, NgFor, AsyncPipe],
+  imports: [TileComponent, NgFor],
   templateUrl: './matrix.component.html',
-  styleUrls: ['./matrix.component.scss']
+  styleUrls: ['./matrix.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class MatrixComponent implements OnInit {
-  matrix$: Observable<Tile[]>;
+export class MatrixComponent {
+  private tetrisState = inject(TetrisStateService);
 
-  constructor(private tetrisQuery: TetrisQuery) {}
+  matrix = signal<Tile[]>([]);
 
-  ngOnInit(): void {
-    this.matrix$ = this.getMatrix();
+  animatedTimerCount = 1;
+  animatedTimerRef = null;
+
+  constructor() {
+    effect(
+      () => {
+        const gameState = this.tetrisState.gameState();
+
+        if (gameState !== GameState.Over && gameState !== GameState.Loading) {
+          this.matrix.set(this.tetrisState.matrix());
+          return;
+        }
+
+        if (this.animatedTimerRef) {
+          clearInterval(this.animatedTimerRef);
+        }
+
+        this.startAnimateMatrix();
+      },
+      {
+        allowSignalWrites: true
+      }
+    );
+
+    inject(DestroyRef).onDestroy(() => {
+      if (this.animatedTimerRef) {
+        clearInterval(this.animatedTimerRef);
+      }
+    });
   }
 
-  getMatrix(): Observable<Tile[]> {
-    return combineLatest([this.tetrisQuery.gameState$, this.tetrisQuery.matrix$]).pipe(
-      untilDestroyed(this),
-      switchMap(([gameState, matrix]) => {
-        if (gameState !== GameState.Over && gameState !== GameState.Loading) {
-          return of(matrix);
-        }
-        const newMatrix = [...matrix];
-        const rowsLength = MatrixUtil.Height * 2;
-        const animatedMatrix$: Observable<Tile[]> = timer(0, rowsLength).pipe(
-          map((x) => x + 1),
-          takeWhile((x) => x <= rowsLength + 1),
-          switchMap((idx) => {
-            const gridIndex = idx - 1;
-            if (gridIndex < MatrixUtil.Height) {
-              newMatrix.splice(
-                gridIndex * MatrixUtil.Width,
-                MatrixUtil.Width,
-                ...MatrixUtil.FullRow
-              );
-            }
-            if (gridIndex > MatrixUtil.Height && gridIndex <= rowsLength) {
-              const startIdx =
-                (MatrixUtil.Height - (gridIndex - MatrixUtil.Height)) * MatrixUtil.Width;
-              newMatrix.splice(startIdx, MatrixUtil.Width, ...MatrixUtil.EmptyRow);
-            }
+  private startAnimateMatrix() {
+    const newMatrix = [...this.tetrisState.matrix()];
+    const rowsLength = MatrixUtil.Height * 2;
 
-            return of(newMatrix);
-          })
-        );
-        return animatedMatrix$;
-      })
-    );
+    // Start first animated matrix to simulate timer(0, delay)
+    this.setAnimateMatrix(newMatrix, rowsLength);
+
+    this.animatedTimerRef = setInterval(() => {
+      this.animatedTimerCount++;
+      if (this.animatedTimerCount > rowsLength + 1) {
+        this.animatedTimerCount = 1;
+
+        if (this.animatedTimerRef) {
+          clearInterval(this.animatedTimerRef);
+        }
+
+        return;
+      }
+
+      this.setAnimateMatrix(newMatrix, rowsLength);
+    }, rowsLength);
+  }
+
+  private setAnimateMatrix(newMatrix: Tile[], rowsLength: number) {
+    const gridIndex = this.animatedTimerCount - 1;
+    if (gridIndex < MatrixUtil.Height) {
+      newMatrix.splice(gridIndex * MatrixUtil.Width, MatrixUtil.Width, ...MatrixUtil.FullRow);
+    }
+    if (gridIndex > MatrixUtil.Height && gridIndex <= rowsLength) {
+      const startIdx = (MatrixUtil.Height - (gridIndex - MatrixUtil.Height)) * MatrixUtil.Width;
+      newMatrix.splice(startIdx, MatrixUtil.Width, ...MatrixUtil.EmptyRow);
+    }
+
+    this.matrix.set(newMatrix);
   }
 }
