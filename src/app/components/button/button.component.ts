@@ -1,13 +1,13 @@
-import { AsyncPipe, NgClass, NgIf, NgStyle } from '@angular/common';
-import { Component, Input } from '@angular/core';
 import { ArrowButton, ArrowButtonTransform } from '@angular-tetris/interface/ui-model/arrow-button';
-import { Observable } from 'rxjs';
+import { NgClass, NgIf, NgStyle } from '@angular/common';
+import { Component, Input, ChangeDetectionStrategy } from '@angular/core';
 @Component({
   selector: 't-button',
   standalone: true,
-  imports: [NgClass, NgStyle, NgIf, AsyncPipe],
+  imports: [NgClass, NgStyle, NgIf],
   templateUrl: './button.component.html',
-  styleUrls: ['./button.component.scss']
+  styleUrls: ['./button.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ButtonComponent {
   @Input() className = '';
@@ -15,7 +15,7 @@ export class ButtonComponent {
   @Input() top: number;
   @Input() left: number;
 
-  @Input() active$: Observable<boolean>;
+  @Input() active: boolean;
   @Input() arrowButton: ArrowButton;
 
   get arrowTransforms() {
