@@ -77,7 +77,7 @@ export class TetrisStateService {
   locked = computed(() => this.tetrisState().locked);
   canHold = computed(() => this.tetrisState().canHold);
 
-  isShowLogo = signal(true);
+  isShowLogo = signal(false);
 
   private showLogoRef = null;
 
@@ -94,7 +94,9 @@ export class TetrisStateService {
         const isShowLogo = isLoadingOrOver && !this.hasCurrent();
 
         if (isLoadingOrOver) {
-          this.isShowLogo.set(isShowLogo);
+          this.showLogoRef = setTimeout(() => {
+            this.isShowLogo.set(isShowLogo);
+          }, 1800);
           return;
         }
 
