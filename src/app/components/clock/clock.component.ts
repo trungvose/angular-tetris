@@ -1,11 +1,10 @@
 import { AsyncPipe, NgClass, NgFor } from '@angular/common';
 import { Component } from '@angular/core';
-import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { timer } from 'rxjs';
 import { map } from 'rxjs/operators';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 const REFRESH_CLOCK_INTERVAL = 1000;
-@UntilDestroy()
 @Component({
   selector: 't-clock',
   standalone: true,
@@ -15,7 +14,7 @@ const REFRESH_CLOCK_INTERVAL = 1000;
 })
 export class ClockComponent {
   clock$ = timer(0, REFRESH_CLOCK_INTERVAL).pipe(
-    untilDestroyed(this),
+    takeUntilDestroyed(),
     map(() => this.renderClock())
   );
 

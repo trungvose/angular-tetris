@@ -1,6 +1,5 @@
 import { enableProdMode, ErrorHandler, importProvidersFrom } from '@angular/core';
 import { bootstrapApplication } from '@angular/platform-browser';
-import { AkitaNgDevtools } from '@datorama/akita-ngdevtools';
 import * as Sentry from '@sentry/angular';
 import { Integrations } from '@sentry/tracing';
 import { AppComponent } from '@angular-tetris/app.component';
@@ -27,7 +26,6 @@ if (environment.production) {
 
 bootstrapApplication(AppComponent, {
   providers: [
-    importProvidersFrom(AkitaNgDevtools.forRoot()),
     {
       provide: ErrorHandler,
       useValue: Sentry.createErrorHandler()

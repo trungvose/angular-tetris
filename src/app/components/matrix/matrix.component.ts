@@ -1,6 +1,5 @@
 import { AsyncPipe, NgFor } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
-import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { GameState } from '@angular-tetris/interface/game-state';
 import { Tile } from '@angular-tetris/interface/tile/tile';
 import { MatrixUtil } from '@angular-tetris/interface/utils/matrix';
@@ -8,7 +7,7 @@ import { TetrisQuery } from '@angular-tetris/state/tetris/tetris.query';
 import { combineLatest, Observable, of, timer } from 'rxjs';
 import { map, switchMap, takeWhile } from 'rxjs/operators';
 import { TileComponent } from '../tile/tile.component';
-@UntilDestroy()
+import { takeUntilDestroyed, toObservable } from '@angular/core/rxjs-interop';
 @Component({
   selector: 't-matrix',
   standalone: true,
@@ -16,18 +15,14 @@ import { TileComponent } from '../tile/tile.component';
   templateUrl: './matrix.component.html',
   styleUrls: ['./matrix.component.scss']
 })
-export class MatrixComponent implements OnInit {
-  matrix$: Observable<Tile[]>;
+export class MatrixComponent {
+  matrix$: Observable<Tile[]> = this.getMatrix();
 
   constructor(private tetrisQuery: TetrisQuery) {}
 
-  ngOnInit(): void {
-    this.matrix$ = this.getMatrix();
-  }
-
   getMatrix(): Observable<Tile[]> {
-    return combineLatest([this.tetrisQuery.gameState$, this.tetrisQuery.matrix$]).pipe(
-      untilDestroyed(this),
+    return combineLatest([toObservable(this.tetrisQuery.gameState$), toObservable(this.tetrisQuery.matrix$)]).pipe(
+      takeUntilDestroyed(),
       switchMap(([gameState, matrix]) => {
         if (gameState !== GameState.Over && gameState !== GameState.Loading) {
           return of(matrix);

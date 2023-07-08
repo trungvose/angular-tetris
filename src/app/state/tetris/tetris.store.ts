@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-import { Store, StoreConfig } from '@datorama/akita';
 import { PieceFactory } from '@angular-tetris/factory/piece-factory';
 import { GameState } from '@angular-tetris/interface/game-state';
 import { Piece } from '@angular-tetris/interface/piece/piece';
@@ -7,6 +6,7 @@ import { Tile } from '@angular-tetris/interface/tile/tile';
 import { MatrixUtil } from '@angular-tetris/interface/utils/matrix';
 import { Speed } from '@angular-tetris/interface/speed';
 import { LocalStorageService } from '@angular-tetris/services/local-storage.service';
+import { FeatureStore } from '@mini-rx/signal-store';
 
 export interface TetrisState {
   matrix: Tile[];
@@ -45,9 +45,8 @@ export const createInitialState = (pieceFactory: PieceFactory): TetrisState => (
 });
 
 @Injectable({ providedIn: 'root' })
-@StoreConfig({ name: 'AngularTetris' })
-export class TetrisStore extends Store<TetrisState> {
+export class TetrisStore extends FeatureStore<TetrisState> {
   constructor(_pieceFactory: PieceFactory) {
-    super(createInitialState(_pieceFactory));
+    super('AngularTetris', createInitialState(_pieceFactory));
   }
 }

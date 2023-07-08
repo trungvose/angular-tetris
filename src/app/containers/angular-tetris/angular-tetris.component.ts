@@ -1,5 +1,5 @@
 import { AsyncPipe, NgIf } from '@angular/common';
-import { Component, HostListener, OnInit, ElementRef, Renderer2 } from '@angular/core';
+import { Component, HostListener, OnInit, ElementRef, Renderer2, Signal } from '@angular/core';
 import { ClockComponent } from '@angular-tetris/components/clock/clock.component';
 import { GithubComponent } from '@angular-tetris/components/github/github.component';
 import { HoldComponent } from '@angular-tetris/components/hold/hold.component';
@@ -44,7 +44,7 @@ const KeyDown = 'document:keydown';
   styleUrls: ['./angular-tetris.component.scss']
 })
 export class AngularTetrisComponent implements OnInit {
-  drop$: Observable<boolean>;
+  drop$: Signal<boolean>;
   isShowLogo$: Observable<boolean>;
   filling: number;
 

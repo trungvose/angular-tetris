@@ -1,15 +1,15 @@
 <p>
-    <span *ngIf="hasCurrent$ | async else startingTmpl">
+    <span *ngIf="hasCurrent$() else startingTmpl">
         Lines
     </span>
 </p>
-<t-number *ngIf="hasCurrent$ | async else initLineTmpl"
-          [num]="clearedLines$ | async">
+<t-number *ngIf="hasCurrent$() else initLineTmpl"
+          [num]="clearedLines$()">
 </t-number>
 <ng-template #startingTmpl>
     Start Line
 </ng-template>
 <ng-template #initLineTmpl>
-    <t-number [num]="initLine$ | async">
+    <t-number [num]="initLine$()">
     </t-number>
 </ng-template>

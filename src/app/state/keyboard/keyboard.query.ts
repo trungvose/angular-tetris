@@ -1,20 +1,18 @@
 import { Injectable } from '@angular/core';
-import { Query } from '@datorama/akita';
-import { KeyboardStore, KeyboardState } from './keyboard.store';
+import { KeyboardStore } from './keyboard.store';
 
 @Injectable({ providedIn: 'root' })
-export class KeyboardQuery extends Query<KeyboardState> {
-  up$ = this.select('up');
-  down$ = this.select('down');
-  left$ = this.select('left');
-  right$ = this.select('right');
-  drop$ = this.select('drop');
-  pause$ = this.select('pause');
-  sound$ = this.select('sound');
-  reset$ = this.select('reset');
-  hold$ = this.select('hold');
+export class KeyboardQuery {
+  up$ = this.store.select(state => state.up);
+  down$ = this.store.select(state => state.down);
+  left$ = this.store.select(state => state.left);
+  right$ = this.store.select(state => state.right);
+  drop$ = this.store.select(state => state.drop);
+  pause$ = this.store.select(state => state.pause);
+  sound$ = this.store.select(state => state.sound);
+  reset$ = this.store.select(state => state.reset);
+  hold$ = this.store.select(state => state.hold);
 
   constructor(protected store: KeyboardStore) {
-    super(store);
   }
 }
