@@ -1,5 +1,5 @@
 import { AsyncPipe, NgClass, NgIf, NgStyle } from '@angular/common';
-import { Component, Input } from '@angular/core';
+import { Component, Input, Signal } from '@angular/core';
 import { ArrowButton, ArrowButtonTransform } from '@angular-tetris/interface/ui-model/arrow-button';
 import { Observable } from 'rxjs';
 @Component({
@@ -15,7 +15,7 @@ export class ButtonComponent {
   @Input() top: number;
   @Input() left: number;
 
-  @Input() active$: Observable<boolean>;
+  @Input() active$: Signal<boolean>;
   @Input() arrowButton: ArrowButton;
 
   get arrowTransforms() {

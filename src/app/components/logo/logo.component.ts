@@ -1,10 +1,9 @@
 import { NgClass } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
-import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { concat, Observable, timer } from 'rxjs';
 import { delay, finalize, map, repeat, startWith, takeWhile, tap } from 'rxjs/operators';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
-@UntilDestroy()
 @Component({
   selector: 't-logo',
   standalone: true,
@@ -12,12 +11,12 @@ import { delay, finalize, map, repeat, startWith, takeWhile, tap } from 'rxjs/op
   templateUrl: './logo.component.html',
   styleUrls: ['./logo.component.scss']
 })
-export class LogoComponent implements OnInit {
+export class LogoComponent {
   className = '';
 
-  ngOnInit(): void {
+  constructor() {
     concat(this.run(), this.eyes())
-      .pipe(delay(5000), repeat(1000), untilDestroyed(this))
+      .pipe(delay(5000), repeat(1000), takeUntilDestroyed())
       .subscribe();
   }
 

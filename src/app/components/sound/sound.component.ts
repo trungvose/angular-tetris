@@ -1,8 +1,6 @@
 import { AsyncPipe } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, computed, Signal } from '@angular/core';
 import { TetrisQuery } from '@angular-tetris/state/tetris/tetris.query';
-import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
 
 @Component({
   selector: 't-sound',
@@ -12,7 +10,7 @@ import { map } from 'rxjs/operators';
   styleUrls: ['./sound.component.scss']
 })
 export class SoundComponent {
-  muted$: Observable<boolean> = this.query.sound$.pipe(map((sound) => !sound));
+  muted$$: Signal<boolean> = computed(() => !this.query.sound$$());
 
   constructor(private query: TetrisQuery) {}
 }

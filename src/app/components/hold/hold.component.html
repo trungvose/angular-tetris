@@ -1,7 +1,7 @@
 <p>Hold</p>
 <div class="hold">
     <div class="row"
-         *ngFor="let row of hold$ | async">
+         *ngFor="let row of hold$$()">
         <t-tile [tile]='tile'
                 *ngFor="let tile of row">
         </t-tile>

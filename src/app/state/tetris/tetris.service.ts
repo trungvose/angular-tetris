@@ -54,7 +54,7 @@ export class TetrisService {
   }
 
   get hold$() {
-    return this.query.hold$;
+    return this.query.hold$$;
   }
 
   get isShowLogo$(): Observable<boolean> {
@@ -74,7 +74,7 @@ export class TetrisService {
       this.setCurrentPiece(this.next);
       this.setNext();
     }
-    const { initLine, initSpeed } = this.query.raw;
+    const { initLine, initSpeed } = this.query.raw();
     this.store.update({
       points: 0,
       gameState: GameState.Started,
@@ -96,7 +96,7 @@ export class TetrisService {
     if (!this.query.isPause) {
       return;
     }
-    const { speed } = this.query.raw;
+    const { speed } = this.query.raw();
     this.store.update({
       locked: false,
       gameState: GameState.Started
@@ -116,7 +116,7 @@ export class TetrisService {
   }
 
   reset() {
-    const { sound } = this.query.raw;
+    const { sound } = this.query.raw();
     this.store.update({
       ...createInitialState(this.pieceFactory),
       sound
@@ -202,14 +202,14 @@ export class TetrisService {
   }
 
   setSound() {
-    const sound = this.query.raw.sound;
+    const sound = this.query.raw().sound;
     this.store.update({
       sound: !sound
     });
   }
 
   decreaseLevel() {
-    const { initSpeed } = this.query.raw;
+    const { initSpeed } = this.query.raw();
     const newSpeed = (initSpeed - 1 < 1 ? 6 : initSpeed - 1) as Speed;
     this.store.update({
       initSpeed: newSpeed
@@ -217,7 +217,7 @@ export class TetrisService {
   }
 
   increaseLevel() {
-    const { initSpeed } = this.query.raw;
+    const { initSpeed } = this.query.raw();
     const newSpeed = (initSpeed + 1 > 6 ? 1 : initSpeed + 1) as Speed;
     this.store.update({
       initSpeed: newSpeed
@@ -225,7 +225,7 @@ export class TetrisService {
   }
 
   increaseStartLine() {
-    const { initLine } = this.query.raw;
+    const { initLine } = this.query.raw();
     const startLine = initLine + 1 > 10 ? 1 : initLine + 1;
     this.store.update({
       initLine: startLine
@@ -233,7 +233,7 @@ export class TetrisService {
   }
 
   decreaseStartLine() {
-    const { initLine } = this.query.raw;
+    const { initLine } = this.query.raw();
     const startLine = initLine - 1 < 1 ? 10 : initLine - 1;
     this.store.update({
       initLine: startLine
@@ -298,7 +298,7 @@ export class TetrisService {
   private onGameOver() {
     this.pause();
     this.soundManager.gameOver();
-    const { points, max, sound } = this.query.raw;
+    const { points, max, sound } = this.query.raw();
     const maxPoint = Math.max(points, max);
     LocalStorageService.setMaxPoint(maxPoint);
     this.store.update({
@@ -370,7 +370,7 @@ export class TetrisService {
       return;
     }
     this.soundManager.clear();
-    const { points, clearedLines, speed, initSpeed } = this.query.raw;
+    const { points, clearedLines, speed, initSpeed } = this.query.raw();
     const newLines = clearedLines + numberOfClearedLines;
     const newPoints = this.getPoints(numberOfClearedLines, points);
     const newSpeed = this.getSpeed(newLines, initSpeed);

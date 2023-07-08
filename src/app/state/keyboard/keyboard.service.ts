@@ -1,5 +1,4 @@
-import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Injectable, Signal } from '@angular/core';
 import { KeyboardQuery } from './keyboard.query';
 import { KeyboardStore, KeyboardState } from './keyboard.store';
 
@@ -7,8 +6,8 @@ import { KeyboardStore, KeyboardState } from './keyboard.store';
   providedIn: 'root'
 })
 export class KeyboardService {
-  get drop$(): Observable<boolean> {
-    return this.query.drop$;
+  get drop$(): Signal<boolean> {
+    return this.query.drop$$;
   }
 
   constructor(private store: KeyboardStore, private query: KeyboardQuery) {}

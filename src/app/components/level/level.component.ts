@@ -11,9 +11,9 @@ import { NumberComponent } from '../number/number.component';
   styleUrls: ['./level.component.scss']
 })
 export class LevelComponent {
-  speed$ = this.query.speed$;
-  hasCurrent$ = this.query.hasCurrent$;
-  initSpeed$ = this.query.initSpeed$;
+  speed$ = this.query.speed$$;
+  hasCurrent$ = this.query.hasCurrent$$;
+  initSpeed$ = this.query.initSpeed$$;
 
   constructor(private query: TetrisQuery) {}
 }
