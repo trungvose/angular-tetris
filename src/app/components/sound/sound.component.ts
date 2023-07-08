@@ -10,7 +10,7 @@ import { TetrisQuery } from '@angular-tetris/state/tetris/tetris.query';
   styleUrls: ['./sound.component.scss']
 })
 export class SoundComponent {
-  muted$: Signal<boolean> = computed(() => !this.query.sound$());
+  muted$$: Signal<boolean> = computed(() => !this.query.sound$$());
 
   constructor(private query: TetrisQuery) {}
 }

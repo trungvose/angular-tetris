@@ -18,8 +18,8 @@ export class KeyboardComponent {
   @Output() onMouseDown = new EventEmitter<string>();
   @Output() onMouseUp = new EventEmitter<string>();
   ArrowButton = ArrowButton; //eslint-disable-line @typescript-eslint/naming-convention
-  pauseButtonLabel$: Signal<string> = computed(() => {
-    return this.query.gameState$() === GameState.Paused ? 'Play' : 'Pause'
+  pauseButtonLabel$$: Signal<string> = computed(() => {
+    return this.query.gameState$$() === GameState.Paused ? 'Play' : 'Pause'
   })
 
   constructor(public keyboardQuery: KeyboardQuery, private query: TetrisQuery) {}

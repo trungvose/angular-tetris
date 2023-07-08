@@ -15,7 +15,7 @@ const REFRESH_LABEL_INTERVAL = 3000;
   styleUrls: ['./point.component.scss']
 })
 export class PointComponent {
-  labelAndPoints$: Observable<LabelAndNumber> = toObservable(this.query.hasCurrent$).pipe(
+  labelAndPoints$: Observable<LabelAndNumber> = toObservable(this.query.hasCurrent$$).pipe(
     takeUntilDestroyed(),
     switchMap((hasCurrent) => {
       if (hasCurrent) {

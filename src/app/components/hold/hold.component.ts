@@ -12,7 +12,7 @@ import { TileComponent } from '../tile/tile.component';
   styleUrls: ['./hold.component.scss']
 })
 export class HoldComponent {
-  hold$: Signal<Tile[][]> = computed(() => {
+  hold$$: Signal<Tile[][]> = computed(() => {
     return this.tetrisService.hold$().next.map((row) => row.map((value) => new Tile(value as TileValue)))
   })
 

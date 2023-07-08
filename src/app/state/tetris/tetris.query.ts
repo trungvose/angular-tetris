@@ -7,21 +7,21 @@ import { toObservable } from '@angular/core/rxjs-interop';
 
 @Injectable({ providedIn: 'root' })
 export class TetrisQuery {
-  next$ = this.store.select(state => state.next);
-  hold$ = this.store.select(state => state.hold);
-  matrix$ = this.store.select(state => state.matrix);
-  sound$ = this.store.select(state => state.sound);
-  gameState$ = this.store.select(state => state.gameState);
-  current$ = this.store.select(state => state.current);
-  hasCurrent$ = this.store.select(state => !!state.current);
-  points$ = this.store.select(state => state.points);
-  clearedLines$ = this.store.select(state => state.clearedLines);
-  initLine$ = this.store.select(state => state.initLine);
-  speed$ = this.store.select(state => state.speed);
-  initSpeed$ = this.store.select(state => state.initSpeed);
-  max$ = this.store.select(state => state.max);
+  next$$ = this.store.select(state => state.next);
+  hold$$ = this.store.select(state => state.hold);
+  matrix$$ = this.store.select(state => state.matrix);
+  sound$$ = this.store.select(state => state.sound);
+  gameState$$ = this.store.select(state => state.gameState);
+  current$$ = this.store.select(state => state.current);
+  hasCurrent$$ = this.store.select(state => !!state.current);
+  points$$ = this.store.select(state => state.points);
+  clearedLines$$ = this.store.select(state => state.clearedLines);
+  initLine$$ = this.store.select(state => state.initLine);
+  speed$$ = this.store.select(state => state.speed);
+  initSpeed$$ = this.store.select(state => state.initSpeed);
+  max$$ = this.store.select(state => state.max);
 
-  isShowLogo$ = combineLatest([toObservable(this.gameState$), toObservable(this.current$)]).pipe(
+  isShowLogo$ = combineLatest([toObservable(this.gameState$$), toObservable(this.current$$)]).pipe(
     switchMap(([state, current]) => {
       const isLoadingOrOver = state === GameState.Loading || state === GameState.Over;
       const isRenderingLogo$ = of(isLoadingOrOver && !current);

@@ -1,7 +1,7 @@
 <div class="keyboard"
      [style.margin-top.px]='filling'>
     <t-button className="blue btn-md"
-              [active$]="keyboardQuery.up$"
+              [active$]="keyboardQuery.up$$"
               [arrowButton]="ArrowButton.UP"
               (mousedown)="mouseDown($event, 'Up')"
               (mouseup)="mouseUp($event, 'Up')"
@@ -13,7 +13,7 @@
         Rotation
     </t-button>
     <t-button className="blue btn-md"
-              [active$]="keyboardQuery.down$"
+              [active$]="keyboardQuery.down$$"
               [arrowButton]="ArrowButton.DOWN"
               (mousedown)="mouseDown($event, 'Down')"
               (mouseup)="mouseUp($event, 'Down')"
@@ -24,7 +24,7 @@
         Down
     </t-button>
     <t-button className="blue btn-md"
-              [active$]="keyboardQuery.left$"
+              [active$]="keyboardQuery.left$$"
               [arrowButton]="ArrowButton.LEFT"
               (mousedown)="mouseDown($event, 'Left')"
               (mouseup)="mouseUp($event, 'Left')"
@@ -35,7 +35,7 @@
         Left
     </t-button>
     <t-button className="blue btn-md"
-              [active$]="keyboardQuery.right$"
+              [active$]="keyboardQuery.right$$"
               [arrowButton]="ArrowButton.RIGHT"
               (mousedown)="mouseDown($event, 'Right')"
               (mouseup)="mouseUp($event, 'Right')"
@@ -46,7 +46,7 @@
         Right
     </t-button>
     <t-button className="blue btn-md"
-              [active$]="keyboardQuery.hold$"
+              [active$]="keyboardQuery.hold$$"
               (mousedown)="mouseDown($event, 'Hold')"
               (mouseup)="mouseUp($event, 'Hold')"
               (touchstart)="mouseDown($event, 'Hold')"
@@ -56,7 +56,7 @@
         Hold (C)
     </t-button>
     <t-button className="blue btn-lg"
-              [active$]="keyboardQuery.drop$"
+              [active$]="keyboardQuery.drop$$"
               (mousedown)="mouseDown($event, 'Space')"
               (mouseup)="mouseUp($event, 'Space')"
               (touchstart)="mouseDown($event, 'Space')"
@@ -66,7 +66,7 @@
         Drop (SPACE)
     </t-button>
     <t-button className="red btn-sm"
-              [active$]="keyboardQuery.reset$"
+              [active$]="keyboardQuery.reset$$"
               (mousedown)="mouseDown($event, 'Reset')"
               (mouseup)="mouseUp($event, 'Reset')"
               (touchstart)="mouseDown($event, 'Reset')"
@@ -76,7 +76,7 @@
         Reset (R)
     </t-button>
     <t-button className="green btn-sm"
-              [active$]="keyboardQuery.sound$"
+              [active$]="keyboardQuery.sound$$"
               (mousedown)="mouseDown($event, 'Sound')"
               (mouseup)="mouseUp($event, 'Sound')"
               (touchstart)="mouseDown($event, 'Sound')"
@@ -86,13 +86,13 @@
         Sound (S)
     </t-button>
     <t-button className="green btn-sm"
-              [active$]="keyboardQuery.pause$"
+              [active$]="keyboardQuery.pause$$"
               (mousedown)="mouseDown($event, 'Pause')"
               (mouseup)="mouseUp($event, 'Pause')"
               (touchstart)="mouseDown($event, 'Pause')"
               (touchend)="mouseUp($event, 'Pause')"
               [top]="0"
               [left]="16">
-              {{ pauseButtonLabel$()}} (P)
+              {{ pauseButtonLabel$$()}} (P)
     </t-button>
 </div>

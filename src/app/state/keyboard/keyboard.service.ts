@@ -7,7 +7,7 @@ import { KeyboardStore, KeyboardState } from './keyboard.store';
 })
 export class KeyboardService {
   get drop$(): Signal<boolean> {
-    return this.query.drop$;
+    return this.query.drop$$;
   }
 
   constructor(private store: KeyboardStore, private query: KeyboardQuery) {}

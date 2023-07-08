@@ -54,7 +54,7 @@ export class TetrisService {
   }
 
   get hold$() {
-    return this.query.hold$;
+    return this.query.hold$$;
   }
 
   get isShowLogo$(): Observable<boolean> {

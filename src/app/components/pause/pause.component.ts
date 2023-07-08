@@ -14,7 +14,7 @@ import { toObservable } from '@angular/core/rxjs-interop';
   styleUrls: ['./pause.component.scss']
 })
 export class PauseComponent {
-  paused$: Observable<boolean> = toObservable(this.query.gameState$).pipe(
+  paused$: Observable<boolean> = toObservable(this.query.gameState$$).pipe(
     switchMap((state) => {
       if (state === GameState.Paused) {
         return interval(250).pipe(map((num) => !!(num % 2)));

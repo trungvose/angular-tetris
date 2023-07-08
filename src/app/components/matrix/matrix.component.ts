@@ -21,7 +21,7 @@ export class MatrixComponent {
   constructor(private tetrisQuery: TetrisQuery) {}
 
   getMatrix(): Observable<Tile[]> {
-    return combineLatest([toObservable(this.tetrisQuery.gameState$), toObservable(this.tetrisQuery.matrix$)]).pipe(
+    return combineLatest([toObservable(this.tetrisQuery.gameState$$), toObservable(this.tetrisQuery.matrix$$)]).pipe(
       takeUntilDestroyed(),
       switchMap(([gameState, matrix]) => {
         if (gameState !== GameState.Over && gameState !== GameState.Loading) {
