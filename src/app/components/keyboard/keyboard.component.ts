@@ -19,7 +19,7 @@ export class KeyboardComponent {
   @Input() filling = 20;
   @Output() onMouseDown = new EventEmitter<string>();
   @Output() onMouseUp = new EventEmitter<string>();
-  ArrowButton = ArrowButton; //eslint-disable-line @typescript-eslint/naming-convention
+  ArrowButton = ArrowButton;
   pauseButtonLabel$: Observable<string> = this.query.gameState$.pipe(
     map((state) => (state === GameState.Paused ? 'Play' : 'Pause'))
   );

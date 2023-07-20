@@ -2,7 +2,6 @@ import { EmptyTile } from '../tile/empty-tile';
 import { Tile } from '../tile/tile';
 import { FilledTile } from '../tile/filled-tile';
 
-/* eslint-disable @typescript-eslint/naming-convention */
 export class MatrixUtil {
   static readonly Width = 10;
   static readonly Height = 20;
@@ -59,4 +58,3 @@ export class MatrixUtil {
     return this.SpeedDelay[speed - 1] ?? this.SpeedDelay[0];
   }
 }
-/* eslint-enable @typescript-eslint/naming-convention */
