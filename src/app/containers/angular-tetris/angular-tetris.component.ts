@@ -52,13 +52,6 @@ export class AngularTetrisComponent implements OnInit {
   isShowLogo$: Observable<boolean>;
   filling: number;
 
-  // constructor(
-  //   private tetrisService: TetrisService,
-  //   private soundManager: SoundManagerService,
-  //   private _el: ElementRef,
-  //   private _render: Renderer2
-  // ) {}
-
   constructor(
     private tetrisService: TetrisService,
     private soundManager: SoundManagerService,
