@@ -1,7 +1,7 @@
 import { AsyncPipe, NgIf } from '@angular/common';
-import { Component } from '@angular/core';
-import { TetrisQuery } from '@angular-tetris/state/tetris/tetris.query';
+import { Component, inject } from '@angular/core';
 import { NumberComponent } from '../number/number.component';
+import { TetrisStore } from '@angular-tetris/state/tetris/tetris.store';
 
 @Component({
   selector: 't-level',
@@ -11,9 +11,8 @@ import { NumberComponent } from '../number/number.component';
   styleUrls: ['./level.component.scss']
 })
 export class LevelComponent {
-  speed$ = this.query.speed$;
-  hasCurrent$ = this.query.hasCurrent$;
-  initSpeed$ = this.query.initSpeed$;
-
-  constructor(private query: TetrisQuery) {}
+  store = inject(TetrisStore);
+  speed$ = this.store.speed$;
+  hasCurrent$ = this.store.hasCurrent$;
+  initSpeed$ = this.store.initSpeed$;
 }

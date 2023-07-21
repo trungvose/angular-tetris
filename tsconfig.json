@@ -2,6 +2,7 @@
   "compileOnSave": false,
   "compilerOptions": {
     "baseUrl": "./",
+    "strictNullChecks": true,
     "paths": {
       "@angular-tetris/*": [
         "src/app/*"

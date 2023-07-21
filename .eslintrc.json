@@ -16,11 +16,11 @@
         "createDefaultProgram": true
       },
       "extends": [
-        "plugin:@angular-eslint/ng-cli-compat",
-        "plugin:@angular-eslint/ng-cli-compat--formatting-add-on",
+        "plugin:@angular-eslint/recommended",
         "plugin:@angular-eslint/template/process-inline-templates"
       ],
       "rules": {
+
         "@angular-eslint/component-selector": [
           "error",
           {
@@ -38,40 +38,6 @@
           }
         ],
         "@angular-eslint/no-output-on-prefix": "off",
-        "@typescript-eslint/naming-convention": [
-          "error",
-          {
-            "selector": "default",
-            "format": [
-              "camelCase"
-            ],
-            "leadingUnderscore": "allow",
-            "trailingUnderscore": "allow"
-          },
-          {
-            "selector": "variable",
-            "format": [
-              "camelCase",
-              "UPPER_CASE",
-              "PascalCase"
-            ],
-            "leadingUnderscore": "allow",
-            "trailingUnderscore": "allow"
-          },
-          {
-            "selector": "typeLike",
-            "format": [
-              "PascalCase"
-            ]
-          },
-          {
-            "selector": "enumMember",
-            "format": [
-              "camelCase",
-              "PascalCase"
-            ]
-          }
-        ],
         "@typescript-eslint/member-ordering": "off",
         "typescript-eslint/quotes": "off",
         "no-underscore-dangle": "off",

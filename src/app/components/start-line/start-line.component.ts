@@ -1,7 +1,7 @@
 import { AsyncPipe, NgIf } from '@angular/common';
-import { Component } from '@angular/core';
-import { TetrisQuery } from '@angular-tetris/state/tetris/tetris.query';
+import { Component, inject } from '@angular/core';
 import { NumberComponent } from '../number/number.component';
+import { TetrisStore } from '@angular-tetris/state/tetris/tetris.store';
 
 @Component({
   selector: 't-start-line',
@@ -11,9 +11,8 @@ import { NumberComponent } from '../number/number.component';
   styleUrls: ['./start-line.component.scss']
 })
 export class StartLineComponent {
-  hasCurrent$ = this.query.hasCurrent$;
-  clearedLines$ = this.query.clearedLines$;
-  initLine$ = this.query.initLine$;
-
-  constructor(public query: TetrisQuery) {}
+  store = inject(TetrisStore);
+  hasCurrent$ = this.store.hasCurrent$;
+  clearedLines$ = this.store.clearedLines$;
+  initLine$ = this.store.initLine$;
 }

@@ -1,54 +1,40 @@
-import { NgClass } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
-import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
-import { concat, Observable, timer } from 'rxjs';
-import { delay, finalize, map, repeat, startWith, takeWhile, tap } from 'rxjs/operators';
+import { CommonModule, NgClass } from '@angular/common';
+import { Component } from '@angular/core';
+import { concat, timer } from 'rxjs';
+import { map, repeat, startWith, takeWhile } from 'rxjs/operators';
 
-@UntilDestroy()
 @Component({
   selector: 't-logo',
   standalone: true,
-  imports: [NgClass],
+  imports: [NgClass, CommonModule],
   templateUrl: './logo.component.html',
   styleUrls: ['./logo.component.scss']
 })
-export class LogoComponent implements OnInit {
-  className = '';
+export class LogoComponent {
+  runningClass$ = timer(0, 100).pipe(
+    startWith(0),
+    takeWhile((t) => t < 40),
+    map((t) => {
+      const range = Math.ceil((t + 1) / 10);
+      const side = range % 2 === 0 ? 'l' : 'r';
+      const runningLegState = t % 2 === 1 ? 3 : 4;
+      const legState = t === 39 ? 1 : runningLegState;
+      return `${side}${legState}`;
+    })
+  );
 
-  ngOnInit(): void {
-    concat(this.run(), this.eyes())
-      .pipe(delay(5000), repeat(1000), untilDestroyed(this))
-      .subscribe();
-  }
+  blinkingEyesClass$ = timer(0, 500).pipe(
+    startWith(0),
+    takeWhile((t) => t < 5),
+    map((t) => `l${t % 2 === 1 ? 1 : 2}`)
+  );
 
-  eyes() {
-    return timer(0, 500).pipe(
-      startWith(0),
-      map((x) => x + 1),
-      takeWhile((x) => x < 6),
-      tap((x) => {
-        const state = x % 2 === 0 ? 1 : 2;
-        this.className = `l${state}`;
-      })
-    );
-  }
+  restingClass$ = timer(5000).pipe(
+    startWith(0),
+    map(() => 'l2')
+  );
 
-  run(): Observable<number> {
-    let side = 'r';
-    return timer(0, 100).pipe(
-      startWith(0),
-      map((x) => x + 1),
-      takeWhile((x) => x <= 40),
-      tap((x) => {
-        if (x === 10 || x === 20 || x === 30) {
-          side = side === 'r' ? 'l' : 'r';
-        }
-        const state = x % 2 === 0 ? 3 : 4;
-        this.className = `${side}${state}`;
-      }),
-      finalize(() => {
-        this.className = `${side}1`;
-      })
-    );
-  }
+  dragonClass$ = concat(this.runningClass$, this.blinkingEyesClass$, this.restingClass$).pipe(
+    repeat(Infinity)
+  );
 }

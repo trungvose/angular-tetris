@@ -34,7 +34,7 @@ export class PieceFactory {
       this.generateNewBag();
     }
     const nextPiece = this.currentBag.pop();
-    return new nextPiece(x, y);
+    return new nextPiece!(x, y);
   }
 
   getNonePiece(x = SPAWN_POSITION_X, y = SPAWN_POSITION_Y): Piece {

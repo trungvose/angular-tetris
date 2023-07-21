@@ -1,7 +1,7 @@
 import { AsyncPipe } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { GameState } from '@angular-tetris/interface/game-state';
-import { TetrisQuery } from '@angular-tetris/state/tetris/tetris.query';
+import { TetrisStore } from '@angular-tetris/state/tetris/tetris.store';
 import { interval, Observable, of } from 'rxjs';
 import { map, switchMap } from 'rxjs/operators';
 
@@ -13,7 +13,7 @@ import { map, switchMap } from 'rxjs/operators';
   styleUrls: ['./pause.component.scss']
 })
 export class PauseComponent {
-  paused$: Observable<boolean> = this.query.gameState$.pipe(
+  paused$: Observable<boolean> = inject(TetrisStore).gameState$.pipe(
     switchMap((state) => {
       if (state === GameState.Paused) {
         return interval(250).pipe(map((num) => !!(num % 2)));
@@ -21,6 +21,4 @@ export class PauseComponent {
       return of(false);
     })
   );
-
-  constructor(private query: TetrisQuery) {}
 }

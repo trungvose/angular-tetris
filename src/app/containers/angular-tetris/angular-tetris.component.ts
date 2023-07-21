@@ -1,5 +1,5 @@
 import { AsyncPipe, NgIf } from '@angular/common';
-import { Component, HostListener, OnInit, ElementRef, Renderer2 } from '@angular/core';
+import { Component, HostListener, OnInit, ElementRef, Renderer2, inject } from '@angular/core';
 import { ClockComponent } from '@angular-tetris/components/clock/clock.component';
 import { GithubComponent } from '@angular-tetris/components/github/github.component';
 import { HoldComponent } from '@angular-tetris/components/hold/hold.component';
@@ -15,9 +15,11 @@ import { SoundComponent } from '@angular-tetris/components/sound/sound.component
 import { StartLineComponent } from '@angular-tetris/components/start-line/start-line.component';
 import { TetrisKeyboard } from '@angular-tetris/interface/keyboard';
 import { SoundManagerService } from '@angular-tetris/services/sound-manager.service';
-import { KeyboardService } from '@angular-tetris/state/keyboard/keyboard.service';
+import { KeyboardStore } from '@angular-tetris/state/keyboard/keyboard.store';
 import { TetrisService } from '@angular-tetris/state/tetris/tetris.service';
+import { TetrisStore } from '@angular-tetris/state/tetris/tetris.store';
 import { Observable } from 'rxjs';
+import { filter, take } from 'rxjs/operators';
 const KeyUp = 'document:keyup';
 const KeyDown = 'document:keydown';
 @Component({
@@ -44,9 +46,18 @@ const KeyDown = 'document:keydown';
   styleUrls: ['./angular-tetris.component.scss']
 })
 export class AngularTetrisComponent implements OnInit {
-  drop$: Observable<boolean>;
+  keyboardStore = inject(KeyboardStore);
+  tetrisStore = inject(TetrisStore);
+  drop$ = this.keyboardStore.drop$;
   isShowLogo$: Observable<boolean>;
   filling: number;
+
+  constructor(
+    private tetrisService: TetrisService,
+    private soundManager: SoundManagerService,
+    private el: ElementRef,
+    private render: Renderer2
+  ) {}
 
   @HostListener('window:resize', ['$event'])
   resize() {
@@ -78,9 +89,7 @@ export class AngularTetrisComponent implements OnInit {
   @HostListener(`${KeyDown}.${TetrisKeyboard.Left}`)
   keyDownLeft() {
     this.soundManager.move();
-    this.keyboardService.setKeỵ({
-      left: true
-    });
+    this.keyboardStore.setLeftTrue();
     if (this.hasCurrent) {
       this.tetrisService.moveLeft();
     } else {
@@ -90,17 +99,13 @@ export class AngularTetrisComponent implements OnInit {
 
   @HostListener(`${KeyUp}.${TetrisKeyboard.Left}`)
   keyUpLeft() {
-    this.keyboardService.setKeỵ({
-      left: false
-    });
+    this.keyboardStore.setLeftFalse();
   }
 
   @HostListener(`${KeyDown}.${TetrisKeyboard.Right}`)
   keyDownRight() {
     this.soundManager.move();
-    this.keyboardService.setKeỵ({
-      right: true
-    });
+    this.keyboardStore.setRightTrue();
     if (this.hasCurrent) {
       this.tetrisService.moveRight();
     } else {
@@ -110,17 +115,13 @@ export class AngularTetrisComponent implements OnInit {
 
   @HostListener(`${KeyUp}.${TetrisKeyboard.Right}`)
   keyUpRight() {
-    this.keyboardService.setKeỵ({
-      right: false
-    });
+    this.keyboardStore.setRightFalse();
   }
 
   @HostListener(`${KeyDown}.${TetrisKeyboard.Up}`)
   keyDownUp() {
     this.soundManager.rotate();
-    this.keyboardService.setKeỵ({
-      up: true
-    });
+    this.keyboardStore.setUpTrue();
     if (this.hasCurrent) {
       this.tetrisService.rotate();
     } else {
@@ -130,17 +131,13 @@ export class AngularTetrisComponent implements OnInit {
 
   @HostListener(`${KeyUp}.${TetrisKeyboard.Up}`)
   keyUpUp() {
-    this.keyboardService.setKeỵ({
-      up: false
-    });
+    this.keyboardStore.setUpFalse();
   }
 
   @HostListener(`${KeyDown}.${TetrisKeyboard.Down}`)
   keyDownDown() {
     this.soundManager.move();
-    this.keyboardService.setKeỵ({
-      down: true
-    });
+    this.keyboardStore.setDownTrue();
     if (this.hasCurrent) {
       this.tetrisService.moveDown();
     } else {
@@ -150,16 +147,12 @@ export class AngularTetrisComponent implements OnInit {
 
   @HostListener(`${KeyUp}.${TetrisKeyboard.Down}`)
   keyUpDown() {
-    this.keyboardService.setKeỵ({
-      down: false
-    });
+    this.keyboardStore.setDownFalse();
   }
 
   @HostListener(`${KeyDown}.${TetrisKeyboard.Space}`)
   keyDownSpace() {
-    this.keyboardService.setKeỵ({
-      drop: true
-    });
+    this.keyboardStore.setDropTrue();
     if (this.hasCurrent) {
       this.soundManager.fall();
       this.tetrisService.drop();
@@ -171,69 +164,55 @@ export class AngularTetrisComponent implements OnInit {
 
   @HostListener(`${KeyUp}.${TetrisKeyboard.Space}`)
   keyUpSpace() {
-    this.keyboardService.setKeỵ({
-      drop: false
-    });
+    this.keyboardStore.setDropFalse();
   }
 
   @HostListener(`${KeyDown}.${TetrisKeyboard.C}`)
   keyDownHold() {
     this.soundManager.move();
-    this.keyboardService.setKeỵ({
-      hold: true
-    });
+    this.keyboardStore.setHoldTrue();
     this.tetrisService.holdPiece();
   }
 
   @HostListener(`${KeyUp}.${TetrisKeyboard.C}`)
   keyUpHold() {
-    this.keyboardService.setKeỵ({
-      hold: false
-    });
+    this.keyboardStore.setHoldFalse();
   }
 
   @HostListener(`${KeyDown}.${TetrisKeyboard.S}`)
   keyDownSound() {
     this.soundManager.move();
     this.tetrisService.setSound();
-    this.keyboardService.setKeỵ({
-      sound: true
-    });
+    this.keyboardStore.setSoundTrue();
   }
 
   @HostListener(`${KeyUp}.${TetrisKeyboard.S}`)
   keyUpSound() {
-    this.keyboardService.setKeỵ({
-      sound: false
-    });
+    this.keyboardStore.setSoundFalse();
   }
 
   @HostListener(`${KeyDown}.${TetrisKeyboard.P}`)
   keyDownPause() {
     this.soundManager.move();
-    this.keyboardService.setKeỵ({
-      pause: true
+    this.keyboardStore.setPauseTrue();
+    this.tetrisService.canStartGame$.pipe(take(1)).subscribe((canStart) => {
+      if (canStart) {
+        this.tetrisService.resume();
+      } else {
+        this.tetrisService.pause();
+      }
     });
-    if (this.tetrisService.canStartGame) {
-      this.tetrisService.resume();
-    } else {
-      this.tetrisService.pause();
-    }
   }
 
   @HostListener(`${KeyUp}.${TetrisKeyboard.P}`)
   keyUpPause() {
-    this.keyboardService.setKeỵ({
-      pause: false
-    });
+    this.keyboardStore.setPauseFalse();
   }
 
   @HostListener(`${KeyDown}.${TetrisKeyboard.R}`)
   keyDownReset() {
     this.soundManager.move();
-    this.keyboardService.setKeỵ({
-      reset: true
-    });
+    this.keyboardStore.setResetTrue();
     this.tetrisService.pause();
     setTimeout(() => {
       if (confirm('You are having a good game. Are you sure you want to reset?')) {
@@ -247,26 +226,15 @@ export class AngularTetrisComponent implements OnInit {
 
   @HostListener(`${KeyUp}.${TetrisKeyboard.R}`)
   keyUpReset() {
-    this.keyboardService.setKeỵ({
-      reset: false
-    });
+    this.keyboardStore.setResetFalse();
   }
 
   get hasCurrent() {
-    return this.tetrisService.hasCurrent;
+    return !!this.tetrisService.current;
   }
 
-  constructor(
-    private tetrisService: TetrisService,
-    private keyboardService: KeyboardService,
-    private soundManager: SoundManagerService,
-    private el: ElementRef,
-    private render: Renderer2
-  ) {}
-
   ngOnInit(): void {
-    this.drop$ = this.keyboardService.drop$;
-    this.isShowLogo$ = this.tetrisService.isShowLogo$;
+    this.isShowLogo$ = this.tetrisStore.isShowLogo$;
     setTimeout(() => {
       this.resize();
     });
