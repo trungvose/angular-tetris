@@ -1,4 +1,4 @@
 <div class="logo">
-    <div [ngClass]="dragonNgClass$ | async"></div>
+    <div [ngClass]="['bg dragon', dragonClass$ | async]"></div>
     <p>Press Space to start</p>
 </div>

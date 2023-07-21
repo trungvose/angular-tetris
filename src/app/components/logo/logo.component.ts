@@ -1,10 +1,8 @@
 import { CommonModule, NgClass } from '@angular/common';
 import { Component } from '@angular/core';
-import { UntilDestroy } from '@ngneat/until-destroy';
 import { concat, timer } from 'rxjs';
-import { delay, map, repeat, startWith, takeWhile, tap } from 'rxjs/operators';
+import { map, repeat, startWith, takeWhile } from 'rxjs/operators';
 
-@UntilDestroy()
 @Component({
   selector: 't-logo',
   standalone: true,
@@ -13,29 +11,30 @@ import { delay, map, repeat, startWith, takeWhile, tap } from 'rxjs/operators';
   styleUrls: ['./logo.component.scss']
 })
 export class LogoComponent {
-  blinkingEyesClass$ = timer(0, 500).pipe(
-    startWith(0),
-    map((x) => x + 1),
-    takeWhile((x) => x < 6),
-    map((x) => `l${x % 2 === 0 ? 1 : 2}`)
-  );
-
   runningClass$ = timer(0, 100).pipe(
     startWith(0),
-    map((x) => x + 1),
-    takeWhile((x) => x <= 40),
-    map((x) => {
-      const range = Math.ceil(x / 10);
+    takeWhile((t) => t < 40),
+    map((t) => {
+      const range = Math.ceil((t + 1) / 10);
       const side = range % 2 === 0 ? 'l' : 'r';
-      const runningLegState = x % 2 === 0 ? 3 : 4;
-      const legState = x === 40 ? 1 : runningLegState;
+      const runningLegState = t % 2 === 1 ? 3 : 4;
+      const legState = t === 39 ? 1 : runningLegState;
       return `${side}${legState}`;
     })
   );
 
-  dragonNgClass$ = concat(this.blinkingEyesClass$, this.runningClass$).pipe(
-    delay(5000),
-    repeat(1000),
-    map((className) => ['bg dragon', className])
+  blinkingEyesClass$ = timer(0, 500).pipe(
+    startWith(0),
+    takeWhile((t) => t < 5),
+    map((t) => `l${t % 2 === 1 ? 1 : 2}`)
+  );
+
+  restingClass$ = timer(5000).pipe(
+    startWith(0),
+    map(() => 'l2')
+  );
+
+  dragonClass$ = concat(this.runningClass$, this.blinkingEyesClass$, this.restingClass$).pipe(
+    repeat(Infinity)
   );
 }
