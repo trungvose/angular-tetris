@@ -18,9 +18,11 @@ const REFRESH_LABEL_INTERVAL = 3000;
 export class PointComponent {
   private tetrisState = inject(TetrisStateService);
 
-  labelAndPoints$: Observable<LabelAndNumber> = this.tetrisState.hasCurrent$.pipe(
+  labelAndPoints$: Observable<LabelAndNumber> = this.tetrisState.current$.pipe(
     untilDestroyed(this),
+    map((current) => !!current),
     switchMap((hasCurrent) => {
+      console.log(hasCurrent, this.tetrisState.points());
       if (hasCurrent) {
         return of(new LabelAndNumber('Score', this.tetrisState.points()));
       }

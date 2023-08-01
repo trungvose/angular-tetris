@@ -82,7 +82,6 @@ export class TetrisStateService {
   gameState$ = toObservable(this.gameState);
   matrix$ = toObservable(this.matrix);
   current$ = toObservable(this.current);
-  hasCurrent$ = toObservable(this.hasCurrent);
 
   isShowLogo$ = combineLatest([this.gameState$, this.current$]).pipe(
     switchMap(([state, current]) => {
