@@ -1,4 +1,4 @@
-<div *ngIf="labelAndPoints() as labelAndPoints">
-    <p>{{ labelAndPoints.label }}</p>
-    <t-number [num]="labelAndPoints.points"></t-number>
+<div *ngIf="labelAndPoints$ | async as labelAndPoint">
+    <p>{{ labelAndPoint.label }}</p>
+    <t-number [num]="labelAndPoint.points"></t-number>
 </div>

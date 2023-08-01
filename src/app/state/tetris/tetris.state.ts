@@ -5,7 +5,9 @@ import { Speed } from '@angular-tetris/interface/speed';
 import { Tile } from '@angular-tetris/interface/tile/tile';
 import { MatrixUtil } from '@angular-tetris/interface/utils/matrix';
 import { LocalStorageService } from '@angular-tetris/services/local-storage.service';
-import { DestroyRef, Injectable, computed, effect, inject, signal } from '@angular/core';
+import { Injectable, computed, inject, signal } from '@angular/core';
+import { toObservable } from '@angular/core/rxjs-interop';
+import { combineLatest, delay, of, switchMap } from 'rxjs';
 
 export interface TetrisState {
   matrix: Tile[];
@@ -43,23 +45,23 @@ const createInitialState = (pieceFactory: PieceFactory): TetrisState => ({
   max: LocalStorageService.maxPoint
 });
 
-const isObjectShallowEqual = (a: any, b: any) => a == b;
+const isObjectShallowEqual = (a: any, b: any) => a === b;
 
 @Injectable({ providedIn: 'root' })
 export class TetrisStateService {
   private pieceFactory = inject(PieceFactory);
   private tetrisState = signal<TetrisState>(createInitialState(this.pieceFactory));
 
-  next = computed(() => this.tetrisState().next, {
+  next = computed<Piece>(() => this.tetrisState().next, {
     equal: isObjectShallowEqual
   });
-  hold = computed(() => this.tetrisState().hold, {
+  hold = computed<Piece>(() => this.tetrisState().hold, {
     equal: isObjectShallowEqual
   });
-  matrix = computed(() => this.tetrisState().matrix, {
+  matrix = computed<Tile[]>(() => this.tetrisState().matrix, {
     equal: isObjectShallowEqual
   });
-  current = computed(() => this.tetrisState().current, {
+  current = computed<Piece>(() => this.tetrisState().current, {
     equal: isObjectShallowEqual
   });
   isEnableSound = computed(() => this.tetrisState().sound);
@@ -77,42 +79,18 @@ export class TetrisStateService {
   locked = computed(() => this.tetrisState().locked);
   canHold = computed(() => this.tetrisState().canHold);
 
-  isShowLogo = signal(false);
+  gameState$ = toObservable(this.gameState);
+  matrix$ = toObservable(this.matrix);
+  current$ = toObservable(this.current);
+  hasCurrent$ = toObservable(this.hasCurrent);
 
-  private showLogoRef = null;
-
-  constructor() {
-    effect(
-      () => {
-        if (this.showLogoRef) {
-          clearTimeout(this.showLogoRef);
-        }
-
-        const gameState = this.gameState();
-
-        const isLoadingOrOver = gameState === GameState.Loading || gameState === GameState.Over;
-        const isShowLogo = isLoadingOrOver && !this.hasCurrent();
-
-        if (isLoadingOrOver) {
-          this.showLogoRef = setTimeout(() => {
-            this.isShowLogo.set(isShowLogo);
-          }, 1800);
-          return;
-        }
-
-        this.isShowLogo.set(isShowLogo);
-      },
-      {
-        allowSignalWrites: true
-      }
-    );
-
-    inject(DestroyRef).onDestroy(() => {
-      if (this.showLogoRef) {
-        clearTimeout(this.showLogoRef);
-      }
-    });
-  }
+  isShowLogo$ = combineLatest([this.gameState$, this.current$]).pipe(
+    switchMap(([state, current]) => {
+      const isLoadingOrOver = state === GameState.Loading || state === GameState.Over;
+      const isRenderingLogo$ = of(isLoadingOrOver && !current);
+      return isLoadingOrOver ? isRenderingLogo$.pipe(delay(1800)) : isRenderingLogo$;
+    })
+  );
 
   updateState(updatedState: Partial<TetrisState>) {
     this.tetrisState.update((currentState) => ({

@@ -1,27 +1,23 @@
-import { NgClass, NgFor } from '@angular/common';
+import { AsyncPipe, NgClass, NgFor } from '@angular/common';
 import { ChangeDetectionStrategy, Component, DestroyRef, inject, signal } from '@angular/core';
-import { UntilDestroy } from '@ngneat/until-destroy';
+import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
+import { map, timer } from 'rxjs';
 
 const REFRESH_CLOCK_INTERVAL = 1000;
 @UntilDestroy()
 @Component({
   selector: 't-clock',
   standalone: true,
-  imports: [NgClass, NgFor],
+  imports: [NgClass, NgFor, AsyncPipe],
   templateUrl: './clock.component.html',
   styleUrls: ['./clock.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ClockComponent {
-  private unregisterFn = inject(DestroyRef).onDestroy(() => {
-    clearInterval(this.timerInterval);
-  });
-
-  clockValues = signal(this.renderClock());
-
-  timerInterval = setInterval(() => {
-    this.clockValues.set(this.renderClock());
-  }, REFRESH_CLOCK_INTERVAL);
+  clock$ = timer(0, REFRESH_CLOCK_INTERVAL).pipe(
+    untilDestroyed(this),
+    map(() => this.renderClock())
+  );
 
   renderClock(): string[] {
     const now = new Date();

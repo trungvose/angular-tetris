@@ -16,7 +16,7 @@ import { SoundManagerService } from '@angular-tetris/services/sound-manager.serv
 import { KeyboardService } from '@angular-tetris/state/keyboard/keyboard.service';
 import { TetrisService } from '@angular-tetris/state/tetris/tetris.service';
 import { TetrisStateService } from '@angular-tetris/state/tetris/tetris.state';
-import { NgIf } from '@angular/common';
+import { AsyncPipe, NgIf } from '@angular/common';
 import {
   ChangeDetectionStrategy,
   Component,
@@ -34,6 +34,7 @@ const KeyDown = 'document:keydown';
   standalone: true,
   imports: [
     NgIf,
+    AsyncPipe,
     ClockComponent,
     GithubComponent,
     HoldComponent,
@@ -61,7 +62,7 @@ export class AngularTetrisComponent implements OnInit {
   private render = inject(Renderer2);
 
   drop = this.keyboardService.drop;
-  isShowLogo = this.tetrisState.isShowLogo;
+  isShowLogo$ = this.tetrisState.isShowLogo$;
   filling: number;
 
   @HostListener('window:resize', ['$event'])
