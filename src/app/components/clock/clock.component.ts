@@ -1,5 +1,5 @@
 import { AsyncPipe, NgClass, NgFor } from '@angular/common';
-import { ChangeDetectionStrategy, Component, DestroyRef, inject, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { map, timer } from 'rxjs';
 

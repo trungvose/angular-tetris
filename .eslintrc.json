@@ -4,7 +4,8 @@
     "projects/**/*"
   ],
   "plugins": [
-    "@angular-eslint"
+    "@angular-eslint",
+    "unused-imports"
   ],
   "overrides": [
     {
@@ -25,6 +26,7 @@
         "plugin:@angular-eslint/template/process-inline-templates"
       ],
       "rules": {
+        "unused-imports/no-unused-imports": "error",
         "@angular-eslint/component-selector": [
           "error",
           {

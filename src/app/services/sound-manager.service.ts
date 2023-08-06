@@ -1,4 +1,3 @@
-import { TetrisService } from '@angular-tetris/state/tetris/tetris.service';
 import { TetrisStateService } from '@angular-tetris/state/tetris/tetris.state';
 import { Injectable, inject } from '@angular/core';
 

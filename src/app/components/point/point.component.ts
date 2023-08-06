@@ -22,7 +22,6 @@ export class PointComponent {
     untilDestroyed(this),
     map((current) => !!current),
     switchMap((hasCurrent) => {
-      console.log(hasCurrent, this.tetrisState.points());
       if (hasCurrent) {
         return of(new LabelAndNumber('Score', this.tetrisState.points()));
       }
