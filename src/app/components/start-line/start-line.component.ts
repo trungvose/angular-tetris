@@ -1,19 +1,20 @@
-import { AsyncPipe, NgIf } from '@angular/common';
-import { Component } from '@angular/core';
-import { TetrisQuery } from '@angular-tetris/state/tetris/tetris.query';
+import { TetrisStateService } from '@angular-tetris/state/tetris/tetris.state';
+import { NgIf } from '@angular/common';
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { NumberComponent } from '../number/number.component';
 
 @Component({
   selector: 't-start-line',
   standalone: true,
-  imports: [NumberComponent, NgIf, AsyncPipe],
+  imports: [NumberComponent, NgIf],
   templateUrl: './start-line.component.html',
-  styleUrls: ['./start-line.component.scss']
+  styleUrls: ['./start-line.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class StartLineComponent {
-  hasCurrent$ = this.query.hasCurrent$;
-  clearedLines$ = this.query.clearedLines$;
-  initLine$ = this.query.initLine$;
+  private tetrisState = inject(TetrisStateService);
 
-  constructor(public query: TetrisQuery) {}
+  hasCurrent = this.tetrisState.hasCurrent;
+  clearedLines = this.tetrisState.clearedLines;
+  initLine = this.tetrisState.initLine;
 }

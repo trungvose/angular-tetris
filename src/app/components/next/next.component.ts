@@ -1,22 +1,21 @@
-import { AsyncPipe, NgFor } from '@angular/common';
-import { Component } from '@angular/core';
 import { Tile, TileValue } from '@angular-tetris/interface/tile/tile';
-import { TetrisQuery } from '@angular-tetris/state/tetris/tetris.query';
-import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { TetrisStateService } from '@angular-tetris/state/tetris/tetris.state';
+import { NgFor } from '@angular/common';
+import { ChangeDetectionStrategy, Component, computed, inject } from '@angular/core';
 import { TileComponent } from '../tile/tile.component';
 
 @Component({
   selector: 't-next',
   standalone: true,
-  imports: [TileComponent, NgFor, AsyncPipe],
+  imports: [TileComponent, NgFor],
   templateUrl: './next.component.html',
-  styleUrls: ['./next.component.scss']
+  styleUrls: ['./next.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class NextComponent {
-  next$: Observable<Tile[][]> = this.tetrisQuery.next$.pipe(
-    map((piece) => piece.next.map((row) => row.map((value) => new Tile(value as TileValue))))
-  );
+  private tetrisState = inject(TetrisStateService);
 
-  constructor(private tetrisQuery: TetrisQuery) {}
+  next = computed(() =>
+    this.tetrisState.next().next.map((row) => row.map((value) => new Tile(value as TileValue)))
+  );
 }

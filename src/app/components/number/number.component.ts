@@ -1,12 +1,13 @@
-import { NgClass, NgFor, NgStyle } from '@angular/common';
-import { Component, OnInit, Input } from '@angular/core';
+import { NgClass, NgFor } from '@angular/common';
+import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 
 @Component({
   selector: 't-number',
   standalone: true,
   imports: [NgFor, NgClass],
   templateUrl: './number.component.html',
-  styleUrls: ['./number.component.scss']
+  styleUrls: ['./number.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class NumberComponent {
   @Input() num = 0;

@@ -1,11 +1,19 @@
-import { Component, OnInit, Input, Renderer2, ElementRef } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  Input,
+  Renderer2,
+  ElementRef,
+  ChangeDetectionStrategy
+} from '@angular/core';
 import { Tile } from '@angular-tetris/interface/tile/tile';
 
 @Component({
   selector: 't-tile',
   standalone: true,
   template: ``,
-  styleUrls: ['./tile.component.scss']
+  styleUrls: ['./tile.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class TileComponent implements OnInit {
   @Input() tile: Tile;

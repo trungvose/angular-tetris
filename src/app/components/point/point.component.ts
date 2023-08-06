@@ -1,7 +1,7 @@
+import { TetrisStateService } from '@angular-tetris/state/tetris/tetris.state';
 import { AsyncPipe, NgIf } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
-import { TetrisQuery } from '@angular-tetris/state/tetris/tetris.query';
 import { Observable, of, timer } from 'rxjs';
 import { map, switchMap } from 'rxjs/operators';
 import { NumberComponent } from '../number/number.component';
@@ -16,23 +16,26 @@ const REFRESH_LABEL_INTERVAL = 3000;
   styleUrls: ['./point.component.scss']
 })
 export class PointComponent {
-  labelAndPoints$: Observable<LabelAndNumber> = this.query.hasCurrent$.pipe(
+  private tetrisState = inject(TetrisStateService);
+
+  labelAndPoints$: Observable<LabelAndNumber> = this.tetrisState.current$.pipe(
     untilDestroyed(this),
+    map((current) => !!current),
     switchMap((hasCurrent) => {
+      console.log(hasCurrent, this.tetrisState.points());
       if (hasCurrent) {
-        return of(new LabelAndNumber('Score', this.query.raw.points));
+        return of(new LabelAndNumber('Score', this.tetrisState.points()));
       }
       return timer(0, REFRESH_LABEL_INTERVAL).pipe(
         map((val) => {
           const isOdd = val % 2 === 0;
-          const { points, max } = this.query.raw;
+          const points = this.tetrisState.points();
+          const max = this.tetrisState.max();
           return isOdd ? new LabelAndNumber('Score', points) : new LabelAndNumber('Max ', max);
         })
       );
     })
   );
-
-  constructor(private query: TetrisQuery) {}
 }
 
 class LabelAndNumber {

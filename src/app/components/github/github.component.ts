@@ -1,30 +1,33 @@
-import { AsyncPipe, NgIf } from '@angular/common';
-import { Component } from '@angular/core';
 import { GoogleAnalyticsService } from '@angular-tetris/services/google-analytics.service';
-import { TetrisQuery } from '@angular-tetris/state/tetris/tetris.query';
+import { TetrisStateService } from '@angular-tetris/state/tetris/tetris.state';
+import { NgIf } from '@angular/common';
+import { ChangeDetectionStrategy, Component, computed, inject } from '@angular/core';
 import { SharedButtonComponent } from '../shared-button/shared-button.component';
 const HASHTAG = 'angular,angulartetris,akita,typescript';
 
 @Component({
   selector: 't-github',
   standalone: true,
-  imports: [SharedButtonComponent, AsyncPipe, NgIf],
+  imports: [SharedButtonComponent, NgIf],
   templateUrl: './github.component.html',
-  styleUrls: ['./github.component.scss']
+  styleUrls: ['./github.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class GithubComponent {
-  max$ = this.query.max$;
-  //eslint-disable-next-line max-len
-  tweetAngularTetrisUrl = `https://twitter.com/intent/tweet?url=https%3A%2F%2Fgithub.com%2Ftrungk18%2Fangular-tetris&text=Awesome%20Tetris%20game%20built%20with%20Angular%2010%20and%20Akita%2C%20can%20you%20get%20999999%20points%3F&hashtags=${HASHTAG}`;
+  private tetrisState = inject(TetrisStateService);
+  private googleAnalytics = inject(GoogleAnalyticsService);
 
-  constructor(private query: TetrisQuery, private googleAnalytics: GoogleAnalyticsService) {}
+  max = this.tetrisState.max;
 
-  getTweetMaxScoreShareUrl(max: number) {
+  tweetMaxScoreShareUrl = computed(() => {
     const text = encodeURIComponent(
-      `Woo-hoo! I got a ${max} points on Angular Tetris @tuantrungvo. Wanna join the party?`
+      `Woo-hoo! I got a ${this.max()} points on Angular Tetris @tuantrungvo. Wanna join the party?`
     );
     return `https://twitter.com/intent/tweet?url=https%3A%2F%2Fgithub.com%2Ftrungk18%2Fangular-tetris&text=${text}&hashtags=${HASHTAG}`;
-  }
+  });
+
+  //eslint-disable-next-line max-len
+  tweetAngularTetrisUrl = `https://twitter.com/intent/tweet?url=https%3A%2F%2Fgithub.com%2Ftrungk18%2Fangular-tetris&text=Awesome%20Tetris%20game%20built%20with%20Angular%2010%20and%20Akita%2C%20can%20you%20get%20999999%20points%3F&hashtags=${HASHTAG}`;
 
   sendTwitterShareMaxScoreEvent() {
     this.googleAnalytics.sendEvent('Share Twitter High Score', 'button');

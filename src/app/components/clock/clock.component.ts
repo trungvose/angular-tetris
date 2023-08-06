@@ -1,8 +1,7 @@
 import { AsyncPipe, NgClass, NgFor } from '@angular/common';
-import { Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, DestroyRef, inject, signal } from '@angular/core';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
-import { timer } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { map, timer } from 'rxjs';
 
 const REFRESH_CLOCK_INTERVAL = 1000;
 @UntilDestroy()
@@ -11,7 +10,8 @@ const REFRESH_CLOCK_INTERVAL = 1000;
   standalone: true,
   imports: [NgClass, NgFor, AsyncPipe],
   templateUrl: './clock.component.html',
-  styleUrls: ['./clock.component.scss']
+  styleUrls: ['./clock.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ClockComponent {
   clock$ = timer(0, REFRESH_CLOCK_INTERVAL).pipe(

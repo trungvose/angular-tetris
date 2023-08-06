@@ -1,5 +1,6 @@
-import { Injectable } from '@angular/core';
-import { TetrisQuery } from '@angular-tetris/state/tetris/tetris.query';
+import { TetrisService } from '@angular-tetris/state/tetris/tetris.service';
+import { TetrisStateService } from '@angular-tetris/state/tetris/tetris.state';
+import { Injectable, inject } from '@angular/core';
 
 const SOUND_FILE_PATH = '/assets/tetris-sound.mp3';
 @Injectable({
@@ -8,8 +9,7 @@ const SOUND_FILE_PATH = '/assets/tetris-sound.mp3';
 export class SoundManagerService {
   private context: AudioContext;
   private buffer: AudioBuffer;
-
-  constructor(private query: TetrisQuery) {}
+  private tetrisState = inject(TetrisStateService);
 
   start() {
     this.playMusic(0, 3.7202, 3.6224);
@@ -36,7 +36,7 @@ export class SoundManagerService {
   }
 
   private playMusic(when: number, offset: number, duration: number) {
-    if (!this.query.isEnableSound) {
+    if (!this.tetrisState.isEnableSound()) {
       return;
     }
     this.loadSound().then((source) => {

@@ -1,5 +1,5 @@
 import { NgClass } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject, ChangeDetectorRef } from '@angular/core';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { concat, Observable, timer } from 'rxjs';
 import { delay, finalize, map, repeat, startWith, takeWhile, tap } from 'rxjs/operators';
@@ -13,6 +13,8 @@ import { delay, finalize, map, repeat, startWith, takeWhile, tap } from 'rxjs/op
   styleUrls: ['./logo.component.scss']
 })
 export class LogoComponent implements OnInit {
+  private cdr = inject(ChangeDetectorRef);
+
   className = '';
 
   ngOnInit(): void {
@@ -29,6 +31,7 @@ export class LogoComponent implements OnInit {
       tap((x) => {
         const state = x % 2 === 0 ? 1 : 2;
         this.className = `l${state}`;
+        this.cdr.markForCheck();
       })
     );
   }
@@ -45,9 +48,11 @@ export class LogoComponent implements OnInit {
         }
         const state = x % 2 === 0 ? 3 : 4;
         this.className = `${side}${state}`;
+        this.cdr.markForCheck();
       }),
       finalize(() => {
         this.className = `${side}1`;
+        this.cdr.markForCheck();
       })
     );
   }
