@@ -10,7 +10,7 @@ The game has sounds, wear your 🎧 or turn on your 🔊 for a better experience
 
 ![A childhood memory Tetris game built with Angular and Akita][demo]
 
-> Please tweet and tag me @tuantrungvo for any issues that you are currently facing!
+> Please tweet and tag me @trungvose for any issues that you are currently facing!
 > Thanks for your understanding. Stay tuned!
 
 ![A childhood memory Tetris game built with Angular and Akita][iphonex]
@@ -21,7 +21,7 @@ If you like my work, feel free to:
 
 - ⭐ this repository. And we will be happy together :)
 - [![Tweet](https://img.shields.io/twitter/url/http/shields.io.svg?style=social)][tweet] about Angular Tetris
-- <a title="Thanks for your support!" href="https://www.buymeacoffee.com/tuantrungvo" target="_blank"><img src="https://res.cloudinary.com/dvujyxh7e/image/upload/c_thumb,w_140,g_face/v1596378474/default-orange_uthxgz.jpg" alt="Buy Me A Coffee"></a>
+- <a title="Thanks for your support!" href="https://www.buymeacoffee.com/trungvose" target="_blank"><img src="https://res.cloudinary.com/dvujyxh7e/image/upload/c_thumb,w_140,g_face/v1596378474/default-orange_uthxgz.jpg" alt="Buy Me A Coffee"></a>
 
 Thanks a bunch for stopping by and supporting me!
 
@@ -40,9 +40,9 @@ After showing my wife the [Tetris game built with Vue][vue]. She asked me why I 
 
 > The game can hold up to a maximum score of 999999 (one million minus one 😂) and I have never reached that very end.
 >
-> Please [tweet][tweetmax] the screenshot with your highest score, together with hashtag `#angulartetris` and my name tagged as well `@tuantrungvo`. I will send **a free gift** to the one having the highest score of the day, from now till <u>1 Aug 2020</u>.
+> Please [tweet][tweetmax] the screenshot with your highest score, together with hashtag `#angulartetris` and my name tagged as well `@trungvose`. I will send **a free gift** to the one having the highest score of the day, from now till <u>1 Aug 2020</u>.
 
-[tweetmax]: https://twitter.com/intent/tweet?url=https%3A%2F%2Fgithub.com%2Ftrungk18%2Fangular-tetris&text=Woo-hoo!%20I%20got%20a%20999999%20points%20on%20Angular%20Tetris%20%40tuantrungvo.%20Wanna%20join%20the%20party%3F%20&hashtags=angular,angulartetris,akita,typescript
+[tweetmax]: https://twitter.com/intent/tweet?url=https%3A%2F%2Fgithub.com%2Ftrungk18%2Fangular-tetris&text=Woo-hoo!%20I%20got%20a%20999999%20points%20on%20Angular%20Tetris%20%40trungvose.%20Wanna%20join%20the%20party%3F%20&hashtags=angular,angulartetris,akita,typescript
 
 ## Who is this for?
 

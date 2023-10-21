@@ -21,7 +21,7 @@ export class GithubComponent {
 
   tweetMaxScoreShareUrl = computed(() => {
     const text = encodeURIComponent(
-      `Woo-hoo! I got a ${this.max()} points on Angular Tetris @tuantrungvo. Wanna join the party?`
+      `Woo-hoo! I got a ${this.max()} points on Angular Tetris @trungvose. Wanna join the party?`
     );
     return `https://twitter.com/intent/tweet?url=https%3A%2F%2Fgithub.com%2Ftrungk18%2Fangular-tetris&text=${text}&hashtags=${HASHTAG}`;
   });
